@@ -79,6 +79,7 @@
 									<input type='text' name='keyword' class='custom-select-sm form-control form-control-sm ml-2' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 									<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'>
 									<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'>
+									<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>">
 									
 									<div class="ml-2">
 				                		<button type="submit" class="btn btn-secondary custom-select-sm btn-width">검색</button>
@@ -106,6 +107,7 @@
 						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 							<li class='paginate_button  ${pageMaker.cri.pageNum == num ? "active" : ""}'>
 								<a href="${num}">${num}</a>
+
 							</li>
 						</c:forEach>  
 									  
@@ -127,6 +129,10 @@
 					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
 					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+				<!--  변수 설정 -->
+					<input type='hidden' name='tno' value='<sec:authentication property="principal.trainerVO.tno"/>'>
+					
+					
 				</form>				            
 				<!-- hidden 태그 전송용 폼 끝 -->
 				

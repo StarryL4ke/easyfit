@@ -28,11 +28,18 @@ public class LessonServiceImpl implements LessonService {
 		return lessonMapper.exerciseTypeList(et);
 	}
 	
+	//@Override
+	//public List<LessonJoinVO> getTripleList(Criteria cri, Long tno) {
+		
+	//	log.info("get Triple List with criteria : " + cri);
+	//	return lessonMapper.tripleList(cri, tno);
+	//}
+	
 	@Override
-	public List<LessonJoinVO> getTripleList(Criteria cri, Long tno) {
+	public List<LessonJoinVO> getTNOTripleList(Criteria cri, Long tno) {
 		
 		log.info("get Triple List with criteria : " + cri);
-		return lessonMapper.tripleList(cri, tno);
+		return lessonMapper.TNOtripleList(cri, tno);
 	}
 	
 	@Override
@@ -96,6 +103,17 @@ public class LessonServiceImpl implements LessonService {
 		log.info("get pt record total count");
 		return lessonMapper.ptRecordTotalCount(cri);
 	}
+	// #{tno} 총 게시글 갯수 구하는 메소드 - PT기록(PT계약회차)
+	//@Override
+	//public long getTNOptRecordTotalCount(Criteria cri, Long tno) {
+		
+		//return lessonMapper.TNOptRecordTotalCount(cri, tno);
+	//}
+	@Override
+		public long getTNOptRecordTotalCount(Long tno) {
+			
+			return lessonMapper.TNOptRecordTotalCount(tno);
+		}
 	
 	
 }

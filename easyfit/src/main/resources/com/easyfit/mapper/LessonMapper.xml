@@ -12,7 +12,7 @@
 						mname LIKE '%'||#{cri.keyword}||'%'
 					</when>
 					<when test="type == 'B'.toString()">
-						m.mno LIKE '%'||#{cri.keyword}||'%'
+						mem.mno LIKE '%'||#{cri.keyword}||'%'
 					</when>
 					<when test="type == 'C'.toString()">
 						mtel LIKE '%'||#{cri.keyword}||'%'
@@ -63,43 +63,47 @@
 	
 	<select id="tripleList" resultType="com.easyfit.domain.join.LessonJoinVO">
 		<![CDATA[
-			SELECT DISTINCT
-			    rn, mno, mname, mtel, erdate, prno, prturn, prcount, prcountall
+			SELECT
+			    rn, mno, mname, mtel, gprno, maxerdate, prturn, prcount, prcountall
 			FROM
 			    (
+			    SELECT
+			        rownum rn, mno, mname, mtel, gprno, maxerdate, prturn, prcount, prcountall
+			    FROM
+			        (
 			        SELECT DISTINCT
-			            rownum rn, mno, mname, mtel, erdate, prno, prturn, prcount, prcountall
+			            m.mno mno, m.mname mname, m.mtel mtel, gprno, maxerdate, pr.prturn prturn, pr.prcount prcount, pr.prcountall prcountall
 			        FROM
+			            member m
+			        JOIN
+			            ptrecord pr
+			        ON
+			            m.mno = pr.mno
+			        JOIN
+			            exerciserecord er
+			        ON
+			            pr.prno = er.prno
+			        LEFT OUTER JOIN
 			            (
-			                SELECT DISTINCT
-			                    m.mno mno, m.mname mname, m.mtel mtel, er.erdate erdate, pr.prno prno, pr.prturn prturn, pr.prcount prcount, pr.prcountall prcountall
-			                FROM
-			                    member m, ptrecord pr, exerciserecord er
-			                WHERE
-			                    m.mno = pr.mno
-			                    AND pr.prno = er.prno
-			                    AND er.erdate = (
-			                    					SELECT DISTINCT
-													    MAX(erdate)
-													FROM                                      
-													    exerciserecord er, ptrecord pr
-													WHERE
-													    er.prno = pr.prno
-													    AND pr.tno = #{tno}
-													GROUP BY
-													    er.prno													
-			                    				)
-			            )
+			            SELECT
+			                NVL(prno, '') gprno, MAX(erdate) maxerdate
+			            FROM                                      
+			                exerciserecord
+			            GROUP BY
+			                prno
+			            ) gr
+			        ON
+			            er.erdate = gr.maxerdate
 			        WHERE
-		]]>	        
-			
-        <include refid="myCriteria"></include>
-        	
-		<![CDATA[	        	
-			        	rownum <= #{cri.pageNum} * #{cri.amount}
+			            pr.tno = #{tno}
+			]]>			
+			<include refid="myCriteria"></include>
+			<![CDATA[
+			            AND rownum <= #{cri.pageNum} * #{cri.amount}
+			        )        
 			    )
-			WHERE
-				rn > (#{cri.pageNum} - 1) * #{cri.amount}
+			    WHERE
+			        rn > (#{cri.pageNum} - 1) * #{cri.amount}
 			ORDER BY
 			    rn DESC
 		]]>
@@ -252,16 +256,68 @@
 	</select>
 	
 	<!-- 총 게시글 갯수 구하는 메소드 - PT기록(PT계약회차) -->
-	<select id="ptRecordTotalCount" resultType="long">
+	<select id="TNOptRecordTotalCount" resultType="long">
 		<![CDATA[
 			SELECT
 				COUNT(prturn)
 			FROM
 				ptrecord
 			WHERE 
-				prno > 0
+				tno = #{tno}
+				AND	prno > 0
 		]]>
 	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- #{tid} 메소드 모음 -->
+<select id="TNOtripleList" resultType="com.easyfit.domain.join.LessonJoinVO">
+<![CDATA[
+SELECT
+    rn, mno, mname, mtel, prno, prturn, prcount, prcountall, maxerdate
+FROM
+    (
+    SELECT
+        rownum rn, mem.mno, mname, mtel, ptr.prno, prturn, prcount, prcountall, maxerdate
+    FROM
+        member mem, ptrecord ptr, (
+            SELECT
+                prno, MAX(erdate) maxerdate
+            FROM
+                exerciserecord
+            GROUP BY
+                prno
+            ) er
+    WHERE
+]]>			
+<include refid="myCriteria"></include>
+<![CDATA[
+        mem.mno = ptr.mno
+        AND ptr.prno = er.prno
+        AND tno = #{tno}
+        AND rownum <= #{cri.pageNum} * #{cri.amount}
+    )
+WHERE
+    rn > (#{cri.pageNum} - 1) * #{cri.amount}
+ORDER BY
+    rn DESC
+]]>
+</select>
+
+
+
+
+
 
 	
 </mapper>

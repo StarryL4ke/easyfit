@@ -13,7 +13,8 @@ public interface LessonMapper {
 	
 	// SELECT
 	public List<ExerciseTypeVO> exerciseTypeList(ExerciseTypeVO et);
-	public List<LessonJoinVO> tripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
+	//public List<LessonJoinVO> tripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
+	public List<LessonJoinVO> TNOtripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
 	public List<LessonJoinVO> doubleList(@Param("cri") Criteria cri, @Param("prno") Long prno);
 	public List<LessonJoinVO> get(@Param("prno") Long prno, @Param("edate") String edate);
 	
@@ -33,5 +34,9 @@ public interface LessonMapper {
 	
 	// 총 게시글 갯수 구하는 메소드 - PT기록
 	public long ptRecordTotalCount(Criteria cri);
+	
+	// #{tno} 의 총 게시글 갯수 구하는 메소드 - PT기록
+	//public long TNOptRecordTotalCount(@Param("cri") Criteria cri, @Param("tno") Long tno);
+	public long TNOptRecordTotalCount(@Param("tno") Long tno);
 	
 }
