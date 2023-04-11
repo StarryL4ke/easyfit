@@ -36,6 +36,6 @@ public interface LessonMapper {
 	
 	//#{tno} 메소드 모음
 	public List<LessonJoinVO> myTripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
-	public long myPTRecordTotalCount(@Param("tno") Long tno);
+	public long myPTRecordTotalCount(@Param("cri") Criteria cri, @Param("tno") Long tno);
 	
 }

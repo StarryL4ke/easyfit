@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <%@ include file="../includes/header.jsp" %>
-<script src="/resources/vendor/jquery/jquery.min.js"></script>
-<!-- Bootstrap Core CSS -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Bootstrap Core JavaScript -->
+
 <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <div>
@@ -35,18 +30,21 @@
 			<tr>
 				<th>PT 회차</th>
 				<th>PT 기간</th>
-				<th>PT 횟수</th>
+				<th>PT 횟수 / PT 전체 횟수</th>
 				<!-- <th>담당트레이너</th> -->
 			</tr>
 		</thead>		
 		<tbody>
 			<c:forEach items="${ptRecordList}" var="ptRecordList">
-				<tr>
+				<tr class="chat" data-prno="${ptRecordList.prno}" data-prstartdate="${ptRecordList.prstartdate}" data-prenddate="${ptRecordList.prenddate}">
 					<td>${ptRecordList.prturn}</td>
-					<td><a href='/easyfit/lessonDetailList?prno=<c:out value="${ptRecordList.prno}"/>'>${ptRecordList.prstartdate}~ ${ptRecordList.prenddate}</a></td>
-					<%-- <td>${ptRecordList.prstartdate}</td><td>~ ${ptRecordList.prenddate}</td> --%>
-					<td>${ptRecordList.prcount}</td>
-					<%-- <td>${ptRecordList.tno}</td> --%>
+					<td><a href='/easyfit/lessonDetailList?prno=<c:out value="${ptRecordList.prno}"/>'>
+							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prstartdate}" />
+								 ~ 
+							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prenddate}" />
+						</a>
+					</td>					
+					<td>${ptRecordList.prcount} / ${ptRecordList.prcountall}</td>				
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -115,8 +113,10 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				<button type="submit" class="btn btn-primary"  id="modalRegisterBtn">저장</button>
+				<button id='modalModBtn' type="button" class="btn btn-warning" data-dismiss="modal">Modify</button>
+		        <button id='modalRemoveBtn' type="button" class="btn btn-danger" data-dismiss="modal">Remove</button>
+		        <button id='modalRegisterBtn' type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
+		        <button id='modalCloseBtn' type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
@@ -173,10 +173,77 @@ $(document).ajaxSend(function(e, xhr, options) {
 	          	modal.modal("hide");
           
 	          	//showList(1);
-	          	showList(-1);
+	          	location.reload();
         	});
         
       });
+    // PT 내역 상세보기
+    $(".chat").on("click", function(e){
+        
+        var prno = $(this).data("prno");
+        var prstartdate = $(this).data("prstartdate");
+        var prenddate = $(this).data("prenddate");
+        $(".modal").modal("show");
+        
+        
+  		console.log($(this).data("prno"));
+        console.log(prno);
+        console.log($(this).data("prstartdate"));
+        console.log(prenddate);
+    	ptRecordService.get(prno, function(ptRecord){
+    		modalInputTno.val(ptRecord.tno);
+            modalInputPrTurn.val(ptRecord.prturn);
+            modalInputPrStartDate.val(prstartdate);
+            modalInputPrEndDate.val(prenddate);
+            modalInputPrCount.val(ptRecord.prcount);
+            modalInputPrCountAll.val(ptRecord.prcountall);
+	    	modal.data("prno", ptRecord.prno);
+    		
+            
+            modal.find("button[id !='modalCloseBtn']").hide();
+            modalModBtn.show();
+            modalRemoveBtn.show();
+            
+            
+            
+            $(".modal").modal("show");
+    	});
+    });
+    
+    // PT 내역 수정하기
+    modalModBtn.on("click", function(e){
+        
+        var ptRecord = {prno:modal.data("prno"), 
+		        		prturn:modalInputPrTurn.val(),
+			            prstartdate:modalInputPrStartDate.val(),
+			            prenddate:modalInputPrEndDate.val(),
+			            prcount:modalInputPrCount.val(),
+			            prcountall:modalInputPrCountAll.val()};
+        
+        ptRecordService.update(ptRecord, function(result){
+              
+          alert(result);
+          modal.modal("hide");
+          location.reload();
+          
+        });
+        
+      });
+    
+    // PT 내역 삭제하기
+    modalRemoveBtn.on("click", function (e){
+    	  var prno = modal.data("prno");
+    	  console.log($(this).data("prno"));
+  	  	  console.log(prno);
+    	  
+    	  ptRecordService.remove(prno, function(result){
+    	        
+    	      alert(result);
+    	      modal.modal("hide");
+    	      location.reload();
+    	      
+    	  });    	  
+    });
 });
 </script>
 

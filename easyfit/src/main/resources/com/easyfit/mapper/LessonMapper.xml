@@ -315,15 +315,36 @@ ORDER BY
 <!-- #{tno} 의 운동일지 종료 -->
 
 <!-- #{tno} 의 운동일지 카운트 시작 -->
-<select id="myPTRecordTotalCount" resultType="long">
-<![CDATA[
+<select id="myPTRecordTotalCount" resultType="long">	
 SELECT
-	COUNT(prturn)
+     COUNT(prturn)
 FROM
-	ptrecord
-WHERE 
-	tno = #{tno}
-	AND	prno > 0
+    (
+    SELECT
+        mno, mname, mtel, prno, prturn, prcount, prcountall, maxerdate
+    FROM
+        (
+        SELECT
+            mem.mno, mname, mtel, ptr.prno, prturn, prcount, prcountall, maxerdate
+        FROM
+            member mem, ptrecord ptr, (
+                SELECT
+                    prno, MAX(erdate) maxerdate
+                FROM
+                    exerciserecord
+                GROUP BY
+                    prno
+                ) er
+        WHERE
+            mem.mno = ptr.mno
+            AND ptr.prno = er.prno
+            AND tno = #{tno}
+        )
+    )
+WHERE	
+<include refid="myCriteria"></include>
+<![CDATA[ 
+	prno > 0
 ]]>
 </select>
 <!-- #{tno} 의 운동일지 카운트 종료 -->

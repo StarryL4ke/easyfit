@@ -33,6 +33,6 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	
 	//#{tno} 메소드 모음
 	public List<LessonJoinVO> getMyTripleList(Criteria cri, Long tno);
-	public long getMyPTRecordTotalCount(Long tno);
+	public long getMyPTRecordTotalCount(Criteria cri, Long tno);
 	
 }

@@ -40,7 +40,7 @@ private LessonService lessonService;
 	  //long total = lessonService.getPTRecordTotal(cri);
 		
 		model.addAttribute("ptRecordList", lessonService.getMyTripleList(cri, tno));
-		long total = lessonService.getMyPTRecordTotalCount(tno);
+		long total = lessonService.getMyPTRecordTotalCount(cri, tno);
 		
 		log.info("list : " + cri);
 		log.info("total : " + total);

@@ -115,8 +115,8 @@ public class LessonServiceImpl implements LessonService {
 		return lessonMapper.myTripleList(cri, tno);
 	}
 	@Override
-	public long getMyPTRecordTotalCount(Long tno) {		
-		return lessonMapper.myPTRecordTotalCount(tno);
+	public long getMyPTRecordTotalCount(Criteria cri, Long tno) {		
+		return lessonMapper.myPTRecordTotalCount(cri, tno);
 	}
 	
 	

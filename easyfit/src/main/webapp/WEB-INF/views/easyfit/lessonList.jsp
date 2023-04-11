@@ -106,7 +106,7 @@
 						
 						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 							<li class='paginate_button  ${pageMaker.cri.pageNum == num ? "active" : ""}'>
-								<a href="${num}">${num}</a>
+								<a href="${num}" class="page-link">${num}</a>
 
 							</li>
 						</c:forEach>  

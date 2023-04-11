@@ -26,7 +26,7 @@ public class ClientController {
 	
 	@GetMapping("/clientList")//회원 목록	
 	public void list(Criteria cri, Long tno, Model model) {
-		long total = clientService.getCount(tno);
+		long total = clientService.getCount(cri, tno);
 		model.addAttribute("list", clientService.getList(cri, tno));
 		model.addAttribute("pageMaker", new PageDTO(total, cri));
 	} 
@@ -66,7 +66,7 @@ public class ClientController {
 	@GetMapping("/allClientList")//전체 회원 목록	
 	//public void allList(Criteria cri, Long tno, Model model) {
 	public void allList(Criteria cri, Model model) {
-		long total = clientService.getAllCount();
+		long total = clientService.getAllCount(cri);
 		//model.addAttribute("allList", clientService.getAllList(cri, tno));
 		model.addAttribute("allList", clientService.getAllList(cri));
 		model.addAttribute("pageMaker", new PageDTO(total, cri));

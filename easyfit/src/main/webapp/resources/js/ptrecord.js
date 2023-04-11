@@ -1,10 +1,8 @@
 console.log("PtRecord Module.....");
 
 var ptRecordService = (function(){
-	console.log("test");
-	function add(ptRecord, callback, error) {
-		console.log("add ptRecord........");
-		
+
+	function add(ptRecord, callback, error) {		
 		$.ajax({
 			type : 'post',
 			url : '/ptrecord/new',
@@ -24,7 +22,60 @@ var ptRecordService = (function(){
 		})
 	}
 	
+	function get(prno, callback, error) {
+		$.getJSON("/ptrecord/" + prno + ".json", function(result) {
+			
+			if (callback) {
+				callback(result);
+			}
+
+		}).fail(function(xhr, status, err) {
+			if (error) {
+				error();
+			}
+		});
+	}
+	
+	function update(ptRecord, callback, error) {
+		$.ajax({
+			type : 'put',
+			url : '/ptrecord/' + ptRecord.prno,
+			data : JSON.stringify(ptRecord),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		});
+	}
+
+	function remove(prno, callback, error) {
+		$.ajax({
+			   type : 'delete',
+				url : '/ptrecord/' + prno,
+			success : function(deleteResult, status, xhr) {
+					if (callback) {
+						callback(deleteResult);
+					}
+				},
+				error : function(xhr, status, er) {
+					if (error) {
+						error(er);
+					}
+				}
+			});
+		}
+	
 	return{
-		add : add
+		add : add,
+		get : get,
+		update : update,
+		remove : remove
 	};
 })();

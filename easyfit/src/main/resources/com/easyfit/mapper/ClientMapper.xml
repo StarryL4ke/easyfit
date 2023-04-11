@@ -48,28 +48,32 @@
 <!-- #{tid}의 회원 목록 -->
 <select id="list" resultType="com.easyfit.domain.join.ClientJoinVO"> 
 <![CDATA[
-SELECT DISTINCT
-    tno, mno, mname, mtel, mjoindate, memail
+SELECT
+    rn, tno, mno, mname, mtel, mjoindate, memail
 FROM
     (
     SELECT
-        rownum rn, t.tno, m.mno, m.mname, m.mtel, m.mjoindate, m.memail
+        rownum rn, tno, m.mno, m.mname, m.mtel, m.mjoindate, m.memail
     FROM
-        member m, ptrecord p, trainer t
+        member m, (
+            SELECT DISTINCT
+                mno, tno
+            FROM
+                ptrecord
+            WHERE
+                tno = #{tno} 
+            ) p
     WHERE
 ]]>
 <include refid="myCriteria"></include>		
 <![CDATA[
         m.mno = p.mno
-    AND
-        p.tno = t.tno
-    AND
-        t.tno = #{tno}
-    AND 
-        rownum <= #{cri.pageNum} * #{cri.amount}
+        AND rownum <= #{cri.pageNum} * #{cri.amount}
     )
 WHERE
-    rn > (#{cri.pageNum} - 1) * #{cri.amount}
+     rn > (#{cri.pageNum} - 1) * #{cri.amount}
+ORDER BY
+	mjoindate DESC
 ]]>
 </select>
 
@@ -93,36 +97,43 @@ FROM (
 WHERE
 	rn > (#{cri.pageNum} - 1) * #{cri.amount}
 ORDER BY
-    rn DESC
+    mjoindate DESC
 ]]>
 
 </select>
 	
 <!-- #{tid}의 총 회원수 -->
 <select id="count" resultType="long">
-<![CDATA[
 SELECT
 	count(m.mno)
 FROM
-	member m, ptrecord p, trainer t
-WHERE		
+	member m, (        
+        SELECT DISTINCT
+            mno, tno
+        FROM
+            ptrecord
+        WHERE
+            tno = 1 
+        ) p
+WHERE
+<include refid="myCriteria"></include>		
+<![CDATA[		
 	m.mno = p.mno
-AND
-	p.tno = t.tno
-AND
-    t.tno = #{tno}
 AND
 	m.mno > 0
 ]]>
 </select>
 
 <!-- 모든 회원 수 -->
-<select id="allCount" resultType="long">
-<![CDATA[		
+<select id="allCount" resultType="long">		
 SELECT
 	count(*)
 FROM
 	member
+WHERE
+<include refid="allCriteria"></include>
+<![CDATA[
+	mno > 0	
 ]]>
 </select>
 
@@ -180,7 +191,7 @@ WHERE
 <select id="prList" resultType="com.easyfit.domain.PTRecordVO">
 <![CDATA[
 SELECT
-    mno, prno, prturn, prstartdate, prenddate, prcount
+    mno, prno, prturn, prstartdate, prenddate, prcount, prcountall
 FROM
    ptrecord
 WHERE
@@ -197,5 +208,45 @@ INSERT INTO ptrecord(prno, mno, tno, prturn, prstartdate, prenddate, prcount, pr
 VALUES(ptrecord_seq.NEXTVAL, #{mno}, #{tno}, #{prturn}, #{prstartdate}, #{prenddate}, #{prcount}, #{prcountall})
 ]]>
 </insert>
+
+<!--PT 상세보기  -->
+<select id="prGet" resultType="com.easyfit.domain.PTRecordVO">
+<![CDATA[
+SELECT
+	prno, mno, tno, prturn, prstartdate, prenddate, prcount, prcountall
+FROM
+	ptrecord
+WHERE
+	prno = #{prno}
+]]>
+</select>
+
+<!-- PT 수정하기 -->
+<update id="prModify">
+<![CDATA[
+UPDATE 
+	ptrecord
+SET
+	prturn = #{prturn},
+	prstartdate = #{prstartdate},
+	prenddate = #{prenddate},
+	prcount = #{prcount},
+	prcountall = #{prcountall}
+WHERE
+	prno = #{prno}
+]]>
+</update>
+
+<!-- PT 삭제하기 -->
+
+<delete id="prRemove">
+<![CDATA[
+DELETE 
+FROM 
+	ptrecord 
+WHERE 
+	prno = #{prno}
+]]>
+</delete>
 
 </mapper>

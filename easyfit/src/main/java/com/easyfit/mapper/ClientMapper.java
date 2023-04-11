@@ -13,13 +13,12 @@ public interface ClientMapper {
 	//회원 목록
 	public List<ClientJoinVO> list(@Param("cri") Criteria cri, @Param("tno") long tno);
 	//회원 수
-	public long count(@Param("tno") long tno);
+	public long count(@Param("cri") Criteria cri, @Param("tno") long tno);
 	
 	//모든 회원 목록
-	//public List<ClientJoinVO> allList(@Param("cri") Criteria cri, @Param("tno") long tno);
 	public List<ClientVO> allList(@Param("cri") Criteria cri);
 	//모든 회원 수
-	public long allCount();		
+	public long allCount(@Param("cri") Criteria cri);		
 	
 	//회원 등록
 	public void registerSelectKey(ClientVO client);		
@@ -35,6 +34,13 @@ public interface ClientMapper {
 	public List<PTRecordVO> prList(Long mno);	
 	//PT 등록
 	public long prRegister(PTRecordVO ptrecord);	
+	// PT 상세보기
+	public PTRecordVO prGet(Long prno);
+	// PT 수정하기
+	public long prModify(PTRecordVO ptrecord);
+	// PT 삭제하기
+	public long prRemove(Long prno);
+
 
 	
 	

@@ -11,12 +11,12 @@ public interface ClientService {//변수앞에 get을 붙여서 카멜표기법�
 	//회원 목록
 	public List<ClientJoinVO> getList(Criteria cri, Long tno);
 	//회원 수
-	public long getCount(long tno);
+	public long getCount(Criteria cri, long tno);
 	//모든 회원 목록
 	//public List<ClientJoinVO> getAllList(Criteria cri, Long tno);
 	public List<ClientVO> getAllList(Criteria cri);
 	//모든 회원 수
-	public long getAllCount();
+	public long getAllCount(Criteria Cri);
 	
 	
 	
@@ -35,4 +35,10 @@ public interface ClientService {//변수앞에 get을 붙여서 카멜표기법�
 	public List<PTRecordVO> getPrList(Long mno);	
 	//PT 등록
 	public long getPrRegister(PTRecordVO ptrecord);
+	// PT 상세보기
+	public PTRecordVO getPrGet(Long prno);
+	// PT 수정하기
+	public long getPrModify(PTRecordVO ptrecord);
+	// PT 삭제하기
+	public long getPrRemove(Long prno);
 }

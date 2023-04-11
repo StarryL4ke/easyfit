@@ -25,7 +25,7 @@
 	<table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
 	<thead>
 		<tr role="row">
-			<th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending" style="width: 86px;">No</th>              
+			<!-- <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending" style="width: 86px;">No</th> -->              
 			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 121px;">회원번호</th>
 			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 65px;">회원이름</th>
 			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px;">전화번호</th>
@@ -35,7 +35,7 @@
 	<tbody>
 		<c:forEach items="${allList}" var="allList">
 		<tr>
-			<td>${allList.rn}</td>
+			<%-- <td>${allList.rn}</td> --%>
 			<td>${allList.mno}</td>
 			<td><a href="/easyfit/allClientGet?mno=${allList.mno}">${allList.mname}</a></td>
 			<td>${allList.mtel}</td>

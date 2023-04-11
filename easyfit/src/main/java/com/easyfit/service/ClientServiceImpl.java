@@ -25,8 +25,8 @@ public class ClientServiceImpl implements ClientService {
 	}
 	
 	@Override//회원 수
-	public long getCount(long tno) {
-		return clientMapper.count(tno);
+	public long getCount(Criteria cri, long tno) {
+		return clientMapper.count(cri, tno);
 	}	
 	
 	@Override//모든 회원 목록
@@ -37,8 +37,8 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override//모든 회원 수
-	public long getAllCount() {
-		return clientMapper.allCount();
+	public long getAllCount(Criteria cri) {
+		return clientMapper.allCount(cri);
 	}
 
 	@Override//회원 등록
@@ -75,6 +75,26 @@ public class ClientServiceImpl implements ClientService {
 	public long getPrRegister(PTRecordVO ptrecord) {
 		log.info("getRegisterSelectKey success");
 		return clientMapper.prRegister(ptrecord);
+	}
+	// PT 상세 보기
+	@Override
+	public PTRecordVO getPrGet(Long prno) {
+		//log.info("getPrGet : " + prno);
+		System.out.println(prno);
+		return clientMapper.prGet(prno);
+	}
+	// PT 수정하기
+	@Override
+	public long getPrModify(PTRecordVO ptrecord) {
+		log.info("getPrModify : " + ptrecord);
+		return clientMapper.prModify(ptrecord);
+	}
+	// PT 삭제하기
+	@Override
+	public long getPrRemove(Long prno) {
+		log.info("getPrRemove : " + prno);
+		//System.out.println(prno);
+		return clientMapper.prRemove(prno);
 	}
 
 }
