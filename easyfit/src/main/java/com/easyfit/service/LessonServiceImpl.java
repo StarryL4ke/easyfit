@@ -27,20 +27,14 @@ public class LessonServiceImpl implements LessonService {
 		log.info("get Exercise Type List : " + et);
 		return lessonMapper.exerciseTypeList(et);
 	}
-	
-	//@Override
-	//public List<LessonJoinVO> getTripleList(Criteria cri, Long tno) {
-		
-	//	log.info("get Triple List with criteria : " + cri);
-	//	return lessonMapper.tripleList(cri, tno);
-	//}
-	
+/*	
 	@Override
-	public List<LessonJoinVO> getTNOTripleList(Criteria cri, Long tno) {
+	public List<LessonJoinVO> getTripleList(Criteria cri, Long tno) {
 		
 		log.info("get Triple List with criteria : " + cri);
-		return lessonMapper.TNOtripleList(cri, tno);
+		return lessonMapper.tripleList(cri, tno);
 	}
+*/	
 	
 	@Override
 	public List<LessonJoinVO> getDoubleList(Criteria cri, Long prno) {
@@ -103,17 +97,27 @@ public class LessonServiceImpl implements LessonService {
 		log.info("get pt record total count");
 		return lessonMapper.ptRecordTotalCount(cri);
 	}
-	// #{tno} 총 게시글 갯수 구하는 메소드 - PT기록(PT계약회차)
-	//@Override
-	//public long getTNOptRecordTotalCount(Criteria cri, Long tno) {
-		
-		//return lessonMapper.TNOptRecordTotalCount(cri, tno);
-	//}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//#{tno} 메소드 모음
 	@Override
-		public long getTNOptRecordTotalCount(Long tno) {
-			
-			return lessonMapper.TNOptRecordTotalCount(tno);
-		}
+	public List<LessonJoinVO> getMyTripleList(Criteria cri, Long tno) {
+		return lessonMapper.myTripleList(cri, tno);
+	}
+	@Override
+	public long getMyPTRecordTotalCount(Long tno) {		
+		return lessonMapper.myPTRecordTotalCount(tno);
+	}
 	
 	
 }

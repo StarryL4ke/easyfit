@@ -36,13 +36,13 @@ private LessonService lessonService;
 	// SELECT - LIST (PT기록)
 	@GetMapping("/lessonList")
 	public void lessonList(@ModelAttribute("cri") Criteria cri, long tno, Model model) {		
+	  //model.addAttribute("ptRecordList", lessonService.getTripleList(cri, tno));
+	  //long total = lessonService.getPTRecordTotal(cri);
+		
+		model.addAttribute("ptRecordList", lessonService.getMyTripleList(cri, tno));
+		long total = lessonService.getMyPTRecordTotalCount(tno);
 		
 		log.info("list : " + cri);
-		//model.addAttribute("ptRecordList", lessonService.getTripleList(cri, tno));
-		model.addAttribute("ptRecordList", lessonService.getTNOTripleList(cri, tno));
-		//long total = lessonService.getPTRecordTotal(cri);
-		//long total = lessonService.getTNOptRecordTotalCount(cri, tno);
-		long total = lessonService.getTNOptRecordTotalCount(tno);
 		log.info("total : " + total);
 		
 		model.addAttribute("pageMaker", new PageDTO(total, cri));

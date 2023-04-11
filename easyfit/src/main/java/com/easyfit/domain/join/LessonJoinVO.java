@@ -35,6 +35,9 @@ public class LessonJoinVO {
 	private Long ernumber; // 1세트당 운동 횟수
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date erdate; // 운동기록일자(작성일자)
+//↓ 새로운 변수
+	private Date maxerdate;//최근 운동기록일자(작성일자)
+//↑	새로운 변수
 	private String ermemo; // 운동기록 관련 코멘트
 	
 	private Long prno; // PT기록번호

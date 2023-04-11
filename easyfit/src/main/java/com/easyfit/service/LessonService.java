@@ -13,8 +13,7 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	
 	//	SELECT
 	public List<ExerciseTypeVO> getExerciseTypeList(ExerciseTypeVO et);
-	//public List<LessonJoinVO> getTripleList(Criteria cri, Long tno);
-	public List<LessonJoinVO> getTNOTripleList(Criteria cri, Long tno);
+  //public List<LessonJoinVO> getTripleList(Criteria cri, Long tno);
 	public List<LessonJoinVO> getDoubleList(Criteria cri, Long prno);
 	public List<LessonJoinVO> getGet(Long prno, String edate);
 	
@@ -32,8 +31,8 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	public long getExerciseRecordTotal(Criteria cri, Long prno);
 	public long getPTRecordTotal(Criteria cri);
 	
-	// #{tno} 의 총 게시글 갯수 구하는 메소드 - PT기록
-	//public long getTNOptRecordTotalCount(Criteria cri, Long tno);
-	public long getTNOptRecordTotalCount(Long tno);
+	//#{tno} 메소드 모음
+	public List<LessonJoinVO> getMyTripleList(Criteria cri, Long tno);
+	public long getMyPTRecordTotalCount(Long tno);
 	
 }

@@ -41,7 +41,7 @@
  		                            <td><c:out value="${list.mno}"/></td>
 		                            <td><c:out value="${list.mname}"/></td>
 		                            <td><c:out value="${list.mtel}"/></td> 
-		                            <td><fmt:formatDate pattern="yyyy-MM-dd hh:MM:ss" value="${list.erdate}" /></td>
+		                            <td><fmt:formatDate pattern="yyyy-MM-dd hh:MM:ss" value="${list.maxerdate}" /></td>
 		                            <td><c:out value="${list.prturn}"/>번째</td>
 		                            <td>
 		                            	<a class='moveToList' href='<c:out value="${list.prno}" />'>
