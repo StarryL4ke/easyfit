@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <%@ include file="../includes/header.jsp" %>
 
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
 <div>
 	<p>TrainerVO : <sec:authentication property="principal.trainerVO" /></p>                 
 </div>

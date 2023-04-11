@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
-<%@ include file="../includes/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ include file="../includes/adminHeader.jsp" %>
+
+<div>
+	<p>TrainerVO : <sec:authentication property="principal.trainerVO" /></p>                 
+</div>
 			    
 <div class="d-sm-flex align-items-center justify-content-between mb-4 ml-2">
-	<h1 class="h3 mb-0 text-gray-800"> [ <sec:authentication property="principal.trainerVO.tname"/> ] 의 회원 목록</h1>
+	<h1 class="h3 mb-0 text-gray-800"> 트레이너 목록</h1>	
 </div>
-<button type="button" class="btn btn-primary custom-select-sm" style="width: 200px;" onclick="location.href='/easyfit/allClientList'">전체 회원 조회</button>
+
 
 <!-- 회원 리스트 시작 -------------------------------------------------------------------------->
 
@@ -14,21 +18,21 @@
 	<table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
 	<thead>
 		<tr role="row">
-			<!-- <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending" style="width: 86px;">No</th> -->                   
-			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 121px;">회원번호</th>
-			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 65px;">회원이름</th>
+			<!-- <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending" style="width: 86px;">No</th> -->              
+			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 121px;">트레이너번호</th>
+			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 65px;">트레이너이름</th>
 			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px;">전화번호</th>
-			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;">가입일</th>
+			<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;">주소</th>
     	</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${list}" var="list">
+		<c:forEach items="${trainerList}" var="trainerList">
 		<tr>
-			<%-- <td>${list.rn}</td> --%>
-			<td>${list.mno}</td>
-			<td><a href="/easyfit/clientGet?mno=${list.mno}">${list.mname}</a></td>
-			<td>${list.mtel}</td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.mjoindate}" /></td>
+			<td>${trainerList.tno}</td>
+			<%-- <td><a href="/easyfit/allClientGet?mno=${allList.mno}">${allList.mname}</a></td> --%>
+			<td>${trainerList.tname}</a></td>
+			<td>${trainerList.ttel}</td>
+			<td>${trainerList.taddress}</td>
 		</tr>
 		</c:forEach> 
 	</tbody>
@@ -39,11 +43,11 @@
 
 <!-- 검색 창 시작 --------------------------------------------------------------------------------->	
 
-<form id='searchForm' action="/easyfit/clientList" method='get'>	
+<form id='searchForm' action="/easyfit/trainerList" method='get'>	
 	<select class="form-control" name='type'>
 	<%--<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}" />>----</option>--%>
-		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : ''}" />>회원이름</option>
-		<option value="B" <c:out value="${pageMaker.cri.type eq 'B' ? 'selected' : ''}" />>회원번호</option>	
+		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : ''}" />>트레이너이름</option>
+		<option value="B" <c:out value="${pageMaker.cri.type eq 'B' ? 'selected' : ''}" />>트레이너번호</option>	
 		<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}" />>전화번호</option>
 	</select>	
 	<input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>' />
@@ -58,7 +62,7 @@
 <!-- 조회 및 등록 버튼 시작 ------------------------------------------------------------------------>
 
 <div class="ml-4">
-	<button type="button" class="btn btn-primary custom-select-sm" style="width: 80px;" onclick="location.href='/easyfit/clientRegister?tno=<sec:authentication property="principal.trainerVO.tno"/>'">회원등록</button>
+	<!-- <button type="button" class="btn btn-primary custom-select-sm" style="width: 80px;" onclick="location.href='/easyfit/trainerRegister'">트레이너등록</button> -->
 </div>
 
 <!-- 조회 및 등록 버튼 종료 ------------------------------------------------------------------------>
@@ -72,7 +76,7 @@
 	</c:if>	
 	<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 		<li class='paginate_button page-item ${pageMaker.cri.pageNum == num ? "active" : ""}'>
-			<a href="/easyfit/clientList?pageNum=${num}&amount=10&tno=<sec:authentication property="principal.trainerVO.tno"/>" aria-controls="dataTable" data-dt-idx="${num}" tabindex="0" class="page-link">${num}</a>
+			<a href="/easyfit/trainerList?pageNum=${num}&amount=10" aria-controls="dataTable" data-dt-idx="${num}" tabindex="0" class="page-link">${num}</a>
 		</li>
 	</c:forEach>				
 	<c:if test="${pageMaker.next}">

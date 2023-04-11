@@ -1,15 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%-- <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> --%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <%@ include file="../includes/header.jsp" %>
-<script src="/resources/vendor/jquery/jquery.min.js"></script>
-<!-- Bootstrap Core CSS -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Bootstrap Core JavaScript -->
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <div>
 	<p>TrainerVO : <sec:authentication property="principal.trainerVO" /></p>                  
@@ -36,6 +28,5 @@
 			
 	<button type="submit" class="btn btn-default">Modify</button>
 </form>
-	
 
 <%@ include file="../includes/footer.jsp" %>

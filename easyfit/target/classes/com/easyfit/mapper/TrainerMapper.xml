@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfit.mapper.TrainerMapper"><!-- Query 작성시 CDATA 꼭 써주세요. -->
+<!-- 검색,조회 SECURITY -->
+<sql id="criteria">			   
+	<trim prefix="(" suffix=") AND" prefixOverrides="OR"> 
+		<foreach item='type' collection="cri.typeArr"> 
+			<trim prefix="OR"> 
+				<choose>
+					<when test="type == 'A'.toString()">
+						tname LIKE '%'||#{cri.keyword}||'%'
+					</when>
+					<when test="type == 'B'.toString()">
+						tno LIKE '%'||#{cri.keyword}||'%'
+					</when>
+					<when test="type == 'C'.toString()">
+						ttel LIKE '%'||#{cri.keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+
+<!-- 트레이너 목록 -->
+<select id="list" resultType="com.easyfit.domain.TrainerVO"> 
+SELECT
+    rn, tno, tname, tid, ttel, taddress, tmemo
+FROM
+    (
+    SELECT
+       rownum rn, tno, tname, tid, ttel, taddress, tmemo
+    FROM
+        trainer
+    WHERE
+<include refid="criteria"></include>		
+<![CDATA[
+        tno NOT IN 0
+        AND rownum <= #{cri.pageNum} * #{cri.amount}
+    )
+WHERE
+     rn > (#{cri.pageNum} - 1) * #{cri.amount}
+ORDER BY
+    tno
+]]>
+</select>
+
+<!-- 트레이너 수 -->
+<select id="count" resultType="long">
+SELECT
+    COUNT(tno)
+FROM
+    trainer
+WHERE
+<include refid="criteria"></include>
+<![CDATA[
+    tno NOT IN 0
+]]>
+</select>
+
+
+
+</mapper>

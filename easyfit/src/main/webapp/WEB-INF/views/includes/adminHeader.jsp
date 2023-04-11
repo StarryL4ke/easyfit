@@ -34,10 +34,10 @@
 	<div id="wrapper">
 	
         <!-- 사이드바 시작 -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
         
             <!-- 사이드바 - 사이트 로고 -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/trainerPage">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/adminPage">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-clipboard"></i>
                 </div>
@@ -57,29 +57,21 @@
             
             <!-- 사이드바 - 회원관리 -->
             <li class="nav-item">
-            	<a class="nav-link" href="/easyfit/allClientList">           		
+            	<a class="nav-link" href="/easyfit/trainerList">
+            	<%-- <a class="nav-link" href="/easyfit/trainerList?tno=<sec:authentication property="principal.trainerVO.tno"/>">  --%>      		
                     <i class="fas fa-fw fa-user-edit"></i>
-                    <span>회원관리</span>
+                    <span>트레이너관리</span>
                 </a>
             </li>
 
 
             <!-- 사이드바 - 운동일지 -->
             <li class="nav-item">
-                <a class="nav-link" href="/easyfit/lessonList?tno=<sec:authentication property="principal.trainerVO.tno"/>">
+                <a class="nav-link" href="/easyfit/trainerBoardList=<sec:authentication property="principal.trainerVO.tno"/>">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>운동일지</span>
+                    <span>노하우게시판</span>
                 </a>
             </li>
-            
-            <!-- 사이드바 - 스케줄 -->
-            <li class="nav-item">
-                <a class="nav-link" href="/easyfit/schedule">
-                    <i class="far fa-fw fa-calendar-alt"></i>
-                    <span>스케줄</span>
-                </a>
-            </li>
-            
             
             <!-- 사이드바 - 통계 -->
             <li class="nav-item">
@@ -117,7 +109,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle" src="/resources/img/undraw_profile.svg">
-                                <span class="mr-2 d-none d-lg-inline text-black-600 small">&nbsp;<b><sec:authentication property="principal.trainerVO.tname"/></b> 트레이너 
+                                <span class="mr-2 d-none d-lg-inline text-black-600 small">&nbsp;<b><sec:authentication property="principal.trainerVO.tname"/></b> 사장 
                                 <a href="/logout">
 	                                <div>
 	                                	<i class="fas fa-sign-out-alt"></i>
