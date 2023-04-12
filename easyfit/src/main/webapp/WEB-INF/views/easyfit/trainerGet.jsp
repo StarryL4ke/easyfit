@@ -55,9 +55,9 @@
 		
 	<!-- 
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ptModal">PT 등록</button>
-	<button type="button" onclick="location.href = '/easyfit/allClientModify?mno=${client.mno}'">Modify</button>
-	<button type="button" onclick="location.href = '/easyfit/allClientRemove?mno=${client.mno}'">Remove</button>
 	-->
+	<button type="button" onclick="location.href = '/easyfit/trainerModify?tno=${trainer.tno}'">Modify</button>
+	<button type="button" onclick="location.href = '/easyfit/trainerRemove?tno=${trainer.tno}'">Remove</button>
 </form>
 
 

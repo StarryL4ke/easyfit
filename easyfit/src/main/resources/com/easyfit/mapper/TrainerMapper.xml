@@ -89,5 +89,28 @@ VALUES
 	(#{tid}, 'ROLE_USER')
 </insert>
 
+<!-- 트레이너 수정 -->
+<update id="modify">
+UPDATE
+	trainer
+SET
+	tid = #{tid},
+	tname = #{tname},
+	ttel = #{ttel},
+	tbirth = #{tbirth},
+	taddress = #{taddress}
+WHERE
+	tno = #{tno}
+</update>
+
+<!-- 트레이너 삭제 -->
+<delete id="remove">
+DELETE
+FROM
+	trainer
+WHERE
+	tno = #{tno}
+</delete>
+
 
 </mapper>

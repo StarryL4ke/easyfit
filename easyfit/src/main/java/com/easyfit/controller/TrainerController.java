@@ -30,13 +30,13 @@ public class TrainerController {
 	private PasswordEncoder bcrypt;
 	
 	@GetMapping("/trainerList")//트레이너 목록
-	public void allList(Criteria cri, Model model) {
+	public void list(Criteria cri, Model model) {
 		long total = trainerService.getCount(cri);
 		model.addAttribute("trainerList", trainerService.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(total, cri));
 	}
 	
-	@GetMapping("/trainerGet")//트레이너 정보
+	@GetMapping({"/trainerGet", "/trainerModify"})//트레이너 정보, 트레이너 수정(GET)
 	public void get(@RequestParam("tno") Long tno, Model model) {
 		model.addAttribute("trainer", trainerService.getGet(tno));
 	}
@@ -55,6 +55,21 @@ public class TrainerController {
 		rttr.addFlashAttribute("result", trainer.getTno());
 		return "redirect:/easyfit/trainerList";
 	}
+	
+	@PostMapping("/trainerModify")//트레이너 수정(POST)
+	public String modify(TrainerVO trainer, RedirectAttributes rttr) {
+		trainerService.getModify(trainer);
+		rttr.addFlashAttribute("trainer", trainer.getTno());
+		return "redirect:/easyfit/trainerList";
+	}
+	
+	@GetMapping("/trainerRemove")//트레이너 삭제
+	public String remove(@RequestParam("tno") Long tno, Model model) {
+		trainerService.getRemove(tno);
+		return "redirect:/easyfit/trainerList";
+	}
+	
+	
 
 	
 }

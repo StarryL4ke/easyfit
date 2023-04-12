@@ -11,4 +11,6 @@ public interface TrainerService {//get 앞에 붙이기
 	public TrainerVO getGet(Long tno);
 	public void getRegisterSelectKey(TrainerVO trainer);
 	public void getAuthRegister(TrainerAuthVO trainerAuth);
+	public void getModify(TrainerVO trainer);
+	public void getRemove(long tno);
 }

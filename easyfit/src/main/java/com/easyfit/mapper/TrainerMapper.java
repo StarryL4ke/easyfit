@@ -14,5 +14,7 @@ public interface TrainerMapper {
 	public TrainerVO get(Long tno);
 	public void registerSelectKey(TrainerVO trainer);
 	public void authRegister(TrainerAuthVO trainerAuth);
+	public void modify(TrainerVO trainer);
+	public void remove(long tno);
 	
 }
