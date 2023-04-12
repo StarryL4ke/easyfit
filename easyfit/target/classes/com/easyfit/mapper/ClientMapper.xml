@@ -151,7 +151,6 @@ VALUES
 </insert>
 	
 <!-- 회원 정보 -->
-<!-- <select id="get" resultType="com.easyfit.domain.join.ClientJoinVO"> -->
 <select id="get" resultType="com.easyfit.domain.ClientVO">
 <![CDATA[
 SELECT 
@@ -204,8 +203,10 @@ WHERE
 <!-- PT 등록 -->
 <insert id="prRegister" parameterType="com.easyfit.domain.PTRecordVO">
 <![CDATA[
-INSERT INTO ptrecord(prno, mno, tno, prturn, prstartdate, prenddate, prcount, prcountall)
-VALUES(ptrecord_seq.NEXTVAL, #{mno}, #{tno}, #{prturn}, #{prstartdate}, #{prenddate}, #{prcount}, #{prcountall})
+INSERT INTO
+	ptrecord(prno, mno, tno, prturn, prstartdate, prenddate, prcount, prcountall)
+VALUES
+	(ptrecord_seq.NEXTVAL, #{mno}, #{tno}, #{prturn}, #{prstartdate}, #{prenddate}, #{prcount}, #{prcountall})
 ]]>
 </insert>
 

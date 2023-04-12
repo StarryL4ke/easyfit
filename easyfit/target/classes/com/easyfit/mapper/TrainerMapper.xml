@@ -58,6 +58,36 @@ WHERE
 ]]>
 </select>
 
+<!-- 트레이너 정보 -->
+<select id="get" resultType="com.easyfit.domain.TrainerVO">
+SELECT
+	tno, tname, tid, tgen, ttel, taddress, tmemo, tbirth
+FROM
+	trainer
+WHERE
+	tno = #{tno}
+</select>
+
+<!-- 트레이너 등록 -->
+<insert id="registerSelectKey">
+<selectKey keyProperty="tno" order="BEFORE" resultType="long">
+<![CDATA[
+SELECT trainer_seq.NEXTVAL FROM dual
+]]>
+</selectKey>
+INSERT INTO 
+	trainer(tno, tname, tid, tpassword, tgen, ttel, taddress, tbirth)
+VALUES
+	(#{tno}, #{tname}, #{tid}, #{tpassword}, #{tgen}, #{ttel}, #{taddress}, #{tbirth})
+</insert>
+
+<!-- 트레이너 권한 등록 -->
+<insert id="authRegister" parameterType="com.easyfit.domain.TrainerAuthVO">
+INSERT INTO
+	trainer_auth(tid, auth)
+VALUES
+	(#{tid}, 'ROLE_USER')
+</insert>
 
 
 </mapper>

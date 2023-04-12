@@ -29,8 +29,7 @@
 		<c:forEach items="${trainerList}" var="trainerList">
 		<tr>
 			<td>${trainerList.tno}</td>
-			<%-- <td><a href="/easyfit/allClientGet?mno=${allList.mno}">${allList.mname}</a></td> --%>
-			<td>${trainerList.tname}</a></td>
+			<td><a href="/easyfit/trainerGet?tno=${trainerList.tno}">${trainerList.tname}</a></td>
 			<td>${trainerList.ttel}</td>
 			<td>${trainerList.taddress}</td>
 		</tr>
@@ -62,7 +61,7 @@
 <!-- 조회 및 등록 버튼 시작 ------------------------------------------------------------------------>
 
 <div class="ml-4">
-	<!-- <button type="button" class="btn btn-primary custom-select-sm" style="width: 80px;" onclick="location.href='/easyfit/trainerRegister'">트레이너등록</button> -->
+	<button type="button" class="btn btn-primary custom-select-sm" style="width: 120px;" onclick="location.href='/easyfit/trainerRegister'">트레이너등록</button>
 </div>
 
 <!-- 조회 및 등록 버튼 종료 ------------------------------------------------------------------------>

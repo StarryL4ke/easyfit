@@ -19,10 +19,10 @@ public class LoginController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder pwencoder;
+
 	
 	@GetMapping("/login")
 	public void loginInput(String error, String logout, Model model) {
-		log.info(pwencoder.encode("1234"));
 		if(error != null) {
 			model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
 		}

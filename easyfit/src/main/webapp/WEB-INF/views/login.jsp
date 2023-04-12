@@ -41,7 +41,7 @@
 	                                    <div class="form-group form-inline col-lg-12"> 
 	                                    	<label><i class="fas fa-fw fa-key fa-lg"></i></label>
 	                                    	<span>&nbsp;</span>
-	                                        <input type="password" class="form-control form-control-user" id="tpw" name="password" placeholder="Password">
+	                                        <input type="password" class="form-control form-control-user" id="tpassword" name="password" placeholder="Password">
 	                                    </div>
 	                                    
 	                                	<div>

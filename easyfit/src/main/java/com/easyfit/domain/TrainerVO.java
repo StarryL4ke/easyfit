@@ -1,5 +1,6 @@
 package com.easyfit.domain;
 
+import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -15,6 +16,7 @@ public class TrainerVO {//변수는 DB에 있는것과 맞춰서 작성하세요
 	private boolean enabled;
 	private String tmemo;
 	private String tid;
+	private Date tbirth;
 	
 	private List<TrainerAuthVO> trainerAuthList;
 }
