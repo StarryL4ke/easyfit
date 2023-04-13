@@ -10,7 +10,10 @@ public interface TrainerService {//get 앞에 붙이기
 	public long getCount(Criteria cri);
 	public TrainerVO getGet(Long tno);
 	public void getRegisterSelectKey(TrainerVO trainer);
-	public void getAuthRegister(TrainerAuthVO trainerAuth);
 	public void getModify(TrainerVO trainer);
-	public void getRemove(long tno);
+	
+	public void getAuthRegister(TrainerAuthVO trainerAuth);
+	public void getAuthRemove(long tno);
+	public void getAuthModify(long tno);
+
 }

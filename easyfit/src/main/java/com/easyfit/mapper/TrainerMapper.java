@@ -13,8 +13,10 @@ public interface TrainerMapper {
 	public long count(@Param("cri") Criteria cri);
 	public TrainerVO get(Long tno);
 	public void registerSelectKey(TrainerVO trainer);
-	public void authRegister(TrainerAuthVO trainerAuth);
 	public void modify(TrainerVO trainer);
-	public void remove(long tno);
+	
+	public void authRegister(TrainerAuthVO trainerAuth);
+	public void authRemove(long tno);
+	public void authModify(long tno);
 	
 }

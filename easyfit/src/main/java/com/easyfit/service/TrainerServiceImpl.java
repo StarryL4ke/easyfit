@@ -24,35 +24,34 @@ public class TrainerServiceImpl implements TrainerService {
 	public List<TrainerVO> getList(Criteria cri) {
 		return trainerMapper.list(cri);
 	}
-
 	@Override
 	public long getCount(Criteria cri) {
 		return trainerMapper.count(cri);
 	}
-
 	@Override
 	public TrainerVO getGet(Long tno) {
 		return trainerMapper.get(tno);
 	}
-
 	@Override
 	public void getRegisterSelectKey(TrainerVO trainer) {
 		trainerMapper.registerSelectKey(trainer);		
 	}
-
-	@Override
-	public void getAuthRegister(TrainerAuthVO trainerAuth) {
-		trainerMapper.authRegister(trainerAuth);		
-	}
-
 	@Override
 	public void getModify(TrainerVO trainer) {
 		trainerMapper.modify(trainer);		
 	}
 
 	@Override
-	public void getRemove(long tno) {
-		trainerMapper.remove(tno);		
+	public void getAuthRegister(TrainerAuthVO trainerAuth) {
+		trainerMapper.authRegister(trainerAuth);		
 	}
-
+	@Override
+	public void getAuthRemove(long tno) {
+		trainerMapper.authRemove(tno);
+	}
+	@Override
+	public void getAuthModify(long tno) {
+		trainerMapper.authModify(tno);
+		
+	}
 }

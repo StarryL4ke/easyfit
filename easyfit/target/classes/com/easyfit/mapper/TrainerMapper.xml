@@ -81,14 +81,6 @@ VALUES
 	(#{tno}, #{tname}, #{tid}, #{tpassword}, #{tgen}, #{ttel}, #{taddress}, #{tbirth})
 </insert>
 
-<!-- 트레이너 권한 등록 -->
-<insert id="authRegister" parameterType="com.easyfit.domain.TrainerAuthVO">
-INSERT INTO
-	trainer_auth(tid, auth)
-VALUES
-	(#{tid}, 'ROLE_USER')
-</insert>
-
 <!-- 트레이너 수정 -->
 <update id="modify">
 UPDATE
@@ -103,14 +95,38 @@ WHERE
 	tno = #{tno}
 </update>
 
-<!-- 트레이너 삭제 -->
-<delete id="remove">
+<!-- 트레이너 권한 등록 -->
+<insert id="authRegister" parameterType="com.easyfit.domain.TrainerAuthVO">
+INSERT INTO
+	trainer_auth(tid, auth, tno)
+VALUES
+	(#{tid}, 'ROLE_MANAGER', (
+		SELECT
+			tno
+		FROM
+			trainer
+		WHERE
+			tid = #{tid}
+	))
+</insert>
+
+<!-- 트레이너 권한 삭제 -->
+<update id="authRemove">
 DELETE
 FROM
-	trainer
+    trainer_auth
+WHERE
+    tno = #{tno}
+</update>
+
+<!-- 트레이너 권한 수정 -->
+<update id="authModify">
+UPDATE
+	trainer_auth
+SET
+	auth = 'ROLE_USER'
 WHERE
 	tno = #{tno}
-</delete>
-
+</update>
 
 </mapper>

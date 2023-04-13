@@ -9,9 +9,9 @@
 
 <form method="post">
 	<label>트레이너 번호</label>
-	<input type="number" name="tno" value="${trainer.tno}" disabled/>	
+	<input type="number" name="tno" value="${trainer.tno}" readonly/>	
 	<label>ID</label>
-	<input type="text" name="tid" value="${trainer.tid}" disabled/><br />	
+	<input type="text" name="tid" value="${trainer.tid}" /><br />	
 	<label>이름</label>
 	<input type="text" name="tname" value="${trainer.tname}" />	
 	<label>전화번호</label>

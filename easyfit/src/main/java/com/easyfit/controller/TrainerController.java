@@ -57,18 +57,19 @@ public class TrainerController {
 	}
 	
 	@PostMapping("/trainerModify")//트레이너 수정(POST)
-	public String modify(TrainerVO trainer, RedirectAttributes rttr) {
+	public String modify(TrainerVO trainer, TrainerAuthVO trainerAuth, RedirectAttributes rttr) {
+		trainerService.getAuthRemove(trainer.getTno());
 		trainerService.getModify(trainer);
+		trainerService.getAuthRegister(trainerAuth);
 		rttr.addFlashAttribute("trainer", trainer.getTno());
 		return "redirect:/easyfit/trainerList";
 	}
 	
-	@GetMapping("/trainerRemove")//트레이너 삭제
-	public String remove(@RequestParam("tno") Long tno, Model model) {
-		trainerService.getRemove(tno);
+	@GetMapping("/trainerRemove")//트레이이너 권한 수정
+	public String remove(Long tno, Model model) {
+		trainerService.getAuthModify(tno);
 		return "redirect:/easyfit/trainerList";
 	}
-	
 	
 
 	
