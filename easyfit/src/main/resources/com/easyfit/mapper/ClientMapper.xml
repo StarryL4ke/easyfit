@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyfit.mapper.ClientMapper"><!-- Query 작성시 CDATA 꼭 써주세요. -->
-<!-- #{tid}의 검색,조회 SECURITY 시작 -->
+<!-- #{tno}의 검색,조회 SECURITY 시작 -->
 <sql id="myCriteria">			   
 	<trim prefix="(" suffix=") AND" prefixOverrides="OR"> 
 		<foreach item='type' collection="cri.typeArr"> 
@@ -21,7 +21,7 @@
 		</foreach>
 	</trim>
 </sql>
-<!-- #{tid}의 검색,조회 SECURITY 종료 -->
+<!-- #{tno}의 검색,조회 SECURITY 종료 -->
 
 <!-- 검색,조회 SECURITY 시작 -->
 <sql id="allCriteria">			   
@@ -45,7 +45,7 @@
 </sql>
 <!-- 검색,조회 SECURITY 종료 -->
 
-<!-- #{tid}의 회원 목록 -->
+<!-- #{tno}의 회원 목록 -->
 <select id="list" resultType="com.easyfit.domain.join.ClientJoinVO"> 
 <![CDATA[
 SELECT
@@ -78,7 +78,6 @@ ORDER BY
 </select>
 
 <!-- 모든 회원 목록 -->
-<!-- <select id="allList" resultType="com.easyfit.domain.join.ClientJoinVO"> -->
 <select id="allList" resultType="com.easyfit.domain.ClientVO">
 <![CDATA[
 SELECT
@@ -102,7 +101,7 @@ ORDER BY
 
 </select>
 	
-<!-- #{tid}의 총 회원수 -->
+<!-- #{tno}의 총 회원수 -->
 <select id="count" resultType="long">
 SELECT
 	count(m.mno)
@@ -113,7 +112,7 @@ FROM
         FROM
             ptrecord
         WHERE
-            tno = 1 
+            tno = #{tno} 
         ) p
 WHERE
 <include refid="myCriteria"></include>		
@@ -249,5 +248,32 @@ WHERE
 	prno = #{prno}
 ]]>
 </delete>
+
+<!-- 스케쥴등록 -->
+<insert id="scheduleRegister" parameterType="com.easyfit.domain.ExerciseRecordVO">
+<![CDATA[
+	INSERT INTO
+	    exerciserecord
+	VALUES(
+	    exerciserecord_seq.NEXTVAL,
+	    #{ergroup},
+	    #{edate},
+	    #{eno},
+	    #{erset},
+	    #{erweight},
+	    #{ernumber},
+	    	(
+	        SELECT
+	            ptr.prno
+	        FROM
+	            ptrecord ptr, member mem
+	        WHERE
+	            ptr.mno = mem.mno
+	            AND mem.mname = #{mname}
+	            AND prno = #{prno}
+	        ),  sysdate, #{ermemo}
+	)
+]]>
+</insert>
 
 </mapper>

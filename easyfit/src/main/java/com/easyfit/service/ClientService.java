@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.easyfit.domain.ClientVO;
 import com.easyfit.domain.Criteria;
+import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.PTRecordVO;
 import com.easyfit.domain.join.ClientJoinVO;
 
@@ -41,4 +42,7 @@ public interface ClientService {//변수앞에 get을 붙여서 카멜표기법�
 	public long getPrModify(PTRecordVO ptrecord);
 	// PT 삭제하기
 	public long getPrRemove(Long prno);
+	
+	// 스케쥴 등록
+	public long getScheduleRegister(ExerciseRecordVO exerciseRecord);
 }

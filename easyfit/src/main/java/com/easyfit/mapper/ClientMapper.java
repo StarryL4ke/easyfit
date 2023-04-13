@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.easyfit.domain.ClientVO;
 import com.easyfit.domain.Criteria;
+import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.PTRecordVO;
 import com.easyfit.domain.join.ClientJoinVO;
 
@@ -41,7 +42,8 @@ public interface ClientMapper {
 	// PT 삭제하기
 	public long prRemove(Long prno);
 
-
+	// 스케쥴 등록
+	public 	long scheduleRegister(ExerciseRecordVO exerciseRecord);
 	
 	
 

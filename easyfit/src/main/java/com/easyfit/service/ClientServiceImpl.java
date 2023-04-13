@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.easyfit.domain.ClientVO;
 import com.easyfit.domain.Criteria;
+import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.PTRecordVO;
 import com.easyfit.domain.join.ClientJoinVO;
 import com.easyfit.mapper.ClientMapper;
@@ -76,25 +77,32 @@ public class ClientServiceImpl implements ClientService {
 		log.info("getRegisterSelectKey success");
 		return clientMapper.prRegister(ptrecord);
 	}
-	// PT 상세 보기
-	@Override
+	
+	@Override//PT 정보
 	public PTRecordVO getPrGet(Long prno) {
 		//log.info("getPrGet : " + prno);
 		System.out.println(prno);
 		return clientMapper.prGet(prno);
 	}
-	// PT 수정하기
-	@Override
+	
+	@Override//PT 수정
 	public long getPrModify(PTRecordVO ptrecord) {
 		log.info("getPrModify : " + ptrecord);
 		return clientMapper.prModify(ptrecord);
 	}
-	// PT 삭제하기
-	@Override
+	
+	@Override//PT 삭제
 	public long getPrRemove(Long prno) {
 		log.info("getPrRemove : " + prno);
 		//System.out.println(prno);
 		return clientMapper.prRemove(prno);
+	}
+	
+	
+	@Override//스케쥴 등록
+	public long getScheduleRegister(ExerciseRecordVO exerciseRecord) {
+		log.info("getScheduleRegister");
+		return clientMapper.scheduleRegister(exerciseRecord);
 	}
 
 }
