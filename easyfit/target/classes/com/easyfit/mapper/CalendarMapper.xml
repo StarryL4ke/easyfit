@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfit.mapper.CalendarMapper"><!-- Query 작성시 CDATA 꼭 써주세요. -->
+<select id="list" resultType="Map" parameterType="String">
+<!-- <select id="list" resultType="com.easyfit.mapper.CalendarMapper"> -->
+<![CDATA[
+SELECT
+    mname, TO_CHAR(edate,'YYYY-MM-DD') edate
+FROM
+    member mem, ptrecord ptr, exerciserecord er
+WHERE
+    mem.mno = ptr.mno
+    AND ptr.prno = er.prno
+]]>
+</select>
+
+</mapper>
