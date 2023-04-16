@@ -2,15 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyfit.mapper.CalendarMapper"><!-- Query 작성시 CDATA 꼭 써주세요. -->
 <select id="list" resultType="Map" parameterType="String">
-<!-- <select id="list" resultType="com.easyfit.mapper.CalendarMapper"> -->
 <![CDATA[
 SELECT
     mname, TO_CHAR(edate,'YYYY-MM-DD') edate
 FROM
-    member mem, ptrecord ptr, exerciserecord er
+    member mem, ptrecord ptr, exerciserecord er, trainer t, trainer_auth auth
 WHERE
     mem.mno = ptr.mno
     AND ptr.prno = er.prno
+    AND t.tno = ptr.tno
+    AND t.tid = auth.tid
+    AND t.tid = #{tid}
 ]]>
 </select>
 

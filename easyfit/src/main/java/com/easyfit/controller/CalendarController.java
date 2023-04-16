@@ -7,12 +7,13 @@ import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easyfit.domain.join.CalendarJoinVO;
 import com.easyfit.service.CalendarService;
 
 import lombok.extern.log4j.Log4j;
@@ -20,19 +21,19 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RestController
 @RequestMapping("/easyfit/*")
-public class CalendarController {
-	
+public class CalendarController {	
 	private final CalendarService calendarService;
-	
 	public CalendarController(CalendarService calendarService) {
 		this.calendarService = calendarService;
 	}
 
-	//@GetMapping(value= "/calendar", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+  //@GetMapping(value= "/calendar", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@GetMapping("/calendarDisplay")
 	@ResponseBody
 	public List<Map<String, Object>> calenList(){
 		List<Map<String, Object>> list = calendarService.list();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String tid = auth.getName();
 		
 		JSONObject jsonObj = new JSONObject();
 		JSONArray jsonArr = new JSONArray();
@@ -44,7 +45,7 @@ public class CalendarController {
 			jsonObj = new JSONObject(hash);
 			jsonArr.add(jsonObj);
 		}
-		log.info("jsonArrCheck: {}"+ jsonArr);
+		log.info("jsonArrCheck: {}"+ jsonArr + tid);
 
 
 		return jsonArr;
