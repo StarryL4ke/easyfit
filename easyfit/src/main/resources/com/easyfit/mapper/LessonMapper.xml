@@ -2,20 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyfit.mapper.LessonMapper"><!-- Query 작성시 CDATA 꼭 써주세요. -->
 
+	<!-- 뷰 페이지(jsp 파일) CRUD (JHR) -->
+
 	<!-- 검색 조회조건 공통모듈 시작 -->
 	<sql id="criteria">			   
 		<trim prefix="(" suffix=") AND" prefixOverrides="OR"> 
-			<foreach item='type' collection="typeArr"> 
+			<foreach item='type' collection="cri.typeArr"> 
 				<trim prefix="OR"> 
 					<choose>
 						<when test="type == 'A'.toString()">
-							mname LIKE '%'||#{keyword}||'%'
+							mname LIKE '%'||#{cri.keyword}||'%'
 						</when>
 						<when test="type == 'B'.toString()">
-							mno LIKE '%'||#{keyword}||'%'
+							mno LIKE '%'||#{cri.keyword}||'%'
 						</when>
 						<when test="type == 'C'.toString()">
-							mtel LIKE '%'||#{keyword}||'%'
+							mtel LIKE '%'||#{cri.keyword}||'%'
 						</when>
 					</choose>
 				</trim>
@@ -26,60 +28,52 @@
 	
 	
 	<!-- SELECT -->
-	<select id="exerciseTypeList" resultType="com.easyfit.domain.ExerciseTypeVO">
-		<![CDATA[
-			SELECT
-				eno, ename, emgr
-			FROM
-				exercisetype
-			WHERE
-				emgr = #{emgr}
-		]]>
-	</select>
-	
 	<select id="tripleList" resultType="com.easyfit.domain.join.LessonJoinVO">
 		<![CDATA[
-			SELECT
-			    rn, mno, mname, mtel, gprno, maxerdate, prturn, prcount, prcountall
-			FROM
-			    (
-			    SELECT
-			        rownum rn, mno, mname, mtel, gprno, maxerdate, prturn, prcount, prcountall
-			    FROM
-			        (
-			        SELECT DISTINCT
-			            m.mno mno, m.mname mname, m.mtel mtel, gprno, maxerdate, pr.prturn prturn, pr.prcount prcount, pr.prcountall prcountall
-			        FROM
-			            member m
-			        JOIN
-			            ptrecord pr
-			        ON
-			            m.mno = pr.mno
-			        JOIN
-			            exerciserecord er
-			        ON
-			            pr.prno = er.prno
-			        LEFT OUTER JOIN
-			            (
-			            SELECT
-			                NVL(prno, '') gprno, MAX(erdate) maxerdate
-			            FROM                                      
-			                exerciserecord
-			            GROUP BY
-			                prno
-			            ) gr
-			        ON
-			            er.erdate = gr.maxerdate
+				SELECT
+				    rn, mno, mname, mtel, gprno, maxerdate, prturn, prcount, prcountall
+				FROM
+				(
+				SELECT
+				    rownum rn, mno, mname, mtel, gprno, maxerdate, prturn, prcount, prcountall
+				FROM
+				    (
+				        SELECT DISTINCT
+				            m.mno mno, m.mname mname, m.mtel mtel, gprno, maxerdate, pr.prturn prturn, pr.prcount prcount, pr.prcountall prcountall
+				        FROM
+				            member m
+				        JOIN
+				            ptrecord pr
+				        ON
+				            m.mno = pr.mno
+				        JOIN
+				            exerciserecord er
+				        ON
+				            pr.prno = er.prno
+				        RIGHT OUTER JOIN
+				        (
+				            SELECT
+				                prno gprno, MAX(erdate) maxerdate
+				            FROM                                      
+				                exerciserecord
+				            GROUP BY
+				                prno
+				        ) gr
+				        ON
+				            er.erdate = gr.maxerdate
+				        WHERE
+				            pr.tno = 1
+			            )
 			        WHERE
-			            pr.tno = #{tno}
-			]]>			
-			<include refid="myCriteria"></include>
-			<![CDATA[
-			            AND rownum <= #{cri.pageNum} * #{cri.amount}
-			        )        
+		]]>	        
+			
+        <include refid="criteria"></include>
+        	
+		<![CDATA[	        	
+			        	rownum <= #{pageNum} * #{amount}
 			    )
-			    WHERE
-			        rn > (#{cri.pageNum} - 1) * #{cri.amount}
+			WHERE
+				rn > (#{pageNum} - 1) * #{amount}
 			ORDER BY
 			    rn DESC
 		]]>
@@ -92,7 +86,7 @@
 			FROM
 			    (
 			        SELECT
-			            rownum rn, mno, mname, edate, erdate, prno,  prcount
+			            rownum rn, mno, mname, edate, erdate, prno, prcount
 			        FROM
 			            (
 			                SELECT DISTINCT
@@ -103,6 +97,7 @@
 			                	m.mno = pr.mno
 			                    AND pr.prno = er.prno
 			                    AND er.prno = #{prno}
+			                    AND pr.tno = #{tno}
 			            )
 			        WHERE
 			        	rownum <= #{cri.pageNum} * #{cri.amount}
@@ -111,6 +106,20 @@
 				rn > (#{cri.pageNum} - 1) * #{cri.amount}
 			ORDER BY
 			    rn DESC
+		]]>
+	</select>	
+	
+	<select id="doubleListNotPaging" resultType="com.easyfit.domain.join.LessonJoinVO">
+		<![CDATA[
+             SELECT DISTINCT
+             	m.mno mno, m.mname mname, pr.prno prno, pr.tno tno
+             FROM
+                 member m, ptrecord pr, exerciserecord er
+             WHERE
+             	m.mno = pr.mno
+                AND pr.prno = er.prno
+                AND er.prno = #{prno}
+                AND pr.tno = #{tno}
 		]]>
 	</select>	
 	
@@ -126,41 +135,25 @@
 				AND er.eno = et.eno
 				AND er.prno = #{prno}
 				AND er.edate = #{edate}
+				AND pr.tno = #{tno}
 			ORDER BY
 				erno ASC
 		]]>
 	</select>
 	
 	
-	<!-- INSERT -->
 	<insert id="register">
 		<![CDATA[
 			INSERT INTO
-				exerciserecord(erno, edate, eno, erset, ernumber, prno, erdate, ermemo)
-			VALUES(
-				exerciserecord_seq.NEXTVAL, #{edate}, #{eno}, #{erset}, #{ernumber}, #{prno}, sysdate, #{ermemo}
+				exerciserecord(erno, ergroup, edate, eno, erset, erweight, ernumber, prno, erdate, ermemo)
+			VALUES (
+				exerciserecord_seq.NEXTVAL, #{ergroup}, #{edate}, #{eno}, #{erset}, #{erweight}, #{ernumber}, #{prno}, sysdate, #{ermemo}
 			)
 		]]>
 	</insert>
+
 	
-	<insert id="registerSelectKey">
-		<selectKey keyProperty="erno" order="BEFORE" resultType="long">
-			SELECT
-				exerciserecord_seq.NEXTVAL
-			FROM
-				dual
-		</selectKey>
-		
-		<![CDATA[
-			INSERT INTO
-				exerciserecord(erno, edate, eno, erset, ernumber, prno, erdate, ermemo)
-			VALUES(
-				#{erno}, #{edate}, #{eno}, #{erset}, #{ernumber}, #{prno}, sysdate, #{ermemo}
-		)
-		]]>
-	</insert>
-	
-	<!-- UPDATE -->
+	<!-- UPDATE (UPDATE) -->
 	<update id="modify">
 		<![CDATA[
 			UPDATE
@@ -176,7 +169,6 @@
 				ermemo = #{ermemo}
 			WHERE
 				prno = #{prno}
-				AND edate = #{edate}
 				AND erno = #{erno}
 		]]>
 	</update>
@@ -198,6 +190,8 @@
 							            prno = #{prno}
 					            )
 					      )
+			WHERE
+				prno = #{prno}
 		]]>
 	</update>
 
@@ -239,118 +233,201 @@
 			FROM
 				ptrecord
 			WHERE 
-				AND	prno > 0
+				prno > 0
 		]]>
 	</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- #{tno} 메소드 모음 -->
-
-<!-- #{tno} 의 검색,조회 SECURITY 시작 -->
-<sql id="myCriteria">			   
-	<trim prefix="(" suffix=") AND" prefixOverrides="OR"> 
-		<foreach item='type' collection="cri.typeArr"> 
-			<trim prefix="OR"> 
-				<choose>
-					<when test="type == 'A'.toString()">
-						mname LIKE '%'||#{cri.keyword}||'%'
-					</when>
-					<when test="type == 'B'.toString()">
-						mem.mno LIKE '%'||#{cri.keyword}||'%'
-					</when>
-					<when test="type == 'C'.toString()">
-						mtel LIKE '%'||#{cri.keyword}||'%'
-					</when>
-				</choose>
-			</trim>
-		</foreach>
-	</trim>
-</sql>
-<!-- #{tno} 의 검색,조회 SECURITY 종료 -->
-
-<!-- #{tno} 의 운동일지 시작 -->
-<select id="myTripleList" resultType="com.easyfit.domain.join.LessonJoinVO">
-<![CDATA[
-SELECT
-    rn, mno, mname, mtel, prno, prturn, prcount, prcountall, maxerdate
-FROM
-    (
-    SELECT
-        rownum rn, mem.mno, mname, mtel, ptr.prno, prturn, prcount, prcountall, maxerdate
-    FROM
-        member mem, ptrecord ptr, (
-            SELECT
-                prno, MAX(erdate) maxerdate
-            FROM
-                exerciserecord
-            GROUP BY
-                prno
-            ) er
-    WHERE
-]]>			
-<include refid="myCriteria"></include>
-<![CDATA[
-        mem.mno = ptr.mno
-        AND ptr.prno = er.prno
-        AND tno = #{tno}
-        AND rownum <= #{cri.pageNum} * #{cri.amount}
-    )
-WHERE
-    rn > (#{cri.pageNum} - 1) * #{cri.amount}
-ORDER BY
-    rn DESC
-]]>
-</select>
-<!-- #{tno} 의 운동일지 종료 -->
-
-<!-- #{tno} 의 운동일지 카운트 시작 -->
-<select id="myPTRecordTotalCount" resultType="long">	
-SELECT
-     COUNT(prturn)
-FROM
-    (
-    SELECT
-        mno, mname, mtel, prno, prturn, prcount, prcountall, maxerdate
-    FROM
-        (
-        SELECT
-            mem.mno, mname, mtel, ptr.prno, prturn, prcount, prcountall, maxerdate
-        FROM
-            member mem, ptrecord ptr, (
-                SELECT
-                    prno, MAX(erdate) maxerdate
-                FROM
-                    exerciserecord
-                GROUP BY
-                    prno
-                ) er
-        WHERE
-            mem.mno = ptr.mno
-            AND ptr.prno = er.prno
-            AND tno = #{tno}
-        )
-    )
-WHERE	
-<include refid="myCriteria"></include>
-<![CDATA[ 
-	prno > 0
-]]>
-</select>
-<!-- #{tno} 의 운동일지 카운트 종료 -->
-
-
-
-
+	
+	
+	
+	<!-- 운동기록 모달 CRUD (JHR) -->
+	
+	<!-- 운동종목 대분류, 중분류 선택 공통모듈 시작 -->
+	<sql id="exerciseTypeCriteria">			   
+		<trim prefix="(" suffix=") AND" prefixOverrides="AND"> 
+			<foreach item="type" collection="typeArr"> 
+				<trim prefix="AND"> 
+					<choose>
+						<when test="type == 'D'.toString()">
+							eno LIKE '1___'
+						</when>
+						<when test="type == 'E'.toString()">
+							eno LIKE '2___'
+						</when>
+						<when test="type == 'F'.toString()">
+							eno LIKE '3___'
+						</when>
+						<when test="type == 'G'.toString()">
+							eno LIKE '4___'
+						</when>
+						<when test="type == 'H'.toString()">
+							eno LIKE '5___'
+						</when>
+						<when test="type == 'W'.toString()">
+							eno LIKE '_1__'
+						</when>
+						<when test="type == 'X'.toString()">
+							eno LIKE '_2__'
+						</when>
+						<when test="type == 'Y'.toString()">
+							eno LIKE '_3__'
+						</when>
+						<when test="type == 'Z'.toString()">
+							eno LIKE '_4__'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	<!--  운동종목 대분류, 중분류 선택 공통모듈 끝 -->
+	
+	<!-- SELECT -->
+	<select id="exerciseTypeList" resultType="com.easyfit.domain.ExerciseTypeVO">
+		<![CDATA[
+			SELECT
+				eno, ename, ememo, emgr
+			FROM
+				exercisetype
+			WHERE
+		]]>	
+		
+		<include refid="exerciseTypeCriteria"></include>
+			
+		<![CDATA[	
+				eno NOT LIKE '___0'
+		]]>
+	</select>
+	
+	<select id="exerciseTypeListNotPaging" resultType="com.easyfit.domain.ExerciseTypeVO">
+		<![CDATA[
+			SELECT
+				eno, ename, emgr, ememo
+			FROM
+				exercisetype
+			WHERE
+				eno NOT LIKE '___0'
+		]]>
+	</select>
+	
+		<select id="eno" resultType="com.easyfit.domain.ExerciseTypeVO">
+		<![CDATA[
+			SELECT
+				eno, ename, emgr, ememo
+			FROM
+				exercisetype
+			WHERE
+				ename = #{ename}
+		]]>
+	</select>
+	
+		
+<!-- 	<select id="eno" resultType="com.easyfit.domain.ExerciseTypeVO">
+		<![CDATA[
+			SELECT
+				eno
+			FROM
+				exercisetype
+			WHERE
+				ename = #{item.ename}
+		]]>
+	</select> -->
+	
+	
+	
+	<!-- #{tno} 메소드 모음 (LJW) -->
+	
+	<!-- #{tno} 의 검색,조회 SECURITY 시작 -->
+	<sql id="myCriteria">			   
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR"> 
+			<foreach item='type' collection="cri.typeArr"> 
+				<trim prefix="OR"> 
+					<choose>
+						<when test="type == 'A'.toString()">
+							mname LIKE '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'B'.toString()">
+							mem.mno LIKE '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							mtel LIKE '%'||#{cri.keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	<!-- #{tno} 의 검색,조회 SECURITY 종료 -->
+	
+	<!-- #{tno} 의 운동일지 시작 -->
+	<select id="myTripleList" resultType="com.easyfit.domain.join.LessonJoinVO">
+	<![CDATA[
+	SELECT
+	    rn, mno, mname, mtel, prno, prturn, prcount, prcountall, maxerdate
+	FROM
+	    (
+	    SELECT
+	        rownum rn, mem.mno, mname, mtel, ptr.prno, prturn, prcount, prcountall, maxerdate
+	    FROM
+	        member mem, ptrecord ptr, (
+	            SELECT
+	                prno, MAX(erdate) maxerdate
+	            FROM
+	                exerciserecord
+	            GROUP BY
+	                prno
+	            ) er
+	    WHERE
+	]]>			
+	<include refid="myCriteria"></include>
+	<![CDATA[
+	        mem.mno = ptr.mno
+	        AND ptr.prno = er.prno
+	        AND tno = #{tno}
+	        AND rownum <= #{cri.pageNum} * #{cri.amount}
+	    )
+	WHERE
+	    rn > (#{cri.pageNum} - 1) * #{cri.amount}
+	ORDER BY
+	    rn DESC
+	]]>
+	</select>
+	<!-- #{tno} 의 운동일지 종료 -->
+	
+	<!-- #{tno} 의 운동일지 카운트 시작 -->
+	<select id="myPTRecordTotalCount" resultType="long">	
+	SELECT
+	     COUNT(prturn)
+	FROM
+	    (
+	    SELECT
+	        mno, mname, mtel, prno, prturn, prcount, prcountall, maxerdate
+	    FROM
+	        (
+	        SELECT
+	            mem.mno, mname, mtel, ptr.prno, prturn, prcount, prcountall, maxerdate
+	        FROM
+	            member mem, ptrecord ptr, (
+	                SELECT
+	                    prno, MAX(erdate) maxerdate
+	                FROM
+	                    exerciserecord
+	                GROUP BY
+	                    prno
+	                ) er
+	        WHERE
+	            mem.mno = ptr.mno
+	            AND ptr.prno = er.prno
+	            AND tno = #{tno}
+	        )
+	    )
+	WHERE	
+	<include refid="myCriteria"></include>
+	<![CDATA[ 
+		prno > 0
+	]]>
+	</select>
+	<!-- #{tno} 의 운동일지 카운트 종료 -->
+	
+	
 	
 </mapper>

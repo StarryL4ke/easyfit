@@ -16,4 +16,26 @@ WHERE
 ]]>
 </select>
 
+<insert id="register">
+INSERT INTO
+    exerciserecord(erno, edate, erdate, prno)
+VALUES(
+    exerciserecord_seq.NEXTVAL,
+    #{exerciseRecord.edate},
+    #{exerciseRecord.edate},
+    (
+    SELECT
+        prno
+    FROM
+        ptrecord ptr, member mem, trainer t, trainer_auth auth
+    WHERE
+        mem.mno = ptr.mno
+        AND ptr.tno = t.tno
+        AND mem.mname = #{mname}
+        AND ptr.prno = #{exerciseRecord.prno}
+        AND auth.tid = #{tid}
+    )
+)
+</insert>
+
 </mapper>

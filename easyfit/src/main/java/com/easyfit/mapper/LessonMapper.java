@@ -11,15 +11,18 @@ import com.easyfit.domain.join.LessonJoinVO;
 
 public interface LessonMapper {
 	
+	// 뷰 페이지(jsp 파일) CRUD (JHR)
+	
 	// SELECT
-	public List<ExerciseTypeVO> exerciseTypeList(ExerciseTypeVO et);
-  //public List<LessonJoinVO> tripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
-	public List<LessonJoinVO> doubleList(@Param("cri") Criteria cri, @Param("prno") Long prno);
-	public List<LessonJoinVO> get(@Param("prno") Long prno, @Param("edate") String edate);
+    //public List<LessonJoinVO> tripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
+	public List<LessonJoinVO> doubleList(@Param("cri") Criteria cri, @Param("prno") Long prno, @Param("tno") Long tno);
+	public LessonJoinVO doubleListNotPaging(@Param("prno") Long prno, @Param("tno") Long tno);
+	public List<LessonJoinVO> get(@Param("prno") Long prno, @Param("edate") String edate, @Param("tno") Long tno);
 	
 	// INSERT
 	public void register(ExerciseRecordVO vo);
 	public void registerSelectKey(ExerciseRecordVO vo);
+
 	
 	// UPDATE
 	public void modify(ExerciseRecordVO vo);
@@ -34,7 +37,17 @@ public interface LessonMapper {
 	// 총 게시글 갯수 구하는 메소드 - PT기록
 	public long ptRecordTotalCount(Criteria cri);
 	
-	//#{tno} 메소드 모음
+	
+	
+	// 운동기록 모달 CRUD (JHR)
+	// SELECT
+	public List<ExerciseTypeVO> exerciseTypeList(Criteria cri);
+	public List<ExerciseTypeVO> exerciseTypeListNotPaging();
+	public ExerciseTypeVO eno(ExerciseTypeVO et);
+	
+	
+	
+	//#{tno} 메소드 모음 (LJW)
 	public List<LessonJoinVO> myTripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
 	public long myPTRecordTotalCount(@Param("cri") Criteria cri, @Param("tno") Long tno);
 	

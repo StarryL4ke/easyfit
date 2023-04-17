@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+    
 <%@ include file="../includes/header.jsp" %>
 
 <div>
@@ -13,10 +15,6 @@
                 	<h1 class="h3 mb-0 text-gray-800">운동일지 (PT 계약회차 기준)</h1>
                 </div>
                
-                <!-- 신규 운동일지 작성 버튼 -->
-        		<div class="col-lg-2 d-inline-block" id="ptRbtn">
-              		<button type="button" class="h8 btn btn-primary" id="regBtn">신규 운동일지 작성</button>
-           		</div>
 			    
 				<!-- 운동일지 (PT 계약회차 기준) 목록 시작 (1행 단위 : 1 PT기록) -------------------------------------------------------------------------->
 				<div class="card-body">	
@@ -97,20 +95,20 @@
 						<ul class="pagination d-sm-flex justify-content-center">
 					
 						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button privious">
+							<li class="paginate_button privious px-2">
 								<a href="${pageMaker.startPage - 1}">이전</a> 
 							</li>
 						</c:if>
 						
 						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-							<li class='paginate_button  ${pageMaker.cri.pageNum == num ? "active" : ""}'>
+							<li class='paginate_button px-2  ${pageMaker.cri.pageNum == num ? "active" : ""}'>
 								<a href="${num}" class="page-link">${num}</a>
 
 							</li>
 						</c:forEach>  
 									  
 						<c:if test="${pageMaker.next}">
-							<li class="paginage_button next">
+							<li class="paginage_button next px-2">
 								<a href="${pageMaker.endPage + 1}">다음</a> 
 							</li>
 						</c:if>
@@ -156,12 +154,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		/* 신규 운동일지 등록 버튼 클릭 이벤트 *********************************************/
-		$('#regBtn').on("click", function() {
-			self.location = '/easyfit/lessonRegister';
-		});
-		
-		
 		/* 모달 알림 (등록) ******************************************************************/
 		var result = '<c:out value="${result}" />';
 		checkModal(result);
@@ -192,6 +184,7 @@
 		$('.moveToList').on("click", function(e) {
 			
 			e.preventDefault();
+			
 			if($("input[name=prno]").length == 0) {
 				$("#hiddenForm").append('<input type="hidden" name="prno" value="' + $(this).attr("href") + '">');
 			}

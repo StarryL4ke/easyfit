@@ -21,5 +21,11 @@ public class ExerciseRecordVO {//변수는 DB에 있는것과 맞춰서 작성�
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date erdate; // 운동기록일자(작성일자)
 	private String ermemo; // 운동기록 관련 코멘트
+	
+	private String insertValue; // insert 데이터 저장 변수
+	private String updateValue; // update 데이터 저장 변수
+	
+	public ExerciseRecordVO() {}
 
+	
 }
