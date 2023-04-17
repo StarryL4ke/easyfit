@@ -44,7 +44,7 @@
 									<div class="row m-0">
 										<div class="align-items-center col-lg-12 p-0 m-0">
 											<div class="h7 mb-0 text-gray-800 font-weight-bold my-2">
-												${vo[status.count].ergroup}번 운동 : ${vo[status.count].ename}
+												${vo[status.index].ergroup}번 운동 : ${vo[status.index].ename}
 											</div>
 											<div class="row p-0 m-0">	
 												<div class="box text-center col-lg-2 p-0 m-0 h8 text-gray-800 bg-light">세트</div>
@@ -60,10 +60,10 @@
 										<input type="hidden" name="edate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${voVar.edate}" />'>
 										<input type="hidden" name="erno" value="${voVar.erno}">
 										<input type="hidden" name="eno" value="${voVar.eno}">
-										<input type="text" name="erset" class="box text-center col-lg-2 m-0 h8 erset" value="${voVar.erset}" disabled>
-										<input type="text" name="erweight" class="box text-center col-lg-2 m-0 h8 erweight" value="${voVar.erweight}" disabled>
-										<input type="text" name="ernumber" class="box text-center col-lg-2 m-0 h8 ernumber" value="${voVar.ernumber}" disabled>
-										<textarea name="ermemo" class="box lh-150 text-left col-lg-5 m-0 h8 ermemo" disabled>${voVar.ermemo}</textarea> 
+										<input type="text" name="erset" class="box text-center col-lg-2 m-0 h8 erset" value="${voVar.erset}" readonly>
+										<input type="text" name="erweight" class="box text-center col-lg-2 m-0 h8 erweight" value="${voVar.erweight}" readonly>
+										<input type="text" name="ernumber" class="box text-center col-lg-2 m-0 h8 ernumber" value="${voVar.ernumber}" readonly>
+										<textarea name="ermemo" class="box lh-150 text-left col-lg-5 m-0 h8 ermemo" readonly>${voVar.ermemo}</textarea> 
 																			
 										<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
 										<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />

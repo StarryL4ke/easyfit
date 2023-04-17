@@ -30,7 +30,7 @@
 					
 					<div>
 						<div class="mb-3">
-							<input type="text" id="mname" value="${vo[0].mname}" class="text-center box2 width-10" disabled>
+							<input type="text" id="mname" value="${vo[0].mname}" class="text-center box2 width-10" readonly>
 							<label class="text-gray-800 h6 ml-1">
 								   회원님 운동일지
 							</label>
@@ -48,10 +48,12 @@
 										<div class="row m-0 exerciseRecordColumn">
 											<div class="align-items-center col-lg-12 p-0 m-0">
 												<div class="h7 mb-0 text-gray-800 font-weight-bold my-2 ename">
-													<span class="ergroup">${vo[status.count].ergroup}</span>번 운동 : <span class="newEname">${vo[status.count].ename}</span>
+													<span class="ergroup">${vo[status.index].ergroup}</span>번 운동 : <span class="newEname">${vo[status.index].ename}</span>
 												</div>
 												<script>
-													ergroupNo = ${vo[status.count].ergroup};
+													ergroupNo = ${vo[status.index].ergroup};
+													console.log("index : " + ${status.index});
+													console.log("ergrupNo : " + ergroupNo);
 												</script>
 												<div class="row p-0 m-0">	
 													<div class="box text-center col-lg-2 p-0 m-0 h8 text-gray-800 bg-light">세트</div>
@@ -75,13 +77,12 @@
 												<input type="text" name="ernumber" class="box text-center col-lg-2 m-0 h8 ernumber" value="${voVar.ernumber}">
 												<textarea name="ermemo" class="box lh-150 text-left col-lg-4 m-0 h8 ermemo">${voVar.ermemo}</textarea> 
 												<div class="text-left col-lg-2 d-inline-block p-0 ml-2">
-													<button type="button"  id="pbtn" class="btn btn-outline-dark ml-2 mb-0 mt-2 h6"> + </button>
-													<button type="button"  id="mbtn" class="btn btn-outline-dark ml-2 mb-0 mt-2 h6"> - </button>
+													<button type="button" class="btn btn-outline-dark ml-2 mb-0 mt-2 h6 pbtn"> + </button>
+													<button type="button" class="btn btn-outline-dark ml-2 mb-0 mt-2 h6 mbtn"> - </button>
 												</div>
 																				
 												<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
 												<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
-												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 												<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
 											</div>
 										</form>	
@@ -193,13 +194,47 @@
 		$("#erdate").val(year + "-" + month + "-" + day);
 		
 	
-		/* Back, 수정 버튼 클릭 이벤트 **********************************/
+		/* Back 버튼 클릭 이벤트 **********************************/
 		$("button[data-oper='back']").on("click", function(){
 			
 			history.back();
 		});
 
+		/* 수정 완료 버튼 클릭 이벤트 **********************************/
 		$("button[data-oper='modify']").on("click", function(){
+			
+			$.each($(".exerciseModifyRegister"), function(i, value) {
+				
+				var object = {
+					
+					prno: $(value).find("div").find("input[name='prno']").val(),
+					ergroup: $(value).find("div").find("input[name='ergroup']").val(),
+					erno: $(value).find("div").find("input[name='erno']").val(),
+					eno: $(value).find("div").find("input[name='eno']").val(),
+					erset: $(value).find("div").find("input[name='erset']").val(),
+					erweight: $(value).find("div").find("input[name='erweight']").val(),
+					ernumber: $(value).find("div").find("input[name='ernumber']").val(),
+					ermemo: $(value).find("div").find("textarea[name='ermemo']").val(),
+					edate: $(value).find("div").find("input[name='edate']").val()
+
+				};
+				
+			 	$.ajax({
+					url: "/easyfit/lessonModifyRegister?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+					data: JSON.stringify(object),
+					contentType: "application/json; charset=utf-8",
+					type: "post",
+					beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					success: function(data) {
+						
+					},
+					error: function(xhr, status) {
+						alert(xhr + " : " + status);
+					}
+				});
+			});
 			
 			$("#lessonModifyModal").modal("show");
 			
@@ -217,24 +252,158 @@
 		});
 		
 		
-		/* 내용 수정 체인지(focusout) 이벤트 *************************************/
+		/* 운동내역 수정 체인지(focusout) 이벤트 *************************************/
 
-		// 운동내역 ==> 보완 필요 
+		// csrf
+		var csrfHeaderName ="${_csrf.headerName}"; 
+		var csrfTokenValue="${_csrf.token}";
+		
 		$(".erset").on("focusout", function() {
 			
-			$(this).closest("form").submit();
+			$.each($(".exerciseRecordRow"), function(i, value) {
+				
+				var object = {
+						
+					prno: $(value).find("div").find("input[name='prno']").val(),
+					ergroup: $(value).find("div").find("input[name='ergroup']").val(),
+					erno: $(value).find("div").find("input[name='erno']").val(),
+					eno: $(value).find("div").find("input[name='eno']").val(),
+					erset: $(value).find("div").find("input[name='erset']").val(),
+					erweight: $(value).find("div").find("input[name='erweight']").val(),
+					ernumber: $(value).find("div").find("input[name='ernumber']").val(),
+					ermemo: $(value).find("div").find("textarea[name='ermemo']").val(),
+					edate: $(value).find("div").find("input[name='edate']").val()
+
+				};
+				
+			 	$.ajax({
+					url: "/easyfit/lessonModify?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+					data: JSON.stringify(object),
+					contentType: "application/json; charset=utf-8",
+					type: "post",
+					beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					success: function(data) {
+						
+					},
+					error: function(xhr, status) {
+						alert(xhr + " : " + status);
+					}
+				});
+			});
+			
 		});
+		
 		$(".erweight").on("focusout", function() {
 			
-			$(this).closest("form").submit();
+			$.each($(".exerciseRecordRow"), function(i, value) {
+				
+				var object = {
+						
+					prno: $(value).find("div").find("input[name='prno']").val(),
+					ergroup: $(value).find("div").find("input[name='ergroup']").val(),
+					erno: $(value).find("div").find("input[name='erno']").val(),
+					eno: $(value).find("div").find("input[name='eno']").val(),
+					erset: $(value).find("div").find("input[name='erset']").val(),
+					erweight: $(value).find("div").find("input[name='erweight']").val(),
+					ernumber: $(value).find("div").find("input[name='ernumber']").val(),
+					ermemo: $(value).find("div").find("textarea[name='ermemo']").val(),
+					edate: $(value).find("div").find("input[name='edate']").val()
+
+				};
+				
+			 	$.ajax({
+					url: "/easyfit/lessonModify?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+					data: JSON.stringify(object),
+					contentType: "application/json; charset=utf-8",
+					type: "post",
+					beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					success: function(data) {
+						
+					},
+					error: function(xhr, status) {
+						alert(xhr + " : " + status);
+					}
+				});
+			});
+			
 		});
+		
 		$(".ernumber").on("focusout", function() {
 			
-			$(this).closest("form").submit();
+			$.each($(".exerciseRecordRow"), function(i, value) {
+				
+				var object = {
+						
+					prno: $(value).find("div").find("input[name='prno']").val(),
+					ergroup: $(value).find("div").find("input[name='ergroup']").val(),
+					erno: $(value).find("div").find("input[name='erno']").val(),
+					eno: $(value).find("div").find("input[name='eno']").val(),
+					erset: $(value).find("div").find("input[name='erset']").val(),
+					erweight: $(value).find("div").find("input[name='erweight']").val(),
+					ernumber: $(value).find("div").find("input[name='ernumber']").val(),
+					ermemo: $(value).find("div").find("textarea[name='ermemo']").val(),
+					edate: $(value).find("div").find("input[name='edate']").val()
+
+				};
+				
+			 	$.ajax({
+					url: "/easyfit/lessonModify?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+					data: JSON.stringify(object),
+					contentType: "application/json; charset=utf-8",
+					type: "post",
+					beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					success: function(data) {
+						
+					},
+					error: function(xhr, status) {
+						alert(xhr + " : " + status);
+					}
+				});
+			});
 		});
+		
 		$(".ermemo").on("focusout", function() {
 			
-			$(this).closest("form").submit();
+			$.each($(this).parent().parent(), function(i, value) {
+				
+				var object = {
+						
+					prno: $(value).find("div").find("input[name='prno']").val(),
+					ergroup: $(value).closest("form").prev("div").find("div").find("div").find("span").val(),
+					erno: $(value).find("div").find("input[name='erno']").val(),
+					eno: $(value).find("div").find("input[name='eno']").val(),
+					erset: $(value).find("div").find("input[name='erset']").val(),
+					erweight: $(value).find("div").find("input[name='erweight']").val(),
+					ernumber: $(value).find("div").find("input[name='ernumber']").val(),
+					ermemo: $(value).find("div").find("textarea[name='ermemo']").val(),
+					edate: $(value).find("div").find("input[name='edate']").val()
+
+				};
+				
+				console.log("ermemo : " + object);
+				
+			 	$.ajax({
+					url: "/easyfit/lessonModify?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+					data: JSON.stringify(object),
+					contentType: "application/json; charset=utf-8",
+					type: "post",
+					beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					success: function(data) {
+						
+					},
+					error: function(xhr, status) {
+						alert(xhr + " : " + status);
+					}
+				});
+			});
 		});
 		
 		
@@ -258,7 +427,6 @@
 			});
  			
 			$(enameValue).each(function(i, enameList) {
-				
 				$("#exerciseTypeChoiceList").append("<div class='d-inline-block bg-dark text-white border rounded p-2 h8'>" + enameList + "</div>");
 			}); 
 
@@ -274,8 +442,13 @@
 		
   		$(".exerciseTypeLargeGroup").on("click", function() {
   			
+  			saveType = "";
+  			$(".modal-scroll").find("div").remove();
+  			
 			type = $(this).data("type");
 			saveType = type;
+		
+			console.log("saveType(l) : " + saveType);
 			
 			$.getJSON("/exercisetype/" + saveType + ".json", function(data) { 
 				
@@ -286,12 +459,11 @@
 				});
 				
 				$(".modal-scroll").append(str);
-
 				
-			}).fail(function(xhr, status, err) { 
+			}).fail(function(xhr, status, err) {
 				if(error) { error(); }
-				
 			});
+			
 		});
   		
   		
@@ -300,7 +472,7 @@
 			type = $(this).data("type");
 			saveType += type;
 			
-			console.log("saveType : " + saveType);
+			console.log("saveType(m) : " + saveType);
 			
 			$.getJSON("/exercisetype/" + saveType + ".json", function(data) {
 				
@@ -322,7 +494,6 @@
 		
 		var chosenExerciseTypeValue = [];
 		
-		
 		$(".modal-scroll").on("click", "button", function() {
 			
 			$("#exerciseTypeChoiceList").append("<div class='d-inline-block bg-dark text-white border rounded p-2 h8 append-bg-dark'>" + $(this).html() + "</div>");
@@ -337,32 +508,28 @@
 			
 		});
 		
-		
-		/* 운동종목 저장(등록) 버튼 클릭 이벤트 **********************************/
+		/* 운동종목 저장(등록) 버튼 클릭 이벤트 (모달에 있는 데이터를 register input 태그로 이동) **********************************/
 		modalSaveBtn.on("click", function() {
-			
+
 			$.each(chosenExerciseTypeValue, function(i, value) {
-				
-				console.log(value);
-				
+	
 				var exerciseRecordColumn = $(".exerciseRecordColumn").eq(0).clone();
 				var exerciseRecordRow = $(".exerciseRecordRow").eq(0).clone();
 				
-				console.log(exerciseRecordColumn.find(".ergroup").html());
-				console.log(ergroupNo);
-			
+				console.log("ergroupNo : " + ergroupNo);
+				console.log(value);
 				
 				ergroupNo++;
 				
 				exerciseRecordColumn.find(".ergroup").html(ergroupNo);
 				exerciseRecordColumn.find(".newEname").html(value);
+				exerciseRecordRow.addClass("exerciseModifyRegister");
 				
 				exerciseRecordRow.find("input[name='ergroup']").val(ergroupNo);
-				exerciseRecordRow.find("input[name='erno']").val("");
 				exerciseRecordRow.find("input[name='erweight']").val("");
 				exerciseRecordRow.find("input[name='ernumber']").val("");
-				exerciseRecordRow.find("input[name='ermemo']").val("");
-				
+				exerciseRecordRow.find("textarea[name='ermemo']").val("");
+
 				
 				$.getJSON("/exercisetype/eno/" + value + ".json", function(data) {
 					
@@ -373,14 +540,35 @@
 					if(error) { error(); }
 					
 				});
-				
+			
 				
 				$("#exerciseRecordRepeat").append(exerciseRecordColumn);
 				$("#exerciseRecordRepeat").append(exerciseRecordRow);
-				
+
 			});
 			
+			$(".exerciseRecordColumn").eq(0).remove();
+			$(".exerciseRecordRow").eq(0).remove();
+			
 			modal.modal("hide");  
+		});
+		
+		
+		
+		/* 행 추가(+)/삭제(-) 버튼 클릭 이벤트 **********************************/
+		$(document).on("click", ".pbtn", function() {
+			
+			var plusForm = $(this).closest("form").clone();
+			plusForm.find("input[name='erset']").val(parseInt($(this).closest("form").find("input[name='erset']").val()) + 1);
+			$(this).closest("form").after(plusForm);
+		});
+		
+		$(document).on("click", ".mbtn", function() {
+			
+			if($(this).closest("form").prev().attr("class", "exerciseRecordColumn")) {
+				$(this).closest("form").prev().remove();
+			}
+			$(this).closest("form").remove();
 		});
 	
 	});

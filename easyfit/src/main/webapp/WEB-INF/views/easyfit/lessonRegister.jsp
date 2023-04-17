@@ -5,10 +5,6 @@
     
 <%@ include file="../includes/header.jsp" %>
 
-<!-- 23.04.15 : 입력한 내용이 DB에 반영되기는 함. 그러나 여러 건이 입력되지 않고 1건만 입력되며, 마지막 건만 입력되는 듯. ergroup이 마지막 숫자로 들어감.
-	그리고 lessonGet으로 넘어가면 내용이 출력되지 않는다.
-	그리고 register인지 modify인지 정확히 모르겠는데 어디선가 데이터가 DB에 저장되면 다른 데이터의 ergroup 일부도 +1이 된다. -->
-
 <script>
 	var ergroupNo = 0;
 </script>
@@ -26,13 +22,13 @@
 						</div>
  						<div>
 							<label class="text-gray-800">작성일자 : </label>
-							<input type="text" id="erdate" class="box2 width-40 h7 pr-1" disabled>
+							<input type="text" id="erdate" class="box2 width-40 h7 pr-1" readonly>
 						</div>
 					</div>
 					
 					<div>
 						<div class="mb-3">
-							<input type="text" id="mname" value="${exerciseRecordList.mname}" class="text-center box2 width-10" disabled>
+							<input type="text" id="mname" value="${exerciseRecordList.mname}" class="text-center box2 width-10" readonly>
 							<label class="text-gray-800 h6 ml-1">
 								   회원님 운동일지
 							</label>
@@ -64,7 +60,7 @@
 									<div class="row m-0">
 										<input type="hidden" name="prno" value="${exerciseRecordList.prno}">
 										<input type="hidden" name="ergroup" value="">
-										<input type="hidden" name="edate" value="">
+										<input type="hidden" name="edate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="" />'>
 										<input type="hidden" name="erno" value="">
 										<input type="hidden" name="eno" value="">
 										<input type="text" name="erset" class="box text-center col-lg-2 m-0 h8" value="1">
@@ -72,12 +68,11 @@
 										<input type="text" name="ernumber" class="box text-center col-lg-2 m-0 h8">
 										<textarea name="ermemo" class="box lh-150 text-left col-lg-4 m-0 h8"></textarea> 
 										<div class="text-left col-lg-2 d-inline-block p-0 ml-2">
-											<button type="button"  id="pbtn" class="btn btn-outline-dark ml-2 mb-0 mt-2 h6"> + </button>
-											<button type="button"  id="mbtn" class="btn btn-outline-dark ml-2 mb-0 mt-2 h6"> - </button>
+											<button type="button"  class="btn btn-outline-dark ml-2 mb-0 mt-2 h6 pbtn"> + </button>
+											<button type="button"  class="btn btn-outline-dark ml-2 mb-0 mt-2 h6 mbtn"> - </button>
 										</div>
 										<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
 										<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
-										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 										<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
 									</div>
 								</form>
@@ -100,6 +95,24 @@
 					</div>
 					<!-- 운동내역 등록 끝 -->
 					
+										
+					<!-- 모달 시작 ----------------------------------------------------------------->
+					<div class="modal fade" id="lessonRegisterModal" tabindex="-1" role="dialog"
+						 aria-labelledby="lessonRegisterModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="lessonRegisterModalLabel">알림</h4>
+								</div>
+								<div class="modal-body">등록이 완료되었습니다.</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default close" data-dismiss="modal" id="lessonRegisterModalCloseBtn">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 모달 끝-->
+					
 					
 	 				<!-- 운동종목 모달 시작 ---------------------------------------------------------------------------------->
 		            <div class="modal fade" id="exerciseTypeModal" tabindex="-1" role="dialog"
@@ -115,7 +128,7 @@
 									<form id='exerciseTypeChoiceForm' action="/exercisetype" method='get'>
 										<div class="col-lg-11 ml-4">
 											<div class="row p-0 mb-3">
-													<button type="button" class="col btn btn-lg btn-white px-0" id="favorite">Favorite</button>
+													<button type="button" class="col btn btn-lg px-0"></button>
 													<button type="button" class="col btn btn-lg btn-white px-0 exerciseTypeLargeGroup" data-type="D">가슴</button>
 													<button type="button" class="col btn btn-lg btn-white px-0 exerciseTypeLargeGroup" data-type="E">하체</button>
 													<button type="button" class="col btn btn-lg btn-white px-0 exerciseTypeLargeGroup" data-type="F">등</button>
@@ -176,12 +189,20 @@
 		});
 		
 	
-		/* 목록, 작성 완료 버튼 클릭 이벤트 **********************************/
+		/* 목록 버튼 클릭 이벤트 **********************************/
 		$("button[data-oper='list']").on("click", function(){
 			
 			history.back();
 		});
 
+		
+		/* 작성 완료 버튼 클릭 이벤트 *****************************/
+		
+		// csrf
+		var csrfHeaderName ="${_csrf.headerName}"; 
+		var csrfTokenValue="${_csrf.token}";
+		
+		
 		$("button[data-oper='register']").on("click", function(){
 			
 			if($("#edate").val() == null || $("#edate").val().length == 0) {
@@ -189,16 +210,47 @@
 				return false;
 			}
 			
-			// var form2 = $("form[role='form']").serializeArray();
-			
-			var formList = new Array();
-			$("form[role='form']").each(function(i, item) {
+			$.each($("form[role='form']"), function(i, value) {
 				
-				formList.push($(item).val());
+				var object = {
+						
+					prno: $(value).find("div").find("input[name='prno']").val(),
+					ergroup: $(value).find("div").find("input[name='ergroup']").val(),
+					erno: $(value).find("div").find("input[name='erno']").val(),
+					eno: $(value).find("div").find("input[name='eno']").val(),
+					erset: $(value).find("div").find("input[name='erset']").val(),
+					erweight: $(value).find("div").find("input[name='erweight']").val(),
+					ernumber: $(value).find("div").find("input[name='ernumber']").val(),
+					ermemo: $(value).find("div").find("textarea[name='ermemo']").val(),
+					edate: $(value).find("div").find("input[name='edate']").val()
+
+				};
+				
+				console.log("data : " + JSON.stringify(object));
+				
+			 	$.ajax({
+					url: "/easyfit/lessonRegister?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+					data: JSON.stringify(object),
+					contentType: "application/json; charset=utf-8",
+					type: "post",
+					beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					success: function(data) {
+						
+					},
+					error: function(xhr, status) {
+						alert(xhr + " : " + status);
+					}
+				});
 			});
 			
-			$("form[role='form']").submit();
 			
+			$("#lessonRegisterModal").modal("show");
+			
+			$("#lessonRegisterModalCloseBtn").on("click", function() {
+				location.href="/easyfit/lessonDetailList?prno=" + prnoValue + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
+			});
 		}); 
 		
 		
@@ -226,8 +278,13 @@
 		
   		$(".exerciseTypeLargeGroup").on("click", function() {
   			
+  			saveType = "";
+  			$(".modal-scroll").find("div").remove();
+  			
 			type = $(this).data("type");
 			saveType = type;
+		
+			console.log("saveType(l) : " + saveType);
 			
 			$.getJSON("/exercisetype/" + saveType + ".json", function(data) { 
 				
@@ -238,12 +295,11 @@
 				});
 				
 				$(".modal-scroll").append(str);
-
 				
-			}).fail(function(xhr, status, err) { 
+			}).fail(function(xhr, status, err) {
 				if(error) { error(); }
-				
 			});
+			
 		});
   		
   		
@@ -252,7 +308,7 @@
 			type = $(this).data("type");
 			saveType += type;
 			
-			console.log("saveType : " + saveType);
+			console.log("saveType(m) : " + saveType);
 			
 			$.getJSON("/exercisetype/" + saveType + ".json", function(data) {
 				
@@ -296,7 +352,6 @@
 				var exerciseRecordColumn = $(".exerciseRecordColumn").eq(0).clone();
 				var exerciseRecordRow = $(".exerciseRecordRow").eq(0).clone();
 				
-				
 				console.log("ergroupNo : " + ergroupNo);
 				console.log(value);
 				
@@ -306,11 +361,7 @@
 				exerciseRecordColumn.find(".newEname").html(value);
 				
 				exerciseRecordRow.find("input[name='ergroup']").val(ergroupNo);
-				exerciseRecordRow.find("input[name='erno']").val("");
-				exerciseRecordRow.find("input[name='erweight']").val("");
-				exerciseRecordRow.find("input[name='ernumber']").val("");
-				exerciseRecordRow.find("input[name='ermemo']").val("");
-				
+
 				
 				$.getJSON("/exercisetype/eno/" + value + ".json", function(data) {
 					
@@ -334,6 +385,23 @@
 			modal.modal("hide");  
 		});
 		
+		
+		
+		/* 행 추가(+)/삭제(-) 버튼 클릭 이벤트 **********************************/
+		$(document).on("click", ".pbtn", function() {
+			
+			var plusForm = $(this).closest("form").clone();
+			plusForm.find("input[name='erset']").val(parseInt($(this).closest("form").find("input[name='erset']").val()) + 1);
+			$(this).closest("form").after(plusForm);
+		});
+		
+		$(document).on("click", ".mbtn", function() {
+			
+			if($(this).closest("form").prev().attr("class", "exerciseRecordColumn")) {
+				$(this).closest("form").prev().remove();
+			}
+			$(this).closest("form").remove();
+		});
 	
 	});
 </script>					

@@ -93,13 +93,19 @@
 		
 		/* 신규 운동일지 작성 버튼 클릭 이벤트 시작 ******************************************************************/
 		var url = location.search;
+		
 		var url2 = url.substring(1);
+			
 		var url3 = url2.split("&");
-		var url4 = url3[5].split("=");
+		
+		//var url4 = url3[5].split("="); 이거 재밋네 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 
+		var url4 = url3[0].split("=");
+		console.log(url4)
+			
+			
 		var prnoValue = url4[1];
 		
 		$('#regBtn').on("click", function() {
-			
 			$("#hiddenForm").append('<input type="hidden" name="prno" value=' + prnoValue + '>');
 			$("#hiddenForm").append('<input type="hidden" name="edate" value="">');
 			$("#hiddenForm").attr("action", "/easyfit/lessonRegister");

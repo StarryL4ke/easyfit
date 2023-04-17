@@ -13,7 +13,6 @@ xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 function addRecord(){
 
 		var schedule = {
-				prno:$("#prno").val(),
 				edate:$("#edate").val()
 		}
 		console.log(schedule);
@@ -74,10 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
 				<div class="form-group">
 					<label for="title" class="col-form-label">이 름:</label>
 					<input type="text" class="form-control" id="mname" name="mname" required>
-				</div>
-				<div class="form-group">
-					<label for="title" class="col-form-label">PT 회차:</label>
-					<input type="text" class="form-control" id="prno" name="prno" required>
+					  
+				<!-- 	<select class="form-control" name="mname">
+						<option value="">-회원선택-</option>						
+							<option value="ClientName">ClientName</option>						
+					</select>
+				 -->	  
 				</div>
 				<div class="form-group">
 					<label for="description" class="col-form-label">PT 예약 날짜:</label>

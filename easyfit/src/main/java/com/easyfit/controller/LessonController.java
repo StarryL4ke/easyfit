@@ -55,9 +55,9 @@ private LessonService lessonService;
 	// SELECT - LIST (운동기록)
 	@GetMapping("/lessonDetailList")
 	public void lessonDetailList(@ModelAttribute("cri") Criteria cri, @RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model) {		
-		
 		log.info("list : " + cri + " , " + prno);
 		model.addAttribute("exerciseRecordList", lessonService.getDoubleList(cri, prno, tno));
+		
 		
 		long total = lessonService.getExerciseRecordTotal(cri, prno);
 		log.info("total : " + total);
@@ -71,7 +71,6 @@ private LessonService lessonService;
 		
 		log.info("lessonGet : " + prno + " , " + edate + " , " + tno);
 		model.addAttribute("vo", lessonService.getGet(prno, edate, tno));
-		
 	}
 	
 	
@@ -81,7 +80,6 @@ private LessonService lessonService;
 		
 		log.info("lessonRegister(get) : " + prno + " , " + tno);
 		model.addAttribute("exerciseRecordList", lessonService.getDoubleListNotPaging(prno, tno));
-
 	}
 	
 	// INSERT
@@ -91,10 +89,8 @@ private LessonService lessonService;
 	public void lessonRegister(@RequestBody ExerciseRecordVO vo, @RequestParam("tno") Long tno) {
 		
 		log.info("lessonRegister(post) : " + vo);
-		
 	    lessonService.getRegister(vo); 
 		lessonService.getPrcountUpdate(vo.getPrno());
-		
 	}
 	
 	
@@ -103,26 +99,27 @@ private LessonService lessonService;
 	public void lessonModify(@RequestParam("prno") Long prno, @RequestParam("edate") String edate, @RequestParam("tno") Long tno, Model model) {
 		
 		log.info("lessonModify(get) : " + prno + " , " + edate + " , " + tno);
+		log.info("check : " + lessonService.getGet(prno, edate, tno));
 		model.addAttribute("vo", lessonService.getGet(prno, edate, tno));
 	}
 	
 	// UPDATE - 기입력 내용은 modify, 새로운 입력 내용은 register 해야 됨
-	// 파라미터를 하나 추가 (selectbox, radio 등으로) 해서 보낸다. 받을 때 수정과 등록 데이터를 구분하고 서비스에서 for문 돌린다.
-	// input type='hidden' name='update' value='u' => 배열 VO에 들어간다. 배열 변수 추가
-	// input type='hidden' name='insert' value='i' => 배열 VO에 들어간다. 배열 변수 추가
-	
- 	@PostMapping("/lessonModify")
-	public String lessonModify(ExerciseRecordVO vo, @RequestParam("tno") Long tno, RedirectAttributes rttr) {
+	@ResponseBody
+	@PostMapping(value = "/lessonModify", consumes="application/json") 
+	public void lessonModify(@RequestBody ExerciseRecordVO vo, @RequestParam("tno") Long tno) {
 										
-		log.info("lessonModify(post)");
+		log.info("lessonModify(post) : " + vo);
 		lessonService.getModify(vo);
-		
-		rttr.addFlashAttribute("result", "수정");
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		return "redirect:/easyfit/lessonModify?prno=" + vo.getPrno() + "&edate=" + sdf.format(vo.getEdate()) + "&tno=" + tno;
-		
 	}
+	
+	@ResponseBody
+	@PostMapping(value = "/lessonModifyRegister", consumes="application/json") 
+	public void lessonModifyRegister(@RequestBody ExerciseRecordVO vo, @RequestParam("tno") Long tno) {
+		
+		log.info("lessonModifyRegister(post) : " + vo);
+		lessonService.getRegister(vo);
+	}
+
 	
 	// DELETE
 	@Transactional
@@ -143,4 +140,13 @@ private LessonService lessonService;
 		
 		return "redirect:/easyfit/lessonDetailList?prno=" + prno + "&tno=" + tno;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

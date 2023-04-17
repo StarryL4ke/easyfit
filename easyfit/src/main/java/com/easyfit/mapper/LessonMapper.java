@@ -21,8 +21,6 @@ public interface LessonMapper {
 	
 	// INSERT
 	public void register(ExerciseRecordVO vo);
-	public void registerSelectKey(ExerciseRecordVO vo);
-
 	
 	// UPDATE
 	public void modify(ExerciseRecordVO vo);

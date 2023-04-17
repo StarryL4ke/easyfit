@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.easyfit.domain.ClientVO;
 import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.mapper.CalendarMapper;
 
@@ -33,6 +34,13 @@ public class CalendarService {
 		log.info(exerciseRecord);
 
 		return calendarMapper.register(exerciseRecord, tid, mname);
+	}
+	
+	//#{tid}의 회원 목록
+	public List<String> mnameList(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String tid = auth.getName();
+		return calendarMapper.mnameList(tid);
 	}
 
 }

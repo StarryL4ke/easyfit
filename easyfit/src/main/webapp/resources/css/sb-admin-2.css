@@ -2317,7 +2317,7 @@ textarea.form-control {
 
 
 /* 추가 */
-#pbtn, #mbtn, #checkbox:checked + #pbtn, #checkbox:checked + #mbtn {
+.pbtn, .mbtn {
   padding: 0.175rem 0.6rem!important;
   font-size: 1.5rem!important;
   line-height: 1!important;
@@ -11398,11 +11398,6 @@ body.sidebar-toggled footer.sticky-footer {
 	top: 10px!important;
 }
 
-/* 추가 */
-#getErdate {
-	position: relative!important;
-	left: 140px!important;
-}
 
 /* 추가 */
 .btn-width {
@@ -11492,3 +11487,93 @@ body.sidebar-toggled footer.sticky-footer {
   flex-wrap: nowrap;
   align-items: stretch;
 }
+
+
+/* 추가 */
+.btn-white {
+  color: #000;
+  background-color: #fff;
+}
+/* 추가 */
+.btn-white:hover {
+  color: #fff;
+  background-color: #4e73df;
+}
+/* 추가 */
+.btn-white:focus, .btn-white.focus {
+  color: #fff;
+  background-color: #2e59d9;
+  border-color: #2653d4;
+  box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
+}
+/* 추가 */
+.btn-white.disabled, .btn-white:disabled {
+  color: #000;
+  background-color: #fff;
+}
+/* 추가 */
+.btn-white:not(:disabled):not(.disabled):active, .btn-white:not(:disabled):not(.disabled).active,
+.show > .btn-white.dropdown-toggle {
+  color: #000;
+  background-color: #fff;
+}
+/* 추가 */
+.btn-white:not(:disabled):not(.disabled):active:focus, .btn-white:not(:disabled):not(.disabled).active:focus,
+.show > .btn-white.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
+}
+
+/* 추가 */
+.btn-lightgray {
+  color: red;
+  background-color: lightgray;
+  font-size: 1.25rem;
+}
+/* 추가 */
+.btn-lightgray:hover {
+  color: #fff;
+  background-color: #4e73df;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+/* 추가 */
+.btn-lightgray:focus, .btn-lightgray.focus {
+  color: #fff;
+  background-color: #2e59d9;
+  border-color: #2653d4;
+  box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
+}
+/* 추가 */
+.btn-lightgray.disabled, .btn-lightgray:disabled {
+  color: #000;
+  background-color: #fff;
+}
+/* 추가 */
+.btn-lightgray:not(:disabled):not(.disabled):active, .btn-lightgray:not(:disabled):not(.disabled).active,
+.show > .btn-lightgray.dropdown-toggle {
+  color: #000;
+  background-color: #fff;
+}
+/* 추가 */
+.btn-lightgray:not(:disabled):not(.disabled):active:focus, .btn-lightgray:not(:disabled):not(.disabled).active:focus,
+.show > .btn-lightgray.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
+}
+
+/* 추가 */
+.modal-scroll {
+    max-height: calc(100vh - 28rem);
+    overflow-y: auto;	
+}
+
+/* 추가 */
+.max-width-800 {
+	max-width: 800px!important;
+}
+
+/* 추가 */
+input[name='exerciseNameSearch'] {
+	position: relative!important;
+	left: 150px!important;
+}
+

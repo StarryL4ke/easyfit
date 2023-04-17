@@ -90,7 +90,7 @@
 			        FROM
 			            (
 			                SELECT DISTINCT
-			                    m.mno mno, m.mname mname, er.edate edate, er.erdate erdate, pr.prno prno, pr.prcount prcount
+			                    m.mno mno, m.mname mname, er.edate edate, TO_DATE(er.erdate, 'yy/mm/dd') erdate, pr.prno prno, pr.prcount prcount
 			                FROM
 			                    member m, ptrecord pr, exerciserecord er
 			                WHERE
@@ -123,23 +123,23 @@
 		]]>
 	</select>	
 	
-   <select id="get" resultType="com.easyfit.domain.join.LessonJoinVO">
-      <![CDATA[
-         SELECT
-            m.mname mname, m.mno mno, er.ergroup ergroup, er.erno erno, er.eno eno, er.edate edate, er.erset erset, er.erweight erweight, er.ernumber ernumber, er.erdate erdate, er.prno prno, et.ename ename, er.ermemo ermemo
-         FROM
-            member m, ptrecord pr, exerciserecord er, exercisetype et
-         WHERE
-            m.mno = pr.mno
-            AND pr.prno = er.prno
-            AND er.eno = et.eno
-            AND er.prno = #{prno}
-            AND TO_DATE(er.edate, 'yy/mm/dd') = TO_DATE(#{edate}, 'yy/mm/dd')
-            AND pr.tno = #{tno}
-         ORDER BY
-            ergroup, erset
-      ]]>
-   </select>
+	<select id="get" resultType="com.easyfit.domain.join.LessonJoinVO">
+		<![CDATA[
+			SELECT
+				m.mname mname, m.mno mno, er.ergroup ergroup, er.erno erno, er.eno eno, er.edate edate, er.erset erset, er.erweight erweight, er.ernumber ernumber, er.erdate erdate, er.prno prno, et.ename ename, er.ermemo ermemo
+			FROM
+				member m, ptrecord pr, exerciserecord er, exercisetype et
+			WHERE
+				m.mno = pr.mno
+				AND pr.prno = er.prno
+				AND er.eno = et.eno
+				AND er.prno = #{prno}
+				AND TO_DATE(er.edate, 'yy/mm/dd') = TO_DATE(#{edate}, 'yy/mm/dd')
+				AND pr.tno = #{tno}
+			ORDER BY
+				ergroup, erset
+		]]>
+	</select>
 	
 	
 	<insert id="register">
@@ -153,13 +153,12 @@
 	</insert>
 
 	
-	<!-- UPDATE (UPDATE) -->
+	<!-- UPDATE -->
 	<update id="modify">
 		<![CDATA[
 			UPDATE
 				exerciserecord
 			SET
-				ergroup = #{ergroup},
 				eno = #{eno},
 				edate = #{edate},
 				erset = #{erset},
@@ -168,8 +167,7 @@
 				erdate = sysdate,
 				ermemo = #{ermemo}
 			WHERE
-				prno = #{prno}
-				AND erno = #{erno}
+				erno = #{erno}
 		]]>
 	</update>
 	
@@ -183,7 +181,7 @@
 							    COUNT(edate)
 							FROM(
 							        SELECT DISTINCT
-							            edate
+							            TO_DATE(edate, 'yy/mm/dd') edate
 							        FROM
 							            exerciserecord 
 							        WHERE
@@ -319,18 +317,6 @@
 				ename = #{ename}
 		]]>
 	</select>
-	
-		
-<!-- 	<select id="eno" resultType="com.easyfit.domain.ExerciseTypeVO">
-		<![CDATA[
-			SELECT
-				eno
-			FROM
-				exercisetype
-			WHERE
-				ename = #{item.ename}
-		]]>
-	</select> -->
 	
 	
 	
