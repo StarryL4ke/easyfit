@@ -123,23 +123,23 @@
 		]]>
 	</select>	
 	
-	<select id="get" resultType="com.easyfit.domain.join.LessonJoinVO">
-		<![CDATA[
-			SELECT
-				m.mname mname, m.mno mno, er.ergroup ergroup, er.erno erno, er.eno eno, er.edate edate, er.erset erset, er.erweight erweight, er.ernumber ernumber, er.erdate erdate, er.prno prno, et.ename ename, er.ermemo ermemo
-			FROM
-				member m, ptrecord pr, exerciserecord er, exercisetype et
-			WHERE
-				m.mno = pr.mno
-				AND pr.prno = er.prno
-				AND er.eno = et.eno
-				AND er.prno = #{prno}
-				AND er.edate = #{edate}
-				AND pr.tno = #{tno}
-			ORDER BY
-				erno ASC
-		]]>
-	</select>
+   <select id="get" resultType="com.easyfit.domain.join.LessonJoinVO">
+      <![CDATA[
+         SELECT
+            m.mname mname, m.mno mno, er.ergroup ergroup, er.erno erno, er.eno eno, er.edate edate, er.erset erset, er.erweight erweight, er.ernumber ernumber, er.erdate erdate, er.prno prno, et.ename ename, er.ermemo ermemo
+         FROM
+            member m, ptrecord pr, exerciserecord er, exercisetype et
+         WHERE
+            m.mno = pr.mno
+            AND pr.prno = er.prno
+            AND er.eno = et.eno
+            AND er.prno = #{prno}
+            AND TO_DATE(er.edate, 'yy/mm/dd') = TO_DATE(#{edate}, 'yy/mm/dd')
+            AND pr.tno = #{tno}
+         ORDER BY
+            ergroup, erset
+      ]]>
+   </select>
 	
 	
 	<insert id="register">

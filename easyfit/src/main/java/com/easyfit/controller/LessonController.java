@@ -8,12 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.easyfit.domain.Criteria;
-import com.easyfit.domain.ExerciseRecordArrayVO;
 import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.PageDTO;
 import com.easyfit.service.LessonService;
@@ -85,17 +86,15 @@ private LessonService lessonService;
 	
 	// INSERT
 	@Transactional
-	@PostMapping("/lessonRegister") 
-	public void lessonRegister(Object forms, @RequestParam("tno") Long tno, Model model) {
+	@ResponseBody
+	@PostMapping(value = "/lessonRegister", consumes="application/json") 
+	public void lessonRegister(@RequestBody ExerciseRecordVO vo, @RequestParam("tno") Long tno) {
 		
-		log.info("lessonRegister(post) : " + forms);
-		//log.info("lessonRegister(post) : " + arrayVo);
+		log.info("lessonRegister(post) : " + vo);
 		
-	    //lessonService.getRegister(arrayVo); 
+	    lessonService.getRegister(vo); 
+		lessonService.getPrcountUpdate(vo.getPrno());
 		
-		//lessonService.getPrcountUpdate(arrayVo.getPrno()[0]);
-		
-		//return "redirect:/easyfit/lessonDetailList?prno=" + arrayVo.getPrno()[0] + "&tno=" + tno; 
 	}
 	
 	

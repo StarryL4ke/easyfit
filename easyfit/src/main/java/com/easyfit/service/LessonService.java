@@ -3,7 +3,6 @@ package com.easyfit.service;
 import java.util.List;
 
 import com.easyfit.domain.Criteria;
-import com.easyfit.domain.ExerciseRecordArrayVO;
 import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.ExerciseTypeVO;
 import com.easyfit.domain.join.LessonJoinVO;
@@ -19,7 +18,7 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	public List<LessonJoinVO> getGet(Long prno, String edate, Long tno);
 	
 	// INSERT
-	public void getRegister(ExerciseRecordArrayVO arrayVo);
+	public void getRegister(ExerciseRecordVO vo);
 	
 	// UPDATE
 	public void getModify(ExerciseRecordVO vo);

@@ -16,11 +16,11 @@
 					<div class="d-sm-flex align-items-center justify-content-between mb-3 h7 ml-2">
 						<div>
 							<label class="text-gray-800">운동일자 : </label>
-							<input type="date" id="edate" class="box2 width-60 h7 pl-4" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${vo[0].edate}" />' disabled>
+							<input type="date" id="edate" class="box2 width-60 h7 pl-4" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${vo[0].edate}" />' readonly>
 						</div>
  						<div>
 							<label class="text-gray-800">작성일자 : </label>
-							<input type="date" id="erdate" class="box2 width-60 h7 pl-4" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${vo[0].erdate}" />' disabled>
+							<input type="date" id="erdate" class="box2 width-60 h7 pl-4" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${vo[0].erdate}" />' readonly>
 						</div>
 					</div>
 					
@@ -110,7 +110,7 @@
 							<div class="modal-header">
 								<h4 class="modal-title" id="lessonGetModalLabel">알림</h4>
 							</div>
-							<div class="modal-body">${result}가 완료되었습니다.</div>
+							<div class="modal-body">삭제가 완료되었습니다.</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
 							</div>

@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.easyfit.domain.Criteria;
-import com.easyfit.domain.ExerciseRecordArrayVO;
 import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.ExerciseTypeVO;
 import com.easyfit.domain.join.LessonJoinVO;
@@ -56,35 +55,31 @@ public class LessonServiceImpl implements LessonService {
 	
 	// INSERT
 	@Override
-	public void getRegister(ExerciseRecordArrayVO arrayVo) {
-	    ExerciseRecordVO[] voArray = toVOArr(arrayVo);
-	    
-	    for(int i = 0 ; i < voArray.length ; i++ ){
-	    	log.info("getRegister : " + voArray);
-	    	lessonMapper.register(voArray[i]);
-	    }
+	public void getRegister(ExerciseRecordVO vo) {
+		
+		log.info("getRegister : " + vo);
+	    lessonMapper.register(vo);
 	}
 	
 	// 배열에서 데이터 빼내는 메소드 생성
-	public ExerciseRecordVO[] toVOArr(ExerciseRecordArrayVO arrayVo){
-		
-		ExerciseRecordVO[] voArray = new ExerciseRecordVO[10];
-		
-		for(int i = 0 ; i < arrayVo.eno.length ; i++ ){
-			voArray[i] = new ExerciseRecordVO();
-			voArray[i].setErno(arrayVo.erno[i]);
-			voArray[i].setEdate(arrayVo.edate[i]);
-			voArray[i].setEno(arrayVo.eno[i]);
-			voArray[i].setErdate(arrayVo.erdate[i]);
-			voArray[i].setErgroup(arrayVo.ergroup[i]);
-			voArray[i].setErmemo(arrayVo.ermemo[i]);
-			voArray[i].setErnumber(arrayVo.ernumber[i]);
-			voArray[i].setErset(arrayVo.erset[i]);
-			voArray[i].setErweight(arrayVo.erweight[i]);
-		}
+	/*
+	 * public ExerciseRecordVO[] toVOArr(ExerciseRecordArrayVO arrayVo){
+	 * 
+	 * ExerciseRecordVO[] voArray = new ExerciseRecordVO[10];
+	 * 
+	 * for(int i = 0 ; i < arrayVo.eno.length ; i++ ){ voArray[i] = new
+	 * ExerciseRecordVO(); voArray[i].setErno(arrayVo.erno[i]);
+	 * voArray[i].setEdate(arrayVo.edate[i]); voArray[i].setEno(arrayVo.eno[i]);
+	 * voArray[i].setErdate(arrayVo.erdate[i]);
+	 * voArray[i].setErgroup(arrayVo.ergroup[i]);
+	 * voArray[i].setErmemo(arrayVo.ermemo[i]);
+	 * voArray[i].setErnumber(arrayVo.ernumber[i]);
+	 * voArray[i].setErset(arrayVo.erset[i]);
+	 * voArray[i].setErweight(arrayVo.erweight[i]); }
+	 *
 		
 		return voArray;
-	}
+	}*/
 	
 
 	// UPDATE
