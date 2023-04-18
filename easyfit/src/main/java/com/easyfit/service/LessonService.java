@@ -13,7 +13,7 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	
 	// SELECT
     //public List<LessonJoinVO> getTripleList(Criteria cri, Long tno);
-	public List<LessonJoinVO> getDoubleList(Criteria cri, Long prno, Long tno);
+	public List<LessonJoinVO> getDoubleList(Long prno, Long tno);
 	public LessonJoinVO getDoubleListNotPaging(Long prno, Long tno);
 	public List<LessonJoinVO> getGet(Long prno, String edate, Long tno);
 	

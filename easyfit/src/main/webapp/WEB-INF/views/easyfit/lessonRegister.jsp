@@ -165,13 +165,13 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		var url = location.search;
+/* 		var url = location.search;
 		var url2 = url.substring(1);
 		var url3 = url2.split("&");
 		var url4 = url3[0].split("=");
 		var url5 = url3[1].split("=");
 		var prnoValue = url4[1];
-		
+		 */
 		
 		/* 작성일자, 운동일자에 오늘 날짜 띄우기 **********************************/
 		var today = new Date();
@@ -249,7 +249,7 @@
 			$("#lessonRegisterModal").modal("show");
 			
 			$("#lessonRegisterModalCloseBtn").on("click", function() {
-				location.href="/easyfit/lessonDetailList?prno=" + prnoValue + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
+				location.href="/easyfit/lessonDetailList?prno=" + ${prnoTransfer} + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
 			});
 		}); 
 		

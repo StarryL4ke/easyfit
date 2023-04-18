@@ -15,7 +15,7 @@ public interface LessonMapper {
 	
 	// SELECT
     //public List<LessonJoinVO> tripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
-	public List<LessonJoinVO> doubleList(@Param("cri") Criteria cri, @Param("prno") Long prno, @Param("tno") Long tno);
+	public List<LessonJoinVO> doubleList(@Param("prno") Long prno, @Param("tno") Long tno);
 	public LessonJoinVO doubleListNotPaging(@Param("prno") Long prno, @Param("tno") Long tno);
 	public List<LessonJoinVO> get(@Param("prno") Long prno, @Param("edate") String edate, @Param("tno") Long tno);
 	

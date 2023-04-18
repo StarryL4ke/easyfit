@@ -32,10 +32,9 @@ public class LessonServiceImpl implements LessonService {
 */	
 	
 	@Override
-	public List<LessonJoinVO> getDoubleList(Criteria cri, Long prno, Long tno) {
+	public List<LessonJoinVO> getDoubleList(Long prno, Long tno) {
 		
-		log.info("get Double List with criteria : " + cri);
-		return lessonMapper.doubleList(cri, prno, tno);
+		return lessonMapper.doubleList(prno, tno);
 	}
 	
 	@Override

@@ -16,4 +16,7 @@ public interface CalendarMapper {
 	public int register(@Param("exerciseRecord") ExerciseRecordVO exerciseRecord, @Param("tid") String tid, @Param("mname") String mname);
 	//#{tid}의 회원 목록
 	public List<String> mnameList(@Param("tid") String tid);
+	//prcount 증/감
+	public long prcountUpdate(@Param("mname") String mname, @Param("tid") String tid);
+	
 }

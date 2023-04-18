@@ -81,31 +81,23 @@
 
 	<select id="doubleList" resultType="com.easyfit.domain.join.LessonJoinVO">
 		<![CDATA[
-			SELECT
-			    rn, mno, mname, edate, erdate, prno, prcount
-			FROM
-			    (
-			        SELECT
-			            rownum rn, mno, mname, edate, erdate, prno, prcount
-			        FROM
-			            (
-			                SELECT DISTINCT
-			                    m.mno mno, m.mname mname, TO_DATE(er.edate, 'yy/mm/dd') edate, TO_DATE(er.erdate, 'yy/mm/dd') erdate, pr.prno prno, pr.prcount prcount
-			                FROM
-			                    member m, ptrecord pr, exerciserecord er
-			                WHERE
-			                	m.mno = pr.mno
-			                    AND pr.prno = er.prno
-			                    AND er.prno = #{prno}
-			                    AND pr.tno = #{tno}
-			            )
-			        WHERE
-			        	rownum <= #{cri.pageNum} * #{cri.amount}
-			    )
-			WHERE
-				rn > (#{cri.pageNum} - 1) * #{cri.amount}
-			ORDER BY
-			    rn DESC
+
+SELECT
+    rownum rn, mno, mname, edate, erdate, prno, prcount
+FROM
+    (
+    SELECT DISTINCT
+        m.mno mno, m.mname mname, TO_DATE(er.edate, 'yy/mm/dd') edate, TO_DATE(er.erdate, 'yy/mm/dd') erdate, pr.prno prno, pr.prcount prcount
+    FROM
+        member m, ptrecord pr, exerciserecord er
+    WHERE
+    	m.mno = pr.mno
+        AND pr.prno = er.prno
+        AND er.prno = #{prno}
+        AND pr.tno = #{tno}
+    )
+ORDER BY
+    rn DESC
 		]]>
 	</select>	
 	

@@ -44,4 +44,9 @@ public class CalendarService {
 		return calendarMapper.mnameList(tid);
 	}
 
+	public boolean getPrcountUpdate(String mname) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String tid = auth.getName();
+		return calendarMapper.prcountUpdate(mname, tid) == 1;
+	}
 }

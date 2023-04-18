@@ -73,8 +73,7 @@
 									</select>
 									
 									<input type='text' name='keyword' class='custom-select-sm form-control form-control-sm ml-2' value='<c:out value="${pageMaker.cri.keyword}"/>'>
-									<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'>
-									<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'>
+
 									
 									<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>">
 									
@@ -122,10 +121,7 @@
 				
 				<!-- hidden 태그 전송용 폼 시작 -->
 				<form id="hiddenForm" action="/easyfit/lessonList" method="get">
-					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
-					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+
 					<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
 					<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
 					<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->

@@ -51,6 +51,70 @@ VALUES(
     )
 )
 </insert>
+<!-- prcount 증/감 -->
+<update id="prcountUpdate">
+UPDATE
+	ptrecord
+SET
+	prcount = (
+				SELECT
+				    COUNT(edate)
+				FROM(
+				        SELECT DISTINCT
+				            TO_DATE(edate, 'yy/mm/dd') edate
+				        FROM
+				            exerciserecord 
+				        WHERE
+				            prno = (
+                                    SELECT
+                                        prno
+                                    FROM
+                                        ptrecord ptr, member mem, trainer t, trainer_auth auth
+                                    WHERE
+                                        mem.mno = ptr.mno
+                                        AND ptr.tno = t.tno
+                                        AND mem.mname = #{mname}
+                                        AND auth.tid = #{tid}
+                                        AND prturn = (
+                                                        SELECT
+                                                            MAX(prturn)
+                                                        FROM
+                                                            member mem, ptrecord ptr, trainer t, trainer_auth auth
+                                                        WHERE
+                                                            mem.mno = ptr.mno
+                                                            AND ptr.tno = t.tno
+                                                            AND t.tid = auth.tid
+                                                            AND mem.mname = #{mname}
+                                                            AND auth.tid = #{tid}                
+                                                        )
+                                    )
+		            )
+		      )
+WHERE
+	prno = (
+            SELECT
+                prno
+            FROM
+                ptrecord ptr, member mem, trainer t, trainer_auth auth
+            WHERE
+                mem.mno = ptr.mno
+                AND ptr.tno = t.tno
+                AND mem.mname = #{mname}
+                AND auth.tid = #{tid}
+                AND prturn = (
+                                SELECT
+                                    MAX(prturn)
+                                FROM
+                                    member mem, ptrecord ptr, trainer t, trainer_auth auth
+                                WHERE
+                                    mem.mno = ptr.mno
+                                    AND ptr.tno = t.tno
+                                    AND t.tid = auth.tid
+                                    AND mem.mname = #{mname}
+                                    AND auth.tid = #{tid}                
+                                )
+            )
+</update>
 <!-- #{tid}의 회원 목록 -->
 <select id="mnameList" resultType="String"> 
 SELECT  

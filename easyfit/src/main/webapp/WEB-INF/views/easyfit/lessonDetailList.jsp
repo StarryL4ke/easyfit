@@ -49,33 +49,6 @@
 				<!-- 운동일지 (운동내역 기준) 목록 끝 -->
 				
 				
-				<!-- 페이징 처리 시작 ----------------------------------------------------------------->
-				<div align="center" class="d-sm-flex col-lg-12">
-					<div class="col-lg-12">
-						<ul class="pagination d-sm-flex justify-content-center">
-						
-							<c:if test="${pageMaker.prev}">
-								<li class="paginate_button privious px-2">
-									<a href="${pageMaker.startPage - 1}">이전</a> 
-								</li>
-							</c:if>
-							
-							<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-								<li class='paginate_button px-2  ${pageMaker.cri.pageNum == num ? "active" : ""}'>
-									<a href="${num}" class="page-link">${num}</a>
-								</li>
-							</c:forEach>  
-										  
-							<c:if test="${pageMaker.next}">
-								<li class="paginage_button next px-2">
-									<a href="${pageMaker.endPage + 1}">다음</a> 
-								</li>
-							</c:if>
-							
-						</ul>			  	
-					</div>
-				</div>
-				<!-- 페이징 처리 끝 -->
 				
 				
 				<!-- hidden 태그 전송용 폼 시작 -->
@@ -102,15 +75,8 @@
 			$("#hiddenForm").attr("action", "/easyfit/lessonRegister");
 			$("#hiddenForm").submit();
 		});
-		
-		/* 페이징 클릭 이벤트 ******************************************************************/
-		$(".paginate_button a").on("click", function(e) {
-			
-			e.preventDefault(); 
-			console.log('click');
-			$("#hiddenForm").find("input[name='pageNum']").val($(this).attr("href"));
-			$("#hiddenForm").submit();
-		});
+
+
 		
 	});
 </script>

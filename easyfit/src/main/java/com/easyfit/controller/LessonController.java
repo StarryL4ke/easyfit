@@ -52,15 +52,10 @@ private LessonService lessonService;
 	
 	// SELECT - LIST (운동기록)
 	@GetMapping("/lessonDetailList")
-	public void lessonDetailList(@ModelAttribute("cri") Criteria cri, @RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model) {		
+	public void lessonDetailList(@RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model) {		
+
+		model.addAttribute("exerciseRecordList", lessonService.getDoubleList(prno, tno));	
 		
-		log.info("list : " + cri + " , " + prno);
-		model.addAttribute("exerciseRecordList", lessonService.getDoubleList(cri, prno, tno));
-		
-		long total = lessonService.getExerciseRecordTotal(cri, prno);
-		log.info("total : " + total);
-		
-		model.addAttribute("pageMaker", new PageDTO(total, cri));
 		model.addAttribute("prnoTransfer", prno);
 	}
 	
@@ -79,6 +74,7 @@ private LessonService lessonService;
 		
 		log.info("lessonRegister(get) : " + prno + " , " + tno);
 		model.addAttribute("exerciseRecordList", lessonService.getDoubleListNotPaging(prno, tno));
+		model.addAttribute("prnoTransfer", prno);
 	}
 	
 	// INSERT
