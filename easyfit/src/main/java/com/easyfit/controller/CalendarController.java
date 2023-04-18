@@ -46,6 +46,7 @@ public class CalendarController {
 		for(int i = 0 ; i < list.size() ; i++) {
 			hash.put("title", list.get(i).get("MNAME"));
 			hash.put("start", list.get(i).get("EDATE"));
+			hash.put("prno", String.valueOf(list.get(i).get("PRNO")));
 			jsonObj = new JSONObject(hash);
 			jsonArr.add(jsonObj);
 		}

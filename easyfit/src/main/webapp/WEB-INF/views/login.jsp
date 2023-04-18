@@ -22,14 +22,17 @@
 			<div class="col-xl-6 col-lg-8 col-md-8">
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
-						<!-- Nested Row within Card Body -->
-						<div class="col-lg-12" style="width: 440px; height: 400px;">
+					
+						<!-- 로그인 폼 -->
+						<div class="col-lg-12" id="loginCard">
 							<div class="p-5 text-center">
 								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">트레이너 로그인</h1> 
-                                    <h2><c:out value="${logout}"/></h2>
+                                    <h2 class="h5 msgColor mb-4"><c:out value="${logout}"/></h2>
 								</div>
-                                <div class="loginbox text-center">
+                                <div class="loginBox text-center">
+	                                
+	                                <!-- 아이디, 비밀번호 입력 -->
 	                                <form class="user text-center" method="post" action="/login">
 	                                
 	                                    <div class="form-group form-inline col-lg-12">
@@ -41,21 +44,23 @@
 	                                    <div class="form-group form-inline col-lg-12"> 
 	                                    	<label><i class="fas fa-fw fa-key fa-lg"></i></label>
 	                                    	<span>&nbsp;</span>
-	                                        <input type="password" class="form-control form-control-user" id="tpassword" name="password" placeholder="Password">
+	                                        <input type="password" class="form-control form-control-user" id="tpw" name="password" placeholder="Password">
 	                                    </div>
 	                                    
-	                                	<div>
-	                                    	<input type='checkbox' name='remember-me'>자동 로그인
-	                                    </div>
-
-	                                    	<span style="color: red;"><c:out value="${error}"/></span>
-	                                    
-	                                    <div class="col-lg-6 col-xs-4">
-	                                    	<input type="submit" class="btn btn-primary btn-user btn-block" value="로그인">
+	                                    <!-- 자동 로그인 -->
+	                                	<div class="my-2">
+	                                    	<input type="checkbox" id="checkbox" name="remember-me">
+	                                    	<label for="checkbox" class="h8">자동 로그인</label>
 	                                    </div>
 	                                    
-	                                    <div class="col-lg-6 col-xs-4">
-		                                    <a href="join.html" class="btn btn-success btn-user btn-block">Join</a>
+	                                    <!-- 에러 메시지 -->
+	                                    <div class="mb-3">
+		                                    <span class="h8 msgColor"><c:out value="${error}"/></span>
+	                                    </div>
+	                                    
+	                                    <!-- 로그인 버튼 -->
+	                                    <div class="col-lg-12 ml-2">
+	                                    	<input type="submit" class="btn btn-success btn-user btn-block h7 p-2" value="Login">
 	                                    </div>
 	                                    
 	                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />                               

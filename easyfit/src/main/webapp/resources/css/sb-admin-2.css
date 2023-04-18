@@ -4504,7 +4504,16 @@ input[type="button"].btn-block {
 }
 
 /* 추가 */
-.loginbox {
+#loginCard {
+	width: 440px;
+	height: 440px;
+	margin-left: 38px;
+	margin-top: 15px;
+	margin-bottom: -20px;
+}
+
+/* 추가 */
+.loginBox {
 	display: inline-block!important;
 	margin: 0px auto!important;
 }
@@ -7709,6 +7718,11 @@ button.bg-dark:focus {
 .mt-1,
 .my-1 {
   margin-top: 0.25rem !important;
+}
+
+/* 추가 */
+.mt-1-5 {
+	margin-top: 0.32rem !important;
 }
 
 .mr-1,
@@ -11457,13 +11471,14 @@ body.sidebar-toggled footer.sticky-footer {
 /* 추가 */
 #checkbox {
 	display: inline-block!important;
-	width: 30px!important;
-	height: 30px!important;
+	width: 20px!important;
+	height: 20px!important;
 	border: 2px solid #4e73df!important;
 	border-radius: 0.35rem!important;
 	text-align: center;
 	position: relative!important;
 	top: 5px!important;
+	margin-right: 5px;
 }
 
 /* 추가 */
@@ -11577,3 +11592,7 @@ input[name='exerciseNameSearch'] {
 	left: 150px!important;
 }
 
+/* 추가 */
+.msgColor {
+	color: red;
+}

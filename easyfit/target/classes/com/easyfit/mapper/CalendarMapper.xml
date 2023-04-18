@@ -6,7 +6,7 @@
 <select id="list" resultType="Map" parameterType="String">
 <![CDATA[
 SELECT
-    mname, TO_CHAR(edate,'YYYY-MM-DD') edate
+    mname, TO_CHAR(edate,'YYYY-MM-DD') edate, ptr.prno
 FROM
     member mem, ptrecord ptr, exerciserecord er, trainer t, trainer_auth auth
 WHERE

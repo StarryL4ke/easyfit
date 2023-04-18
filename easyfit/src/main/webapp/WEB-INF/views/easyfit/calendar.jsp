@@ -10,6 +10,21 @@ var csrfTokenValue="${_csrf.token}";
 $(document).ajaxSend(function(e, xhr, options) { 
 xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
 }); 
+
+function dateFormat(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+ 
+
+    return date.getFullYear() + '-' + month + '-' + day;
+}
+
 function addRecord(){
 
 		var schedule = {
@@ -43,6 +58,31 @@ document.addEventListener('DOMContentLoaded', function() {
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 		initialView: 'dayGridMonth',
 		selectable: true,
+		eventClick: function(info) {
+			var mname = info.event.title;
+			var edate = info.event.start;
+			var tno = <sec:authentication property="principal.trainerVO.tno"/>;
+			
+			console.log(mname);
+			console.log(data[0].prno);
+			console.log(dateFormat(edate));
+			console.log(tno);
+	
+			// url 구성
+			var url = "/easyfit/lessonGet?prno=" + data[0].prno + "&edate=" + dateFormat(edate) + "&tno=" + tno;
+			// 페이지 이동
+			window.location.href = url;
+			
+			 
+			var eventObj = info.event;
+	
+   	      if (eventObj.url) {
+   	        alert(
+   	          'Clicked ' + eventObj.title + '.\n' +
+   	          'Will open ' + eventObj.url + ' in a new tab'
+   	        );
+   	      }   	      
+		},
 		dateClick: function(info) {
 			$.ajax({
 				type : 'get',
@@ -69,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 });
 </script>
-<div id='calendar'></div>
+<div id='calendar' style="width: 70%;"></div>
 
 <div class="modal fade" id="modal-add-event" tabindex="-1" role="dialog" aria-labelledby="modal-add-event" aria-hidden="true">
 	<div class="modal-dialog">
