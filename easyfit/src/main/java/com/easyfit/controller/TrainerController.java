@@ -1,6 +1,7 @@
 package com.easyfit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,8 @@ public class TrainerController {
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder bcrypt;
 	
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/trainerList")//트레이너 목록
 	public void list(Criteria cri, Model model) {
 		long total = trainerService.getCount(cri);

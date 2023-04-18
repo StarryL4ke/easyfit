@@ -8,7 +8,7 @@ var csrfHeaderName ="${_csrf.headerName}";
 var csrfTokenValue="${_csrf.token}";
         
 $(document).ajaxSend(function(e, xhr, options) { 
-xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
 }); 
 
 function dateFormat(date) {
@@ -17,20 +17,15 @@ function dateFormat(date) {
     let hour = date.getHours();
     let minute = date.getMinutes();
     let second = date.getSeconds();
-
+    
     month = month >= 10 ? month : '0' + month;
-    day = day >= 10 ? day : '0' + day;
- 
+    day = day >= 10 ? day : '0' + day; 
 
     return date.getFullYear() + '-' + month + '-' + day;
 }
 
 function addRecord(){
-
-		var schedule = {
-				edate:$("#edate").val()
-		}
-		console.log(schedule);
+	var schedule = {edate:$("#edate").val()}
 	$.ajax({
 		type : 'post',
 		url : '/easyfit/calendarRegister?mname='+$("#clientNameList option:selected").val(),
@@ -41,11 +36,8 @@ function addRecord(){
 		},
 		error : function(xhr, status, er) {
 		}
-	})      
-
+	})
 }
-
-
 
 document.addEventListener('DOMContentLoaded', function() {
 	var request = $.ajax({
@@ -56,60 +48,52 @@ document.addEventListener('DOMContentLoaded', function() {
 	request.done(function(data){
 		var calendarEl = document.getElementById('calendar');
 		var calendar = new FullCalendar.Calendar(calendarEl, {
-		initialView: 'dayGridMonth',
-		selectable: true,
-		eventClick: function(info) {
-			var mname = info.event.title;
-			var edate = info.event.start;
-			var tno = <sec:authentication property="principal.trainerVO.tno"/>;
+			initialView: 'dayGridMonth',
+			selectable: true,
+			eventClick: function(info) {
+				var mname = info.event.title;
+				var edate = info.event.start;
+				var tno = <sec:authentication property="principal.trainerVO.tno"/>;
 			
-			console.log(mname);
-			console.log(data[0].prno);
-			console.log(dateFormat(edate));
-			console.log(tno);
+				// url 구성
+				var url = "/easyfit/lessonGet?prno=" + data[0].prno + "&edate=" + dateFormat(edate) + "&tno=" + tno;
+				// 페이지 이동
+				window.location.href = url;			
+				 
+				var eventObj = info.event;
 	
-			// url 구성
-			var url = "/easyfit/lessonGet?prno=" + data[0].prno + "&edate=" + dateFormat(edate) + "&tno=" + tno;
-			// 페이지 이동
-			window.location.href = url;
-			
-			 
-			var eventObj = info.event;
-	
-   	      if (eventObj.url) {
-   	        alert(
-   	          'Clicked ' + eventObj.title + '.\n' +
-   	          'Will open ' + eventObj.url + ' in a new tab'
-   	        );
-   	      }   	      
-		},
-		dateClick: function(info) {
-			$.ajax({
-				type : 'get',
-				url : '/easyfit/calendarClientName',
-				success : function(result, status, xhr) {
-					$.each(result, function(i,v){
-						$("#clientNameList").append("<option value="+v+">" + v + "</option>");					
-					});
-				},
-				error : function(xhr, status, er) {
-				}
-			})      
-			
-			$('#modal-add-event #edate').val(info.dateStr); // 모달 창에서 날짜 설정
-	        $('#modal-add-event').modal('show'); // 모달 창 열기
-		},
-		events: data
-	});
-	calendar.render();
+   	      		if (eventObj.url) {
+   	        		alert('Clicked ' + eventObj.title + '.\n' + 'Will open ' + eventObj.url + ' in a new tab');
+   	     	 	}   	      
+			},
+			dateClick: function(info) {
+				$.ajax({
+					type : 'get',
+					url : '/easyfit/calendarClientName',
+					success : function(result, status, xhr) {
+						$.each(result, function(i,v){
+							$("#clientNameList").append("<option value="+v+">" + v + "</option>");					
+						});
+					},
+					error : function(xhr, status, er) {
+					}
+				})			
+				$('#modal-add-event #edate').val(info.dateStr); // 모달 창에서 날짜 설정
+		        $('#modal-add-event').modal('show'); // 모달 창 열기
+			},
+			events: data,
+			Boolean, defalut: true,
+			locale: 'ko'
+		});
+		calendar.render();
 	});
 	request.fail(function( jqXHR, textStatus ){
 		alert("Request failed: " + textStatus);
-	});
-	
+	});	
 });
 </script>
-<div id='calendar' style="width: 70%;"></div>
+<!-- <div id='calendar' style="width: 70%;"></div> -->
+<div id='calendar'></div>
 
 <div class="modal fade" id="modal-add-event" tabindex="-1" role="dialog" aria-labelledby="modal-add-event" aria-hidden="true">
 	<div class="modal-dialog">

@@ -1,6 +1,8 @@
 package com.easyfit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Controller
 @RequestMapping("/*")
+
 public class LoginController {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -42,13 +45,19 @@ public class LoginController {
 	public void accessDenied(Authentication auth, Model model) {
 		model.addAttribute("message", "접근 불가.");
 	}
-	
+
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/adminPage")
 	public void loginAdmin() {
 	}
 	
 	@GetMapping("/trainerPage")
 	public void loginTrainer() {
+		
+	}
+	
+	@GetMapping("/trainerSample")
+	public void loginSample() {
 		
 	}
 	
