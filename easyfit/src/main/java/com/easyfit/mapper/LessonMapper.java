@@ -27,7 +27,7 @@ public interface LessonMapper {
 	public long prcountUpdate(Long prno);
 	
 	// DELETE
-	public long remove(@Param("prno") Long erno, @Param("edate") String edate);
+	public long remove(@Param("prno") Long prno, @Param("edate") String edate);
 	
 	// 총 게시글 갯수 구하는 메소드 - 운동기록
 	public long exerciseRecordTotalCount(Criteria cri, @Param("prno") Long prno);

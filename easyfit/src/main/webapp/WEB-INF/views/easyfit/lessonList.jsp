@@ -75,6 +75,7 @@
 									<input type='text' name='keyword' class='custom-select-sm form-control form-control-sm ml-2' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 									<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'>
 									<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'>
+									
 									<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>">
 									
 									<div class="ml-2">
@@ -125,10 +126,9 @@
 					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
 					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
-				<!--  변수 설정 -->
-					<input type='hidden' name='tno' value='<sec:authentication property="principal.trainerVO.tno"/>'>
-					
-					
+					<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+					<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+					<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
 				</form>				            
 				<!-- hidden 태그 전송용 폼 끝 -->
 				

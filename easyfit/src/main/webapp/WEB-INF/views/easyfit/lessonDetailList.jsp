@@ -16,7 +16,7 @@
                 </div>
                 					
 				<!-- 신규 운동일지 작성 버튼-------------------------------------------------------------->
-        		<div class="col-lg-3 d-inline-block mt-3 pt-2 pr-4 float-right" id="regBtn">
+        		<div class="col-lg-3 d-inline-block mt-3 pt-2 pr-4 float-right">
               		<button type="button" class="h8 btn btn-primary float-right" id="regBtn">신규 운동일지 작성</button>
            		</div>
 			    
@@ -86,35 +86,24 @@
 				</form>				            
 				<!-- hidden 태그 전송용 폼 끝 -->
 				
-								
-
+				
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		/* 신규 운동일지 작성 버튼 클릭 이벤트 시작 ******************************************************************/
-		var url = location.search;
-		
-		var url2 = url.substring(1);
-			
-		var url3 = url2.split("&");
-		
-		//var url4 = url3[5].split("="); 이거 재밋네 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 
-		var url4 = url3[0].split("=");
-		console.log(url4)
-			
-			
-		var prnoValue = url4[1];
+		/* 신규 운동일지 작성 버튼 클릭 이벤트 ******************************************************************/
+
+		var prnoValue = '<c:out value="${prnoTransfer}"/>';
 		
 		$('#regBtn').on("click", function() {
+			
 			$("#hiddenForm").append('<input type="hidden" name="prno" value=' + prnoValue + '>');
+			//$("#hiddenForm").append('<input type="hidden" name="prno" value="'+ ${prnoTransfer} +'">');
 			$("#hiddenForm").append('<input type="hidden" name="edate" value="">');
 			$("#hiddenForm").attr("action", "/easyfit/lessonRegister");
 			$("#hiddenForm").submit();
 		});
-		/* 신규 운동일지 작성 버튼 클릭 이벤트 끝 */
 		
-		
-		/* 페이징 이벤트 시작 ******************************************************************/
+		/* 페이징 클릭 이벤트 ******************************************************************/
 		$(".paginate_button a").on("click", function(e) {
 			
 			e.preventDefault(); 
@@ -122,7 +111,6 @@
 			$("#hiddenForm").find("input[name='pageNum']").val($(this).attr("href"));
 			$("#hiddenForm").submit();
 		});
-		/* 페이징 이벤트 끝 */
 		
 	});
 </script>

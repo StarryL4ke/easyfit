@@ -52,16 +52,24 @@ VALUES(
 )
 </insert>
 <!-- #{tid}의 회원 목록 -->
-<select id="mnameList" resultType="String">
-SELECT DISTINCT
-    mname
+<select id="mnameList" resultType="String"> 
+SELECT  
+    m.mname
+FROM  
+(  
+SELECT
+    ptr.mno, MAX(ptr.prturn)
 FROM
-    member mem, ptrecord ptr, trainer t, trainer_auth auth
+    ptrecord ptr, trainer t, trainer_auth auth
 WHERE
-    mem.mno = ptr.mno
-    AND ptr.tno = t.tno
+    ptr.tno = t.tno
     AND t.tid = auth.tid
     AND auth.tid = #{tid}
+GROUP BY
+    ptr.mno
+) t, member m
+WHERE
+    t.mno = m.mno
 </select>
 
 </mapper>

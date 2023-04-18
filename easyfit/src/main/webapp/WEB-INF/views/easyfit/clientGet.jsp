@@ -40,7 +40,7 @@
 						<a href='/easyfit/lessonDetailList?prno=<c:out value="${ptRecordList.prno}"/>&tno=<sec:authentication property="principal.trainerVO.tno"/>'>
 							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prstartdate}" />
 								 ~ 
-							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prenddate}" />\
+							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prenddate}" />
 						</a>
 					</td>
 					<td>${ptRecordList.prcount} / ${ptRecordList.prcountall}</td>

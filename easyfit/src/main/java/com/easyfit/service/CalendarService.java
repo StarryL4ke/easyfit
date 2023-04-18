@@ -32,6 +32,7 @@ public class CalendarService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String tid = auth.getName();
 		log.info(exerciseRecord);
+		log.info("######## : " + mname);
 
 		return calendarMapper.register(exerciseRecord, tid, mname);
 	}

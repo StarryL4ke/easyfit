@@ -25,7 +25,7 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	public boolean getPrcountUpdate(Long prno);
 	
 	// DELETE
-	public boolean getRemove(Long erno, String edate);
+	public boolean getRemove(Long prno, String edate);
 	
 	// 총 게시글 갯수 구하는 메소드
 	public long getExerciseRecordTotal(Criteria cri, Long prno);

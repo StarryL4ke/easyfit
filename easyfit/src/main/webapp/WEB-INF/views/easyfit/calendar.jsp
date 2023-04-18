@@ -18,7 +18,7 @@ function addRecord(){
 		console.log(schedule);
 	$.ajax({
 		type : 'post',
-		url : '/easyfit/calendarRegister?mname='+$("#mname").val(),
+		url : '/easyfit/calendarRegister?mname='+$("#clientNameList option:selected").val(),
 		data : JSON.stringify(schedule),
 		contentType : "application/json; charset=utf-8",
 		success : function(result, status, xhr) {
@@ -44,7 +44,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		initialView: 'dayGridMonth',
 		selectable: true,
 		dateClick: function(info) {
-	        $('#modal-add-event #edate').val(info.dateStr); // 모달 창에서 날짜 설정
+			$.ajax({
+				type : 'get',
+				url : '/easyfit/calendarClientName',
+				success : function(result, status, xhr) {
+					$.each(result, function(i,v){
+						$("#clientNameList").append("<option value="+v+">" + v + "</option>");					
+					});
+				},
+				error : function(xhr, status, er) {
+				}
+			})      
+			
+			$('#modal-add-event #edate').val(info.dateStr); // 모달 창에서 날짜 설정
 	        $('#modal-add-event').modal('show'); // 모달 창 열기
 		},
 		events: data
@@ -71,14 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			<div class="modal-body">
 			<form>
 				<div class="form-group">
-					<label for="title" class="col-form-label">이 름:</label>
-					<input type="text" class="form-control" id="mname" name="mname" required>
-					  
-				<!-- 	<select class="form-control" name="mname">
-						<option value="">-회원선택-</option>						
-							<option value="ClientName">ClientName</option>						
-					</select>
-				 -->	  
+					<label for="title" class="col-form-label">이 름:</label>					  
+					<select class="form-control" name="mname" id="clientNameList"></select>  
 				</div>
 				<div class="form-group">
 					<label for="description" class="col-form-label">PT 예약 날짜:</label>

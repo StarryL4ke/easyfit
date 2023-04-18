@@ -1,7 +1,5 @@
 package com.easyfit.controller;
 
-import java.text.SimpleDateFormat;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,7 +41,7 @@ private LessonService lessonService;
 	  //long total = lessonService.getPTRecordTotal(cri);
 		
 		model.addAttribute("ptRecordList", lessonService.getMyTripleList(cri, tno));  // (LJW)
-		long total = lessonService.getMyPTRecordTotalCount(cri, tno);
+		long total = lessonService.getMyPTRecordTotalCount(cri, tno); // (LJW)
 		
 		log.info("list : " + cri);
 		log.info("total : " + total);
@@ -55,14 +53,15 @@ private LessonService lessonService;
 	// SELECT - LIST (운동기록)
 	@GetMapping("/lessonDetailList")
 	public void lessonDetailList(@ModelAttribute("cri") Criteria cri, @RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model) {		
+		
 		log.info("list : " + cri + " , " + prno);
 		model.addAttribute("exerciseRecordList", lessonService.getDoubleList(cri, prno, tno));
-		
 		
 		long total = lessonService.getExerciseRecordTotal(cri, prno);
 		log.info("total : " + total);
 		
 		model.addAttribute("pageMaker", new PageDTO(total, cri));
+		model.addAttribute("prnoTransfer", prno);
 	}
 	
 	// SELECT - GET
@@ -124,9 +123,9 @@ private LessonService lessonService;
 	// DELETE
 	@Transactional
 	@PostMapping("/lessonRemove")
-	public String lesonRemove(@RequestParam("prno") Long prno, @RequestParam("edate") String edate, Long tno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String lesonRemove(@RequestParam("prno") Long prno, @RequestParam("edate") String edate, @RequestParam("tno") Long tno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
-		log.info("lessonRemove : " + prno + " , " + edate);
+		log.info("lessonRemove : " + prno + " , " + edate) ;
 		
 		if(lessonService.getRemove(prno, edate)) {
 			rttr.addFlashAttribute("result", "삭제");
@@ -140,13 +139,4 @@ private LessonService lessonService;
 		
 		return "redirect:/easyfit/lessonDetailList?prno=" + prno + "&tno=" + tno;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
