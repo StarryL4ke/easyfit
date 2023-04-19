@@ -3,59 +3,83 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <%@ include file="../includes/header.jsp" %>
 
-<div>
-	<p>TrainerVO : <sec:authentication property="principal.trainerVO" /></p>                 
-</div>
-
-<form method="post">
-	<label>회원번호</label>
-	<input type="number" name="mno" value="${client.mno}" disabled/>	
-	<label>Email</label>
-	<input type="text" name="memail" value="${client.memail}" disabled/><br />	
-	<label>이름</label>
-	<input type="text" name="mname" value="${client.mname}" disabled/>	
-	<label>가입일</label>
-	<input type="date" name="mjoindate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mjoindate}"/>' disabled/><br />
-	<label>생년월일</label>
-	<input type="date" name="mbirth" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mbirth}"/>' disabled/><br />
-	<label>주소</label>
-	<input type="text" name="maddress" value="${client.maddress}" disabled/><br />
-	<!-- <label>담당 트레이너</label> -->
-	<%-- <input type="text" name="tno" value="${ptRecordList.tno}" disabled/><br /> --%>
-	<h4>PT 이력</h4>
-	<table>
-		<thead>
-			<tr>
-				<th>PT 회차</th>
-				<th>PT 기간</th>
-				<th>PT 횟수 / PT 전체 횟수</th>
-				<!-- <th>담당트레이너</th> -->
-			</tr>
-		</thead>		
-		<tbody>
-			<c:forEach items="${ptRecordList}" var="ptRecordList">
-				<tr class="chat" data-prno="${ptRecordList.prno}" data-prstartdate="${ptRecordList.prstartdate}" data-prenddate="${ptRecordList.prenddate}">
-					<td>${ptRecordList.prturn}</td>
-					<td><a href='/easyfit/lessonDetailList?prno=<c:out value="${ptRecordList.prno}"/>&tno=<sec:authentication property="principal.trainerVO.tno"/>'>
-							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prstartdate}" />
-								 ~ 
-							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prenddate}" />
-						</a>
-					</td>					
-					<td>${ptRecordList.prcount} / ${ptRecordList.prcountall}</td>				
+<div class="card-body shadow bg-light">
+<!-- 페이지 이름 -->
+	<div class="col-lg-4 py-4 d-inline-block ">
+		<div class="col-lg-9 align-items-center justify-content-start mb-4 d-inline-block">
+			<h1 class="h3 mb-0 text-gray-800">회원 정보</h1>
+		</div>
+		<form method="post" class="table table-bordered">
+			<div class="form-group mt-3">
+				<label class="w-25">회원번호 : </label>
+				<input class="box" type="number" name="mno" value="${client.mno}" disabled/><br />	
+			</div>
+			<div class="form-group ">
+				<label class="w-25">Email : </label>
+				<input class="box" type="text" name="memail" value="${client.memail}" disabled/><br />	
+			</div>
+			<div class="form-group ">
+				<label class="w-25">이름 : </label>
+				<input class="box" type="text" name="mname" value="${client.mname}" disabled/><br />	
+			</div>
+			<div class="form-group ">
+				<label class="w-25">가입일 : </label>
+				<input class="box" type="text" name="mjoindate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mjoindate}"/>' disabled/><br />
+			</div>
+			<div class="form-group ">
+				<label class="w-25">생년월일 : </label>
+				<input class="box" type="text" name="mbirth" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mbirth}"/>' disabled/><br />
+			</div>
+			<div class="form-group ">
+				<label class="w-25">주소 : </label>
+				<input class="box" type="text" name="maddress" value="${client.maddress}" disabled/><br />
+			</div>
+		</form>
+		<div class="text-right">
+			<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+			<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+			<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
+			<button type="button" class="btn btn-info custom-select-sm btn-width" onclick="location.href = '/easyfit/allClientModify?mno=${client.mno}'">수정</button>
+			<button type="button" class="btn btn-danger custom-select-sm btn-width"  onclick="location.href = '/easyfit/allClientRemove?mno=${client.mno}'">삭제</button>
+		</div>
+	</div>
+	<!-- PT 등록 및 이력  ---------------------------------------------------->
+	<div class="col-lg-7 d-inline-block float-right mt-5">	
+		<div class="align-items-center justify-content-start mb-3 d-inline-block">
+			<h4 class="h3 mb-0 text-gray-800">PT 이력</h4>
+			<!-- <label>담당 트레이너</label> -->
+			<%-- <input type="text" name="tno" value="${ptRecordList.tno}" disabled/><br /> --%>
+		</div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="width-8 bg-light">PT 회차</th>
+					<th class="width-25 bg-light">PT 기간</th>
+					<th class="width-8 bg-light">PT 진행도</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+			</thead>		
+			
+			<tbody>
+				<c:forEach items="${ptRecordList}" var="ptRecordList">
+					<tr class="chat" data-prno="${ptRecordList.prno}" data-prstartdate="${ptRecordList.prstartdate}" data-prenddate="${ptRecordList.prenddate}">
+						<td>${ptRecordList.prturn}</td>
+						<td><a href='/easyfit/lessonDetailList?prno=<c:out value="${ptRecordList.prno}"/>&tno=<sec:authentication property="principal.trainerVO.tno"/>'>
+								<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prstartdate}" />
+									 ~ 
+								<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prenddate}" />
+							</a>
+						</td>					
+						<td>${ptRecordList.prcount} / ${ptRecordList.prcountall}</td>				
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<div class="float-right mt-4">
+			<button type="button" class="btn btn-primary custom-select-sm btn-width" data-toggle="modal" data-target="#ptModal">PT 등록</button>
+		</div>
+	</div>
+</div>		
 		
-<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
-<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
-<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
-		
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ptModal">PT 등록</button>
-	<button type="button" onclick="location.href = '/easyfit/allClientModify?mno=${client.mno}'">Modify</button>
-	<button type="button" onclick="location.href = '/easyfit/allClientRemove?mno=${client.mno}'">Remove</button>
-</form>
 
 <!-- PT등록 모달 시작 --------------------------------------------------------------------------------------------------------------------------------------->
 

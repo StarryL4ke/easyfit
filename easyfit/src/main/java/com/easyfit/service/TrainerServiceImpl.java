@@ -13,7 +13,7 @@ import com.easyfit.mapper.TrainerMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@Transactional
+
 @Log4j
 @Service
 @AllArgsConstructor

@@ -3,27 +3,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <%@ include file="../includes/header.jsp" %>
 
-<form method="post">
-	<label>회원번호</label>
-	<input type="number" name="mno" value="${client.mno}" disabled/>	
-	<label>Email</label>
-	<input type="text" name="memail" value="${client.memail}" /><br />	
-	<label>이름</label>
-	<input type="text" name="mname" value="${client.mname}" />	
-	<label>가입일</label>
-	<input type="date" name="mjoindate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mjoindate}"/>' disabled/><br />
-	<label>생년월일</label>
-	<input type="date" name="mbirth" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mbirth}"/>'/><br />
-	<label>주소</label>
-	<input type="text" name="maddress" value="${client.maddress}" /><br />
-	
-<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
-<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->	
-			
-	<button type="submit" class="btn btn-default">Modify</button>
-</form>
-	
+
+<div class="card-body shadow bg-light">
+<!-- 페이지 이름 -->
+	<div class="col-lg-12 py-4 d-inline-block ">
+		<div class="col-lg-9 align-items-center justify-content-start mb-4 d-inline-block">
+			<h1 class="h3 mb-0 text-gray-800">회원 정보 수정</h1>
+		</div>
+		<form method="post" class="table table-bordered">
+			<div class="form-group mt-3">
+				<label class="w-25">회원번호 : </label>
+				<input class="box" type="number" name="mno" value="${client.mno}" disabled/><br />	
+			</div>
+			<div class="form-group mt-3">
+				<label class="w-25">Email : </label>
+				<input class="box"  type="text" name="memail" value="${client.memail}" /><br />	
+			</div>
+			<div class="form-group mt-3">
+				<label class="w-25">이름 : </label>
+				<input class="box" type="text" name="mname" value="${client.mname}" /><br />	
+			</div>
+			<div class="form-group mt-3">
+				<label class="w-25">가입일 : </label>
+				<input class="dateBox" type="date" name="mjoindate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mjoindate}"/>' disabled/><br />
+			</div>
+			<div class="form-group mt-3">
+				<label class="w-25">생년월일 : </label>
+				<input class="dateBox" type="date" name="mbirth" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mbirth}"/>'/><br />
+			</div>
+			<div class="form-group mt-3">
+				<label class="w-25">주소 : </label>
+				<input class="box" type="text" name="maddress" value="${client.maddress}" /><br />
+			</div>
+			<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+			<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->	
+			<div class="text-center">		
+				<button type="submit" class="btn btn-info custom-select-sm btn-width mb-4">수정완료</button>
+			</div>
+		</form>
+	</div>
+</div>
+		
 
 <%@ include file="../includes/footer.jsp" %>

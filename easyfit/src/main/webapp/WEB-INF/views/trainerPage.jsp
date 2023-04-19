@@ -72,12 +72,21 @@
 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myBarChart"></canvas>
+                                        <canvas id="ptBarChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
 <!-- 그래프 끝 -->
+
+				<!-- hidden 태그 전송용 폼 시작 -->
+					<c:forEach items="${monthlyPT}" var="mpt">
+	                    <input type="hidden" class="prcountSum" value="<c:out value='${mpt.prcountSum}' />">
+						<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+						<input type="hidden" name="tid" value="<sec:authentication property="principal.trainerVO.tid"/>" /><br />
+						<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
+                	</c:forEach>
+				<!-- hidden 태그 전송용 폼 끝 -->
 
 <!-- 공지사항 시작 -------------------------------------------------------------------------->
 	                    <div class="col-lg-5 mb-5">
@@ -113,6 +122,89 @@
 <!-- 그래프 및 미니 공지사항 영역 끝 -->
             
 
+<script>
 
+	// 월별 PT 현황 막대 그래프 출력 (JHR)
+	
+	// csrf
+	var csrfHeaderName ="${_csrf.headerName}"; 
+	var csrfTokenValue="${_csrf.token}";
+	
+	
+	var prcountList = [];
+
+	$.each($(".prcountSum"), function(i, value) {
+		
+		var object = {
+
+			prcountSum: $(value).val()
+	
+		};
+		
+		console.log("chart data : " + JSON.stringify(object));
+
+	 	$.ajax({
+			url: "/trainerPage?tid=<sec:authentication property='principal.trainerVO.tid'/>",
+			data: JSON.stringify(object),
+			contentType: "application/json; charset=utf-8",
+			type: "post",
+			beforeSend: function(xhr) { 
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success: function(data) {
+				
+				console.log("success : " + data[1]);
+				prcountList.push(parseInt(data[1])); 
+				
+				var ctx = document.getElementById("ptBarChart").getContext("2d");
+				var chart = new Chart(ctx, {
+					type: 'bar',
+					data : {
+						labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+						datasets: [{
+							label: '월별 PT 수업 진행 횟수',
+							backgroundColor: 'rgba(78, 115, 223, 0.8)',
+							hoverBackgroundColor: "rgba(28, 200, 138, 0.8)",
+							borderColor: 'rgb(255, 99, 132)',
+							data: prcountList
+						}]
+					},
+				    options: {
+					    scales: {
+					      xAxes: [{
+					        gridLines: {
+					          display: false,
+					          drawBorder: false
+					        },
+					      }],
+					      yAxes: [{
+					        ticks: {
+					          min: 0,
+					          max: 10,
+					          maxTicksLimit: 10,
+					          padding: 10
+					        },
+					        gridLines: {
+					          color: "rgb(234, 236, 244)",
+					          zeroLineColor: "rgb(234, 236, 244)",
+					          drawBorder: false,
+					          borderDash: [2],
+					          zeroLineBorderDash: [2]
+					        }
+					      }],
+					    },
+					    legend: {
+					      display: false
+					    }
+					 }
+				});
+			},
+			error: function(xhr, status) {
+				alert(xhr + " : " + status);
+			}
+		});
+	});
+
+</script>
             
 <%@ include file="includes/footer.jsp" %>

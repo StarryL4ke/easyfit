@@ -11596,3 +11596,11 @@ input[name='exerciseNameSearch'] {
 .msgColor {
 	color: red;
 }
+/* 추가 */
+.dateBox {
+	width: 229px;
+	height: 40px;
+	text-align: center;
+}
+
+

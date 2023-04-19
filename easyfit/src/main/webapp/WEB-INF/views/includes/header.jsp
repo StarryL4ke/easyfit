@@ -150,7 +150,7 @@
                                 	&nbsp;<b><sec:authentication property="principal.trainerVO.tname"/></b> 트레이너 
                                 </span>
                             </a>
-                            <a href="/logout">
+                            <a href="/customLogout">
                             	<div class="d-inline-block mt-1-5 mr-2 ml-0">
 		                            <i class="fas fa-lg fa-sign-out-alt"></i>
                             	</div>
