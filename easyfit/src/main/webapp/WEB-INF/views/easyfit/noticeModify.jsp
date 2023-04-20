@@ -1,26 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%-- <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> --%>
+    
 <%@ include file="../includes/header.jsp" %>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <script src="/resources/vendor/jquery/jquery.min.js"></script>
-
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></script>
-
+<!-- Bootstrap Core CSS -->
+<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core JavaScript -->
 <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-
-
-
-</head>
 <body>
 
 	<h1>Notice Board Modification</h1>
@@ -30,7 +20,7 @@
 	
 		<div>
 			<label>글번호</label>
-			<input name="nno" value='<c:out value="${notice.nno}"/>' readonly />
+			<input name="nno" value='<c:out value="${notice.nno}"/>' disabled />
 		</div>
 		<div>
 			<label>글제목</label>
@@ -38,7 +28,7 @@
 		</div>
 		<div>
 			<label>공지 내용</label> <br>
-			<textarea name="ncontent" rows="10" cols="100" ><c:out value="${notice.ncontent}"/></textarea>
+			<textarea name="ncontent" rows="10" cols="50" ><c:out value="${notice.ncontent}"/></textarea>
 		</div>
 		
 		<!-- <label>최초 공지일</label>
@@ -48,7 +38,7 @@
 		
 		<div>
 			<label>작성자</label>
-			<input name="tno" value='<c:out value="${notice.tno}"/>' readonly />
+			<input name="tno" value='<c:out value="${notice.tno}"/>' disabled />
 		</div>
 		
 		<button type="submit" data-oper="modify" class="btn btn-default">수정완료</button>
@@ -83,7 +73,7 @@
 	</script>
 	
 </body>
-</html>
+
 
 
 <%@ include file="../includes/footer.jsp" %>

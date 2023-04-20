@@ -116,21 +116,45 @@ ORDER BY
 	</select>	
 	
 	<select id="get" resultType="com.easyfit.domain.join.LessonJoinVO">
-		<![CDATA[
-			SELECT
-				m.mname mname, m.mno mno, er.ergroup ergroup, er.erno erno, er.eno eno, er.edate edate, er.erset erset, er.erweight erweight, er.ernumber ernumber, er.erdate erdate, er.prno prno, et.ename ename, er.ermemo ermemo
-			FROM
-				member m, ptrecord pr, exerciserecord er, exercisetype et
-			WHERE
-				m.mno = pr.mno
-				AND pr.prno = er.prno
-				AND er.eno = et.eno
-				AND er.prno = #{prno}
-				AND TO_DATE(er.edate, 'yy/mm/dd') = TO_DATE(#{edate}, 'yy/mm/dd')
-				AND pr.tno = #{tno}
-			ORDER BY
-				ergroup, erset
-		]]>
+<!-- *기존 sql*
+SELECT
+	m.mname mname, m.mno mno, er.ergroup ergroup, er.erno erno, er.eno eno, er.edate edate, er.erset erset, er.erweight erweight, er.ernumber ernumber, er.erdate erdate, er.prno prno, et.ename ename, er.ermemo ermemo
+FROM
+	member m, ptrecord pr, exerciserecord er, exercisetype et
+WHERE
+	m.mno = pr.mno
+	AND pr.prno = er.prno
+	AND er.eno = et.eno
+	AND er.prno = #{prno}
+	AND TO_DATE(er.edate, 'yy/mm/dd') = TO_DATE(#{edate}, 'yy/mm/dd')
+	AND pr.tno = #{tno}
+ORDER BY
+	ergroup, erset
+ -->
+<![CDATA[
+SELECT
+    edate, erdate, mname, ergroup, ename, ptr.prno, erno, et.eno, erset, erweight, ernumber, ermemo
+FROM
+    member mem
+FULL OUTER JOIN
+    ptrecord ptr
+ON
+    mem.mno = ptr.mno
+FULL OUTER JOIN
+    exerciserecord er
+ON
+    ptr.prno = er.prno
+FULL OUTER JOIN
+    exercisetype et
+ON
+    er.eno = et.eno
+WHERE
+    ptr.prno = #{prno}
+    AND ptr.tno = #{tno}
+    AND TO_DATE(er.edate, 'yy/mm/dd') = TO_DATE(#{edate}, 'yy/mm/dd')
+ORDER BY
+	ergroup, erset
+]]>
 	</select>
 	
 	
@@ -313,6 +337,18 @@ ORDER BY
 	
 	
 	<!-- #{tno} 메소드 모음 (LJW) -->
+	
+<select id="lessonRegisterMNAME" resultType="String">
+SELECT DISTINCT
+    mname
+FROM
+    member mem, ptrecord ptr, trainer t
+WHERE
+    mem.mno = ptr.mno
+    AND ptr.tno = t.tno
+    AND mem.mno = #{mno}
+    AND t.tno = #{tno}    
+</select>
 	
 	<!-- #{tno} 의 검색,조회 SECURITY 시작 -->
 	<sql id="myCriteria">			   

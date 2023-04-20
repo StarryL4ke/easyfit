@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.easyfit.domain.Criteria;
 import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.ExerciseTypeVO;
+import com.easyfit.domain.join.ClientJoinVO;
 import com.easyfit.domain.join.LessonJoinVO;
 
 public interface LessonMapper {
@@ -48,5 +49,6 @@ public interface LessonMapper {
 	//#{tno} 메소드 모음 (LJW)
 	public List<LessonJoinVO> myTripleList(@Param("cri") Criteria cri, @Param("tno") Long tno);
 	public long myPTRecordTotalCount(@Param("cri") Criteria cri, @Param("tno") Long tno);
+	public String lessonRegisterMNAME(@Param("tno") Long tno, @Param("mno") Long mno);
 	
 }

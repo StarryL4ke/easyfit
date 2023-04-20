@@ -54,9 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
 				var mname = info.event.title;
 				var edate = info.event.start;
 				var tno = <sec:authentication property="principal.trainerVO.tno"/>;
+				var prno = info.event.extendedProps.prno;
+
 			
 				// url 구성
-				var url = "/easyfit/lessonGet?prno=" + data[0].prno + "&edate=" + dateFormat(edate) + "&tno=" + tno;
+				//var url = "/easyfit/lessonGet?prno=" + data[0].prno + "&edate=" + dateFormat(edate) + "&tno=" + tno;
+				var url = "/easyfit/lessonGet?prno=" + prno + "&edate=" + dateFormat(edate) + "&tno=" + tno;
+				console.log(prno);
 				// 페이지 이동
 				window.location.href = url;			
 				 
@@ -89,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	request.fail(function( jqXHR, textStatus ){
 		alert("Request failed: " + textStatus);
-	});	
+	});	 
 });
 </script>
-<!-- <div id='calendar' style="width: 70%;"></div> -->
+
 <div id='calendar'></div>
 
 <div class="modal fade" id="modal-add-event" tabindex="-1" role="dialog" aria-labelledby="modal-add-event" aria-hidden="true">

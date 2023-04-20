@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.easyfit.domain.Criteria;
 import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.ExerciseTypeVO;
+import com.easyfit.domain.join.ClientJoinVO;
 import com.easyfit.domain.join.LessonJoinVO;
 import com.easyfit.mapper.LessonMapper;
 
@@ -139,6 +140,10 @@ public class LessonServiceImpl implements LessonService {
 	public long getMyPTRecordTotalCount(Criteria cri, Long tno) {		
 		return lessonMapper.myPTRecordTotalCount(cri, tno);
 	}
-	
+	@Override
+	public String getLessonRegisterMNAME(Long tno, Long mno) {
+		return lessonMapper.lessonRegisterMNAME(tno, mno);
+	}
+
 	
 }

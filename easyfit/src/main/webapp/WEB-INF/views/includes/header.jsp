@@ -102,6 +102,13 @@
                     <span>스케줄</span></a>
             </li>
             
+            <!-- 사이드바 - 트레이너게시판 -->
+            <li class="nav-item">
+                <a class="nav-link" href="/easyfit/trainerBoardList">
+                	<i class="fas fa-fw fa-exclamation-circle"></i>
+                    <span>트레이너 게시판</span></a>
+            </li>
+            
             
             <!-- 사이드바 -
                 <li class="nav-item">

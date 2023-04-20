@@ -52,11 +52,12 @@ private LessonService lessonService;
 	
 	// SELECT - LIST (운동기록)
 	@GetMapping("/lessonDetailList")
-	public void lessonDetailList(@RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model) {		
+	public void lessonDetailList(@RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model, Long mno) {		
 
 		model.addAttribute("exerciseRecordList", lessonService.getDoubleList(prno, tno));	
 		
-		model.addAttribute("prnoTransfer", prno);
+		model.addAttribute("prnoTransfer", prno);	
+		model.addAttribute("mnoTransfer", mno);
 	}
 	
 	// SELECT - GET
@@ -65,16 +66,21 @@ private LessonService lessonService;
 		
 		log.info("lessonGet : " + prno + " , " + edate + " , " + tno);
 		model.addAttribute("vo", lessonService.getGet(prno, edate, tno));
+		log.info(lessonService.getGet(prno, edate, tno));
 	}
 	
 	
 	// INSERT
 	@GetMapping("/lessonRegister")
-	public void lessonRegister(@RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model) {
+	public void lessonRegister(@RequestParam("prno") Long prno, @RequestParam("tno") Long tno, Model model, Long mno) {
 		
-		log.info("lessonRegister(get) : " + prno + " , " + tno);
+		log.info("lessonRegister(get) : " + prno + " , " + tno + "," + lessonService.getLessonRegisterMNAME(tno, mno));
 		model.addAttribute("exerciseRecordList", lessonService.getDoubleListNotPaging(prno, tno));
 		model.addAttribute("prnoTransfer", prno);
+		model.addAttribute("mnoValue", mno);
+		model.addAttribute("mnameTransfer", lessonService.getLessonRegisterMNAME(tno, mno));
+		log.info(lessonService.getLessonRegisterMNAME(tno, mno));
+		
 	}
 	
 	// INSERT

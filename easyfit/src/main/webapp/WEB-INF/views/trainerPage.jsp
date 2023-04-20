@@ -154,6 +154,7 @@
 			success: function(data) {
 				
 				console.log("success : " + data[1]);
+				console.log("data : " + data);
 				prcountList.push(parseInt(data[1])); 
 				
 				var ctx = document.getElementById("ptBarChart").getContext("2d");

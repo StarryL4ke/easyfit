@@ -1,7 +1,6 @@
 package com.easyfit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Controller
 @RequestMapping("/*")
-
 public class LoginController {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -31,9 +29,10 @@ public class LoginController {
 	// trainerPage 월별 PT 현황 막대 그래프 출력에 활용(JHR)
 	@Setter(onMethod_ = @Autowired)
 	private LoginService loginService;
+	
 
 	
-	@GetMapping("/customLogin")
+	@GetMapping("/login")
 	public void loginInput(String error, String logout, Model model) {
 		if(error != null) {
 			model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
@@ -43,19 +42,18 @@ public class LoginController {
 		}
 	}
 	
-	@GetMapping("/customLogout")
+	@GetMapping("/logout")
 	public void logoutGet() {}
-	@PostMapping("/customLogout")
+	@PostMapping("/logout")
 	public void logoutPost() {}
 	
 
 	
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
-		model.addAttribute("message", "�젒洹� 遺덇�.");
+		model.addAttribute("message", "접근 불가.");
 	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
 	@GetMapping("/adminPage")
 	public void loginAdmin() {
 	}
@@ -85,25 +83,10 @@ public class LoginController {
 		return prcountSumList;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@GetMapping("/trainerSample")
 	public void loginSample() {
 		
 	}
-	
 	
 	
 }

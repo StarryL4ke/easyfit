@@ -5,6 +5,7 @@ import java.util.List;
 import com.easyfit.domain.Criteria;
 import com.easyfit.domain.ExerciseRecordVO;
 import com.easyfit.domain.ExerciseTypeVO;
+import com.easyfit.domain.join.ClientJoinVO;
 import com.easyfit.domain.join.LessonJoinVO;
 
 public interface LessonService {//변수앞에 get을 붙여서 카멜표기법을 사용합니다.
@@ -42,5 +43,6 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	//#{tno} 메소드 모음 (LJW)
 	public List<LessonJoinVO> getMyTripleList(Criteria cri, Long tno);
 	public long getMyPTRecordTotalCount(Criteria cri, Long tno);
+	public String getLessonRegisterMNAME(Long tno, Long mno);
 	
 }

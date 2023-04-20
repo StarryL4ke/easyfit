@@ -66,12 +66,14 @@
 		/* 신규 운동일지 작성 버튼 클릭 이벤트 ******************************************************************/
 
 		var prnoValue = '<c:out value="${prnoTransfer}"/>';
+		var mnoValue = '<c:out value="${mnoTransfer}"/>';
 		
 		$('#regBtn').on("click", function() {
 			
 			$("#hiddenForm").append('<input type="hidden" name="prno" value=' + prnoValue + '>');
 			//$("#hiddenForm").append('<input type="hidden" name="prno" value="'+ ${prnoTransfer} +'">');
 			$("#hiddenForm").append('<input type="hidden" name="edate" value="">');
+			$("#hiddenForm").append('<input type="hidden" name="mno" value=' + mnoValue + '>');
 			$("#hiddenForm").attr("action", "/easyfit/lessonRegister");
 			$("#hiddenForm").submit();
 		});

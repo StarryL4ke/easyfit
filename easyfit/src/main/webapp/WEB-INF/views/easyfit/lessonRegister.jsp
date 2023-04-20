@@ -28,7 +28,7 @@
 					
 					<div>
 						<div class="mb-3">
-							<input type="text" id="mname" value="${exerciseRecordList.mname}" class="text-center box2 width-10" readonly>
+							<input type="text" id="mname" value="${mnameTransfer}" class="text-center box2 width-10" readonly>
 							<label class="text-gray-800 h6 ml-1">
 								   회원님 운동일지
 							</label>
@@ -58,7 +58,7 @@
 								
 								<form role="form" action="/easyfit/lessonRegister" method="post" class="m-0 exerciseRecordRow">
 									<div class="row m-0">
-										<input type="hidden" name="prno" value="${exerciseRecordList.prno}">
+										<input type="hidden" name="prno" value="${prnoTransfer}">
 										<input type="hidden" name="ergroup" value="">
 										<input type="hidden" name="edate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="" />'>
 										<input type="hidden" name="erno" value="">
@@ -249,7 +249,8 @@
 			$("#lessonRegisterModal").modal("show");
 			
 			$("#lessonRegisterModalCloseBtn").on("click", function() {
-				location.href="/easyfit/lessonDetailList?prno=" + ${prnoTransfer} + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
+				location.href="/easyfit/lessonDetailList?mno="+ ${mnoValue} +"&prno=" + ${prnoTransfer} + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
+				//location.href="/easyfit/lessonDetailList?prno=" + ${prnoTransfer} + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
 			});
 		}); 
 		

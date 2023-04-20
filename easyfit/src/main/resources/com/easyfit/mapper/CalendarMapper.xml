@@ -21,11 +21,13 @@ WHERE
 <!-- 일정 등록 -->
 <insert id="register">
 INSERT INTO
-    exerciserecord(erno, edate, erdate, prno)
+    exerciserecord(erno, edate, erdate, ergroup, erset, prno)
 VALUES(
     exerciserecord_seq.NEXTVAL,
     #{exerciseRecord.edate},
     #{exerciseRecord.edate},
+    1,
+    1,
     (
     SELECT
         prno

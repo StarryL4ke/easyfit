@@ -547,8 +547,6 @@
 
 			});
 			
-			$(".exerciseRecordColumn").eq(0).remove();
-			$(".exerciseRecordRow").eq(0).remove();
 			
 			modal.modal("hide");  
 		});

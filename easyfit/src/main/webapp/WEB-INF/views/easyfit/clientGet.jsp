@@ -66,7 +66,7 @@
 					<%-- <td>${ptRecordList.prno}</td> --%>
 					<td>${ptRecordList.prturn}</td>
 					<td>
-						<a href='/easyfit/lessonDetailList?prno=<c:out value="${ptRecordList.prno}"/>&tno=<sec:authentication property="principal.trainerVO.tno"/>'>
+						<a href='/easyfit/lessonDetailList?mno=<c:out value="${ptRecordList.mno}"/>&prno=<c:out value="${ptRecordList.prno}"/>&tno=<sec:authentication property="principal.trainerVO.tno"/>'>
 							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prstartdate}" />
 								 ~ 
 							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prenddate}" />

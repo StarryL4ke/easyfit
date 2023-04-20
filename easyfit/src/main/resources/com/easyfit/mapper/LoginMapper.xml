@@ -28,27 +28,30 @@ WHERE
     t.tid = #{tid}
 ]]>
 </select>
-<!-- 로그인한 트레이너의 올해 월별 PT 수업 횟수 조회 (JHR) -->	
-<select id="prCountSum" resultType="com.easyfit.domain.join.LoginJoinVO">
-	<![CDATA[
-		SELECT
-		    eMonth, SUM(prcount) prcountSum
-		FROM
-		    (
-		    SELECT DISTINCT
-		        TO_CHAR(er.edate, 'yyyy-mm') eMonth, pr.prcount prcount
-		    FROM
-		        ptrecord pr, exerciserecord er, trainer_auth auth
-		    WHERE
-		        pr.prno = er.prno
-		        AND pr.tno = auth.tno
-		        AND TO_CHAR(er.edate, 'yyyy') = TO_CHAR(sysdate, 'yyyy')
-		        AND auth.tid = #{tid}
-		    )
-		GROUP BY
-		    eMonth
-		ORDER BY
-   			eMonth
-	]]>
-</select>
+
+
+	
+	<!-- 로그인한 트레이너의 올해 월별 PT 수업 횟수 조회 (JHR) -->	
+	<select id="prCountSum" resultType="com.easyfit.domain.join.LoginJoinVO">
+		<![CDATA[
+			SELECT
+			    eMonth, SUM(prcount) prcountSum
+			FROM
+			    (
+			    SELECT DISTINCT
+			        TO_CHAR(er.edate, 'yyyy-mm') eMonth, pr.prcount prcount
+			    FROM
+			        ptrecord pr, exerciserecord er, trainer_auth auth
+			    WHERE
+			        pr.prno = er.prno
+			        AND pr.tno = auth.tno
+			        AND TO_CHAR(er.edate, 'yyyy') = TO_CHAR(sysdate, 'yyyy')
+			        AND auth.tid = #{tid}
+			    )
+			GROUP BY
+			    eMonth
+			ORDER BY
+    			eMonth
+		]]>
+	</select>
 </mapper>

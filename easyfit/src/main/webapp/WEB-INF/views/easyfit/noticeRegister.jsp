@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <%@ include file="../includes/header.jsp" %>
 
 <!DOCTYPE html>
@@ -8,16 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 - Get</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<title>Insert title here</title>
-
-<script src="/resources/vendor/jquery/jquery.min.js"></script>
-
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></script>
-
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
 
 
 </head>
@@ -48,7 +40,13 @@
 			
 			<div>
 				<label>작성자</label>
-				<input name="tno" value='1' readonly />  
+				<input name="tno" value='1' disabled />  
+			</div>
+			
+			<div>
+				<label>작성일자</label>
+				<input type="text" name="ndate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${notice.ndate}"/>' disabled/><br />
+		
 			</div>
 			<div> 
 				<button type="submit" data-oper="register" class="btn btn-default" >작성완료</button>
