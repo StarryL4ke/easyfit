@@ -50,15 +50,16 @@
 		<div class="align-items-center justify-content-start mb-3 d-inline-block">
 			<h4 class="h3 mb-0 text-gray-800">PT 이력</h4>
 		</div>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<!-- <th>PT 번호</th> -->
-					<th class="width-8 bg-light">PT 회차</th>
-					<th class="width-25 bg-light">PT 기간</th>
-					<th class="width-8 bg-light">PT 진행도</th>
-				</tr>
-			</thead>
+			
+		<table id="ptTable" class="table table-bordered">
+				<thead>
+					<tr>
+						<!-- <th>PT 번호</th> -->
+						<th class="width-8 bg-light">PT 회차</th>
+						<th class="width-25 bg-light">PT 기간</th>
+						<th class="width-8 bg-light">PT 진행도</th>
+					</tr>
+				</thead>
 		
 		<tbody>
 			<c:forEach  items="${ptRecordList}" var="ptRecordList">
@@ -66,7 +67,7 @@
 					<%-- <td>${ptRecordList.prno}</td> --%>
 					<td>${ptRecordList.prturn}</td>
 					<td>
-						<a href='/easyfit/lessonDetailList?mno=<c:out value="${ptRecordList.mno}"/>&prno=<c:out value="${ptRecordList.prno}"/>&tno=<sec:authentication property="principal.trainerVO.tno"/>'>
+						<a href='/easyfit/lessonDetailList?prno=<c:out value="${ptRecordList.prno}"/>&tno=<sec:authentication property="principal.trainerVO.tno"/>'>
 							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prstartdate}" />
 								 ~ 
 							<fmt:formatDate pattern="yyyy-MM-dd" value="${ptRecordList.prenddate}" />
@@ -77,8 +78,9 @@
 			</c:forEach>
 		</tbody>
 		</table>
+		<div id="page-navigation"></div>
 			<div class="float-right mt-4">
-				<button type="button" class="btn btn-primary custom-select-sm btn-width" data-toggle="modal" data-target="#ptModal">PT 등록</button>	
+				<button id="addPTBtn" type="button" class="btn btn-primary custom-select-sm btn-width" data-toggle="modal" data-target="#ptModal">PT 등록</button>	
 			</div>
 	</div>
 
@@ -140,9 +142,9 @@
 					<label for="ptMemo">비고</label>
 					<input type="text" class="form-control" id="ptMemo" name="prmemo">
 				</div>
-<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
-<%-- <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
-<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
+				<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+				<%-- <input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
+				<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
 			</div>
 			<div class="modal-footer">
 				<button id='modalModBtn' type="button" class="btn btn-warning" data-dismiss="modal">Modify</button>
@@ -180,11 +182,26 @@ $(document).ready(function() {
     var modalInputPrCountAll = modal.find("input[name='prcountall']");
     
 
-    
+    var addPTBtn = $("#addPTBtn");
     var modalModBtn = $("#modalModBtn");
     var modalRemoveBtn = $("#modalRemoveBtn");
     var modalRegisterBtn = $("#modalRegisterBtn");
 	
+    addPTBtn.on("click", function(e){
+    	// Add PT 버튼 클릭 시 다른 버튼들 숨기기
+	    modalModBtn.hide();
+	    modalRemoveBtn.hide();
+	    modalRegisterBtn.show();
+	   
+	    modal.find(modalInputPrTurn).val("");
+	    modal.find(modalInputPrStartDate).val("");
+	    modal.find(modalInputPrEndDate).val("");
+	    modal.find(modalInputPrCount).val("");
+	    modal.find(modalInputPrCountAll).val("");
+	    $(".modal").modal("show");
+    });
+    
+    
     modalRegisterBtn.on("click",function(e){
     e.preventDefault();
     
@@ -199,15 +216,16 @@ $(document).ready(function() {
 
 	            mno:mnoValue
             };
+          
         	console.log(ptRecord);
         	// PT 추가
         	ptRecordService.add(ptRecord, function(result){
           
           		alert(result);
-          
+          		
 	          	modal.find("input").val("");
 	          	modal.modal("hide");
-          		
+	          	
 	          	location.reload();
         	});
         
@@ -282,5 +300,33 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+$(document).ready(function() {
+    var show_per_page = 5;
+    var $pt_rows = $("#ptTable tbody tr");
+    var number_of_items = $pt_rows.length;
+    var number_of_pages = Math.ceil(number_of_items / show_per_page);
+    var $navigation = $('<ul class="pagination justify-content-center"></ul>');
+    for (var page = 1; page <= number_of_pages; page++) {
+        $navigation.append('<li class="page-item"><a href="javascript:void(0);" class="page-link" data-page="' + page + '">' + page + '</a></li>');
+    }
+    $("#page-navigation").html($navigation);
+	
+    // 첫 번째 페이지에 대한 행들만 보여주기
+    var start_index = 0;
+    var end_index = start_index + show_per_page;
+    $pt_rows.hide().slice(start_index, end_index).show();
+
+    // 페이지 버튼 클릭 시 해당 페이지에 대한 행들 보여주기
+    $navigation.on("click", "a", function() {
+        var page_number = $(this).data("page");
+        var start_index = (page_number - 1) * show_per_page;
+        var end_index = start_index + show_per_page;
+        $pt_rows.hide().slice(start_index, end_index).show();
+    });
+});
+</script>
+
+
 
 <%@ include file="../includes/footer.jsp" %>

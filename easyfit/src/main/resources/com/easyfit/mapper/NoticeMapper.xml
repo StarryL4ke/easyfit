@@ -31,12 +31,15 @@
 	</select>
 	-->
 	
-	<select id="list" resultType="com.easyfit.domain.NoticeVO">
+	<!-- <select id="list" resultType="com.easyfit.domain.NoticeVO">
 		<![CDATA[ 
 		SELECT 
 			nno, ntitle, ncontent, tno, ndate 
 		FROM ( 
-			SELECT rownum rn, nno, ntitle, ncontent, tno, ndate FROM notice 
+			SELECT 
+				rownum rn, nno, ntitle, ncontent, tno, ndate 
+			FROM 
+				notice 
 		WHERE 
 			
 		]]>
@@ -45,7 +48,27 @@
 		<![CDATA[ 
 		rownum <= #{pageNum} * #{amount} ) WHERE rn > (#{pageNum} - 1) * #{amount} 
 		]]>
-	</select>
+	</select> -->
+<select id="list" resultType="com.easyfit.domain.join.NoticeJoinVO">
+<![CDATA[
+	SELECT 
+      	n.nno, n.ntitle, n.ncontent, n.tno, n.ndate, t.tname 
+    FROM (
+      	SELECT 
+        	rownum rn, nno, ntitle, ncontent, tno, ndate 
+      	FROM 
+        	notice 
+      	WHERE 
+]]>
+<include refid="criteria"/>
+<![CDATA[
+      rownum <= #{pageNum} * #{amount} 
+    ) n 
+    JOIN trainer t ON n.tno = t.tno 
+    WHERE 
+      rn > (#{pageNum} - 1) * #{amount}
+]]>
+</select>
 	
 	<!--  총 게시글 수  -->
 	<select id="count" resultType="Long"> 
@@ -69,14 +92,15 @@
 	
 	
 	<!--  공지사항 상세보기  -->
-	<select id="get" resultType="com.easyfit.domain.NoticeVO"> 
+	<select id="get" resultType="com.easyfit.domain.join.NoticeJoinVO"> 
 		<![CDATA[
 		SELECT
-		    nno, ntitle, ncontent, tno, ndate
+		    nno, ntitle, ncontent, t.tno, ndate, t.tname
 		FROM
-		    notice
-		
-		WHERE nno = #{nno} 
+		    notice n, trainer t
+		WHERE 
+		    n.tno = t.tno
+		    AND nno = #{nno}
 		]]>
 	</select>
 	

@@ -1,67 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%@ include file="../includes/header.jsp" %>
-
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>공지사항 - Get</title>
-
-
-</head>
-<body>  
-	<h1>공지사항 안내드립니다</h1>
-
-	<form method="post" >
-		<label>글번호</label>
-		<input type="number" name="nno" value="${notice.nno}" disabled />	
-
-
-
-		<div>
+ 
+	<div class="card-body shadow bg-light container">
+		<!-- 페이지 이름 -->
+		<div class="col-lg-12 py-4 d-inline-block ">
+			<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-4 d-inline-block"> 
+				<h1 class="h3 mb-0 text-gray-800">공지사항</h1>
 			</div>
-
-		<div>
-		<label>타이틀</label>
-		<input type="text" name="ntitle" value="${notice.ntitle}"  disabled /><br>
-
-		<label class="default">공지 내용</label> <br>
-		<textarea name="ncontent" rows="10" cols="50" disabled><c:out value="${notice.ncontent}"/></textarea> <br>
-	
-		
-		<label>작성일자</label>
-		<input type="text" name="ndate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${notice.ndate}"/>' disabled/><br />
-		
-		<label>작성자</label>
-		<input type="number" name="tno" value="${notice.tno}" disabled /> <br>	
-		
-		
-		<!-- 수정, 삭제 버튼 -->
-		<button type="button" class="btn btn-default" onclick="location.href = '/easyfit/noticeModify?nno=${notice.nno}'">수정·삭제</button>
-		
-		<button type="button" class="btn btn-default" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록으로</button>
-	
-	
-	</form>
-
-	
-
-
-
-
-	
-</body>
-</html>
-
+			
+			<form method="post" >
+				<div >
+					<div class="form-group mt-3" style="display:flex; align-items: baseline;">
+						<label class="form-label h5 mr-3">글 번 호 : </label>
+						<input class="box width-10" type="number" name="nno" value="${notice.nno}" readonly />	
+					</div>
+					<div class="form-group mt-3">
+						<label class="form-label h5 mr-3">타 이 틀 : </label>
+						<input class="box width-25" type="text" name="ntitle" value="${notice.ntitle}"  readonly /><br>
+					</div>
+					<div class="form-group mt-3">
+						<label class="form-label h5 mr-3">작 성 일 : </label>
+						<input class="dateBox width-20" type="text" name="ndate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${notice.ndate}"/>' readonly/><br />
+					</div>
+					<div class="form-group mt-3">
+						<label class="form-label h5 mr-3">작 성 자 : </label>
+						<input class="box width-10" type="text" name="tname" value="${notice.tname}" readonly /> <br>	
+					</div>
+					<div class="form-group mt-3">
+						<label class="form-label h5 mr-3">공지 내용</label> <br>
+						<textarea class="form-control z-depth-1" name="ncontent" rows="3"  readonly><c:out value="${notice.ncontent}"/></textarea> <br>
+					</div>
+				</div>
+				<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+				<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+				<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
+				<!-- 수정, 삭제 버튼 -->
+				<div class="float-right">
+					<button type="button" class="btn btn-info custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeModify?nno=${notice.nno}'">수정·삭제</button>
+					<button type="button" class="btn btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록으로</button>
+				</div>
+			</form>
+		</div>
+	</div>		
 
 <%@ include file="../includes/footer.jsp" %>

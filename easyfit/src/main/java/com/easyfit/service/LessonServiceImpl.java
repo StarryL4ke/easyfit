@@ -71,6 +71,13 @@ public class LessonServiceImpl implements LessonService {
 	}
 	
 	@Override
+	public void getModifyEno(ExerciseRecordVO vo) {
+		
+		log.info("getModifyEno : " + vo);
+		lessonMapper.modifyEno(vo);
+	}
+	
+	@Override
 	public boolean getPrcountUpdate(Long prno) {
 		
 		log.info("getPrcountUpdate : " + prno);

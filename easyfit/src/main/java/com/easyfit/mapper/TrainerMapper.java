@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.easyfit.domain.Criteria;
 import com.easyfit.domain.TrainerAuthVO;
 import com.easyfit.domain.TrainerVO;
+import com.easyfit.domain.join.LessonJoinVO;
 
 public interface TrainerMapper {
 	public List<TrainerVO> list(@Param("cri") Criteria cri);
@@ -19,4 +20,6 @@ public interface TrainerMapper {
 	public void authRemove(long tno);
 	public void authModify(long tno);
 	
+	// 담당트레이너의 회원 목록
+	public List<LessonJoinVO> trList(Long tno);
 }

@@ -42,6 +42,7 @@ public class TrainerController {
 	@GetMapping({"/trainerGet", "/trainerModify"})//트레이너 정보, 트레이너 수정(GET)
 	public void get(@RequestParam("tno") Long tno, Model model) {
 		model.addAttribute("trainer", trainerService.getGet(tno));
+		model.addAttribute("trList", trainerService.getTrList(tno));
 	}
 	
 	@GetMapping("/trainerRegister")//트레이너 등록(GET)

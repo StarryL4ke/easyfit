@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.easyfit.domain.Criteria;
 //import com.easyfit.domain.Criteria;
 import com.easyfit.domain.NoticeVO;
+import com.easyfit.domain.join.NoticeJoinVO;
 import com.easyfit.mapper.NoticeMapper;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	//공지사항 목록
 	@Override
-	public List<NoticeVO> getList(Criteria cri) {
+	public List<NoticeJoinVO> getList(Criteria cri) {
 		log.info("noticeGet");
 		return noticeMapper.list(cri);
 	}
@@ -34,7 +35,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	//공지사항 상세보기
 	@Override
-	public NoticeVO getGet(Long nno) {
+	public NoticeJoinVO getGet(Long nno) {
+		System.out.println(nno);
 		return noticeMapper.get(nno);
 	}
 

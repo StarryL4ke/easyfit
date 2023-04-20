@@ -11604,3 +11604,26 @@ input[name='exerciseNameSearch'] {
 }
 
 
+
+
+
+
+/* 추가 */
+.cbtn:hover {
+  color: #e74a3b;
+  text-decoration: none;
+}
+
+/* 추가 */
+.box3 {
+  display: inline;
+  width: 250px;
+  height: calc(1.5em + 0.3rem + 2px);
+  font-size: 1.3rem;
+  font-weight: bold;
+  line-height: 2!important;
+  color: #6e707e;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0!important;
+}

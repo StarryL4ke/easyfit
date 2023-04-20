@@ -5,8 +5,6 @@
     
 <%@ include file="../includes/header.jsp" %>
 
-<!-- 23.04.15 : 수정한 내용이 DB에 반영되기는 함. 그러나 ergroup이 null로 들어가는 문제가 있다. -->
-
 <script>
 	var ergroupNo = 0;
 </script>
@@ -48,12 +46,12 @@
 										<div class="row m-0 exerciseRecordColumn">
 											<div class="align-items-center col-lg-12 p-0 m-0">
 												<div class="h7 mb-0 text-gray-800 font-weight-bold my-2 ename">
-													<span class="ergroup">${vo[status.index].ergroup}</span>번 운동 : <span class="newEname">${vo[status.index].ename}</span>
+													<!-- 운동 수정 버튼 -->
+													<button type="button" class="btn h8 cbtn pl-1 pr-0"><i class="fas fa-edit"></i></button>
+													<span class="ergroup">${vo[status.index].ergroup}</span>번 운동 : <input type="text" class="box3 newEname" value="${vo[status.index].ename}" readonly >
 												</div>
 												<script>
 													ergroupNo = ${vo[status.index].ergroup};
-													console.log("index : " + ${status.index});
-													console.log("ergrupNo : " + ergroupNo);
 												</script>
 												<div class="row p-0 m-0">	
 													<div class="box text-center col-lg-2 p-0 m-0 h8 text-gray-800 bg-light">세트</div>
@@ -140,7 +138,7 @@
 								<form id='exerciseTypeChoiceForm' action="/exercisetype" method='get'>
 									<div class="col-lg-11 ml-4">
 										<div class="row p-0 mb-3">
-												<button type="button" class="col btn btn-lg btn-white px-0" id="favorite">Favorite</button>
+												<button type="button" class="col btn btn-lg btn-white px-0"></button>
 												<button type="button" class="col btn btn-lg btn-white px-0 exerciseTypeLargeGroup" data-type="D">가슴</button>
 												<button type="button" class="col btn btn-lg btn-white px-0 exerciseTypeLargeGroup" data-type="E">하체</button>
 												<button type="button" class="col btn btn-lg btn-white px-0 exerciseTypeLargeGroup" data-type="F">등</button>
@@ -166,6 +164,7 @@
 									<div class="col-lg-10 mt-2" id="exerciseTypeChoiceList"></div>
 								</div>
 		            			<button type="button" id="exerciseTypeSaveBtn" class="btn btn-primary btn-width float-right">등록</button>
+		            			<button type="button" id="exerciseTypeChangeBtn" class="btn btn-success btn-width float-right">수정</button>
 	            			</div>
 	            		</div>
 	            	</div>
@@ -184,6 +183,10 @@
 		var url5 = url3[1].split("=");
 		var prnoValue = url4[1];
 		var edateValue = url5[1];
+		
+		// csrf
+		var csrfHeaderName ="${_csrf.headerName}"; 
+		var csrfTokenValue="${_csrf.token}";
 		
 		/* 작성일자에 오늘 날짜 띄우기 **********************************/
 		var today = new Date();
@@ -239,25 +242,52 @@
 			$("#lessonModifyModal").modal("show");
 			
 			$("#lessonModifyModalCloseBtn").on("click", function() {
-				location.href="/easyfit/lessonGet?prno=" + prnoValue + "&edate=" + edateValue + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
+				location.href="/easyfit/lessonGet?prno=" + prnoValue + "&edate=" + $("input[name='edate']").eq(0).val() + "&tno=<sec:authentication property='principal.trainerVO.tno'/>";
 			});
 		}); 
 		
 		
-		// 운동일자
+		/* 운동일자 수정 체인지(focusout) 이벤트 *************************************/
 		$("#edate").on("change", function() {
 			
 			$("input[name='edate']").val($("#edate").val());
-			$("input[name='edate']").parent().parent().submit();
+			
+			$.each($(".exerciseRecordRow"), function(i, value) {
+				
+				var object = {
+						
+					prno: $(value).find("div").find("input[name='prno']").val(),
+					ergroup: $(value).find("div").find("input[name='ergroup']").val(),
+					erno: $(value).find("div").find("input[name='erno']").val(),
+					eno: $(value).find("div").find("input[name='eno']").val(),
+					erset: $(value).find("div").find("input[name='erset']").val(),
+					erweight: $(value).find("div").find("input[name='erweight']").val(),
+					ernumber: $(value).find("div").find("input[name='ernumber']").val(),
+					ermemo: $(value).find("div").find("textarea[name='ermemo']").val(),
+					edate: $(value).find("div").find("input[name='edate']").val()
+
+				};
+				
+			 	$.ajax({
+					url: "/easyfit/lessonModify?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+					data: JSON.stringify(object),
+					contentType: "application/json; charset=utf-8",
+					type: "post",
+					beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					success: function(data) {
+						
+					},
+					error: function(xhr, status) {
+						alert(xhr + " : " + status);
+					}
+				});
+			});
 		});
 		
 		
 		/* 운동내역 수정 체인지(focusout) 이벤트 *************************************/
-
-		// csrf
-		var csrfHeaderName ="${_csrf.headerName}"; 
-		var csrfTokenValue="${_csrf.token}";
-		
 		$(".erset").on("focusout", function() {
 			
 			$.each($(".exerciseRecordRow"), function(i, value) {
@@ -410,6 +440,7 @@
 		/* 운동종목 모달 관련 변수 선언 *********************************/
  		var modal = $("#exerciseTypeModal");
 		var modalSaveBtn = $('#exerciseTypeSaveBtn');
+		var modalChangeBtn = $('#exerciseTypeChangeBtn');
 		
 		var split = [];
 		var ename = [];
@@ -417,6 +448,9 @@
 		
 		/* 운동 추가 버튼 클릭 이벤트 ***********************************/
 		$("#exerciseAddBtn").on("click", function() {
+			
+			modalChangeBtn.hide();
+			modalSaveBtn.show();
 			
  			$.each($(".ename"), function(i, value) {
  				
@@ -516,13 +550,10 @@
 				var exerciseRecordColumn = $(".exerciseRecordColumn").eq(0).clone();
 				var exerciseRecordRow = $(".exerciseRecordRow").eq(0).clone();
 				
-				console.log("ergroupNo : " + ergroupNo);
-				console.log(value);
-				
 				ergroupNo++;
 				
 				exerciseRecordColumn.find(".ergroup").html(ergroupNo);
-				exerciseRecordColumn.find(".newEname").html(value);
+				exerciseRecordColumn.find(".newEname").val(value);
 				exerciseRecordRow.addClass("exerciseModifyRegister");
 				
 				exerciseRecordRow.find("input[name='ergroup']").val(ergroupNo);
@@ -547,7 +578,6 @@
 
 			});
 			
-			
 			modal.modal("hide");  
 		});
 		
@@ -564,11 +594,92 @@
 		$(document).on("click", ".mbtn", function() {
 			
 			if($(this).closest("form").prev().attr("class", "exerciseRecordColumn")) {
-				$(this).closest("form").prev().remove();
+				alert("1세트는 삭제할 수 없습니다.")
+				return;
 			}
 			$(this).closest("form").remove();
 		});
-	
+
+		
+		/* 운동 수정 관련 변수 선언 ************************************/
+		var changeEname = null;
+		
+		/* 운동 수정 버튼 클릭 이벤트 **********************************/
+		$(document).on("click", ".cbtn", function() {
+			
+			changeEname = $(this).siblings(".newEname");
+			console.log("changeEname : " + changeEname.val());
+			modalSaveBtn.hide();
+			modalChangeBtn.show();
+			modal.modal("show");
+		});
+		
+		/* 운동종목 수정 버튼 클릭 이벤트 (모달에 있는 데이터를 register input 태그로 이동) **********************************/
+		modalChangeBtn.on("click", function() {
+
+			$.each(chosenExerciseTypeValue, function(i, value) {
+				
+				console.log("value : " + value);
+				
+				$.getJSON("/exercisetype/eno/" + value + ".json", function(data) {
+				
+					changeEname.val(value);
+					console.log("changeEname2 : " + changeEname.val());
+					
+					console.log("Data : " + data.eno);
+					
+					changeEname.parent().parent().parent().next("form[role='form']").find("div").find("input[name='eno']").val(data.eno);
+					
+					console.log("check : " + changeEname.parent().parent().parent().next("form[role='form']").find("div").find("input[name='eno']").val());
+					console.log("check : " + changeEname.val());
+					
+					
+					/* eno update 적용 코드 */
+					var object = {
+							
+						ergroup: changeEname.prev("span").html(),
+						edate: changeEname.parent().parent().parent().next("form[role='form']").find("div").find("input[name='edate']").val(),
+						eno: data.eno
+
+					};
+					
+					console.log("object : " + JSON.stringify(object));
+					
+				 	$.ajax({
+						url: "/easyfit/lessonModifyEno?tno=<sec:authentication property='principal.trainerVO.tno'/>",
+						data: JSON.stringify(object),
+						contentType: "application/json; charset=utf-8",
+						type: "post",
+						beforeSend: function(xhr) { // 서버에 보내기 전에 실행되는 함수
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
+						success: function(data) {
+							
+						},
+						error: function(xhr, status) {
+							alert(xhr + " : " + status);
+						}
+					});
+					
+				 	
+				}).fail(function(xhr, status, err) { 
+					
+					if(error) { error(); }
+					
+				});
+			
+			});
+			
+			modal.modal("hide");  
+		});
+		
+		
+		/* 운동번호 체인지(change) 이벤트 - 운동이름도 함께 수정 *************************************/
+		$("input[name='eno']").on("change", function() {
+			
+
+		});
+		
 	});
 </script>					
 <%@ include file="../includes/footer.jsp" %>				

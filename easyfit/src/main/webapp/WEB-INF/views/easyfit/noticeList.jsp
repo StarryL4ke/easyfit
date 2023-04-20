@@ -6,18 +6,11 @@
     
 <%@ include file="../includes/header.jsp" %>
 
-
-
-
 			    <!-- 공지사항 페이지 타이틀 -->
 		        <div class="d-sm-flex align-items-center justify-content-between mb-4 ml-2">
                        <h1 class="h3 mb-0 text-gray-800">공지사항</h1>
                 </div>
-                
-			    <!-- 공지사항 게시글 등록 버튼 -->            		
-                <div class="ml-4">
-          			<a href="/easyfit/noticeRegister"><button type="button" class="h8 btn btn-primary float-right">등록</button></a>
-          		</div>
+               
 			    
 				<!-- 공지사항 글목록 -------------------------------------------------------------------------->
 				<div class="card-body">	
@@ -40,7 +33,7 @@
 										<a href='/easyfit/noticeGet?nno=${list.nno}'>${list.ntitle}</a>
 									</td>
 									<!--<td>${list.ncontent}</td>  -->
-									<td width="20%">${list.tno}</td>
+									<td width="20%">${list.tname}</td>
 									<td width="20%"><fmt:formatDate pattern='yyyy-MM-dd' value="${list.ndate}" /></td>						
 								</tr>
 							</c:forEach>
@@ -77,7 +70,11 @@
 									<div class="ml-4">
 			                			<button type="submit" class="btn btn-secondary custom-select-sm btn-width">검색</button>
 			                		</div>
-		              		
+		              				
+		              				   <!-- 공지사항 게시글 등록 버튼 -->            		
+					                <div class="ml-4">
+					          			<a href="/easyfit/noticeRegister"><button type="button" class="btn btn-primary custom-select-sm btn-width">등록</button></a>
+					          		</div>
 								</div>
 							</div>					
 						</form>

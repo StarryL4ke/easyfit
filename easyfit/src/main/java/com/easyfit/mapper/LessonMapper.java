@@ -25,6 +25,7 @@ public interface LessonMapper {
 	
 	// UPDATE
 	public void modify(ExerciseRecordVO vo);
+	public void modifyEno(ExerciseRecordVO vo);
 	public long prcountUpdate(Long prno);
 	
 	// DELETE

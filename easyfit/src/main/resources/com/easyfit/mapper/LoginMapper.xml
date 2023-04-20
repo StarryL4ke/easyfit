@@ -31,7 +31,8 @@ WHERE
 
 
 	
-	<!-- 로그인한 트레이너의 올해 월별 PT 수업 횟수 조회 (JHR) -->	
+	<!-- 로그인한 트레이너의 올해 월별 PT 수업 횟수 조회 (JHR) -->
+	<!-- <sekect id="prCountSum" parameterType="String"></sekect> -->
 	<select id="prCountSum" resultType="com.easyfit.domain.join.LoginJoinVO">
 		<![CDATA[
 			SELECT

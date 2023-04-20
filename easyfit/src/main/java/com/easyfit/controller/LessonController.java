@@ -114,6 +114,14 @@ private LessonService lessonService;
 	}
 	
 	@ResponseBody
+	@PostMapping(value = "/lessonModifyEno", consumes="application/json") 
+	public void lessonModifyEno(@RequestBody ExerciseRecordVO vo, @RequestParam("tno") Long tno) {
+										
+		log.info("lessonModify(post_eno) : " + vo);
+		lessonService.getModifyEno(vo);
+	}
+	
+	@ResponseBody
 	@PostMapping(value = "/lessonModifyRegister", consumes="application/json") 
 	public void lessonModifyRegister(@RequestBody ExerciseRecordVO vo, @RequestParam("tno") Long tno) {
 		

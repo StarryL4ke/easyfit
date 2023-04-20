@@ -1,52 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%-- <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> --%>
-    
 <%@ include file="../includes/header.jsp" %>
-<script src="/resources/vendor/jquery/jquery.min.js"></script>
-<!-- Bootstrap Core CSS -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Bootstrap Core JavaScript -->
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<body>
-
-	<h1>Notice Board Modification</h1>
-	
-	<form role="form" action="/easyfit/noticeModify" method="post">
-
-	
-		<div>
-			<label>글번호</label>
-			<input name="nno" value='<c:out value="${notice.nno}"/>' disabled />
+<div class="card-body shadow bg-light container">
+	<!-- 페이지 이름 -->
+	<div class="col-lg-12 py-4 d-inline-block ">
+		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-4 d-inline-block"> 
+			<h1 class="h3 mb-0 text-gray-800">공지사항 수정</h1>
 		</div>
-		<div>
-			<label>글제목</label>
-			<input name="ntitle" value='<c:out value="${notice.ntitle}"/>' />
-		</div>
-		<div>
-			<label>공지 내용</label> <br>
-			<textarea name="ncontent" rows="10" cols="50" ><c:out value="${notice.ncontent}"/></textarea>
-		</div>
-		
-		<!-- <label>최초 공지일</label>
-		<input type="text" name="ndate" value='<fmt:formatDate pattern = "yyyy-MM-dd" value="${notice.ndate}"/>' /><br />
-		-->
-		
-		
-		<div>
-			<label>작성자</label>
-			<input name="tno" value='<c:out value="${notice.tno}"/>' disabled />
-		</div>
-		
-		<button type="submit" data-oper="modify" class="btn btn-default">수정완료</button>
-		<button type="submit" data-oper="remove" class="btn btn-default">삭제하기</button>
-		<button type="button" data-oper="list" class="btn btn-default" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록으로</button>
-	
-	</form>	
-	
+			
+			<form role="form" action="/easyfit/noticeModify" method="post">
+				<div>
+					<div class="form-group mt-3" style="display:flex; align-items: baseline;">
+						<label class="form-label h5 mr-3">글 번 호 :</label>
+						<input class="box width-10" name="nno" value='<c:out value="${notice.nno}"/>' readonly />
+					</div>
+				</div>
+				<div>
+					<div class="form-group mt-3">
+						<label class="form-label h5 mr-3">글 제 목 :</label>
+						<input class="box width-25" name="ntitle" value='<c:out value="${notice.ntitle}"/>' />
+					</div>
+				</div>
+				<div>
+					<div class="form-group mt-3">
+						<label class="form-label h5 mr-3">작 성 자 : </label>
+						<input class="box width-10" name="tno" value='<c:out value="${notice.tname}"/>' readonly />
+					</div>
+				</div>
+				<div>
+					<div class="form-group mt-3">
+						<label class="form-label h5 mr-3">공지 내용</label> <br>
+						<textarea class="form-control z-depth-1" name="ncontent" rows="10" cols="100" ><c:out value="${notice.ncontent}"/></textarea>
+					</div>
+				</div>
+				
+				<!-- 수정, 삭제 버튼 -->
+				<div class="float-right">
+					<button type="submit" data-oper="modify" class="btn btn-info custom-select-sm mb-4">수정완료</button>
+					<button type="submit" data-oper="remove" class="btn btn-danger custom-select-sm mb-4">삭제하기</button>
+					<button type="button" data-oper="list" class="btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록으로</button>
+				</div>
+			</form>	
+	</div>
+</div>
 
 	
 	
@@ -72,8 +70,4 @@
 		});
 	</script>
 	
-</body>
-
-
-
 <%@ include file="../includes/footer.jsp" %>

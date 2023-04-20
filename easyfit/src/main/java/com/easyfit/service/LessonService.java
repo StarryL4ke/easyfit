@@ -23,6 +23,7 @@ public interface LessonService {//변수앞에 get을 붙여서 카멜표기법�
 	
 	// UPDATE
 	public void getModify(ExerciseRecordVO vo);
+	public void getModifyEno(ExerciseRecordVO vo);
 	public boolean getPrcountUpdate(Long prno);
 	
 	// DELETE

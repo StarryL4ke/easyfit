@@ -55,4 +55,5 @@ public class LessonJoinVO {
 	private String ename; // 운동종목이름
 	private Date emgr; // 상위운동종목번호
 	private String ememo; // 운동 관련 메모
+	private long max; // TrainerMapper.xml의 MAX(prturn)
 }

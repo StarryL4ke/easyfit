@@ -18,5 +18,7 @@ public interface CalendarMapper {
 	public List<String> mnameList(@Param("tid") String tid);
 	//prcount 증/감
 	public long prcountUpdate(@Param("mname") String mname, @Param("tid") String tid);
+	//chartData
+	public List<Map<String, Object>> chartData(@Param("tid") String tid);
 	
 }

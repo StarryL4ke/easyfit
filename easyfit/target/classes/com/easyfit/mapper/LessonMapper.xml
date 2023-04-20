@@ -186,6 +186,19 @@ ORDER BY
 				erno = #{erno}
 		]]>
 	</update>
+
+	<!-- UPDATE (only eno) -->
+	<update id="modifyEno">
+		<![CDATA[
+			UPDATE
+				exerciserecord
+			SET
+				eno = #{eno}
+			WHERE
+				edate = #{edate}
+				AND ergroup = #{ergroup}
+		]]>
+	</update>
 	
 	<update id="prcountUpdate">
 		<![CDATA[

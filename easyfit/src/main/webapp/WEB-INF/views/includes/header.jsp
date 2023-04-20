@@ -38,10 +38,10 @@
     <script src="/resources/js/sb-admin-2.js"></script>
 
     <!-- Page level plugins -->
-    <script src="/resources/vendor/chart.js/Chart.min.js"></script>
+    <script src="/resources/vendor/chart.js/Chart.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/resources/js/demo/chart-bar-demo.js"></script>
+    <!-- <script src="/resources/js/demo/chart-bar-demo.js"></script> -->
 
 </head>
 

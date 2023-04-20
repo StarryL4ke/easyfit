@@ -21,7 +21,7 @@ public class CalendarService {
 	@Autowired
 	private CalendarMapper calendarMapper;
 	//일정 목록
-	public List<Map<String,Object>> list() {
+	public List<Map<String, Object>> list() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String tid = auth.getName();
 		return calendarMapper.list(tid);
@@ -48,5 +48,11 @@ public class CalendarService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String tid = auth.getName();
 		return calendarMapper.prcountUpdate(mname, tid) == 1;
+	}
+	
+	public List<Map<String, Object>> chartData(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String tid = auth.getName();
+		return calendarMapper.chartData(tid);
 	}
 }

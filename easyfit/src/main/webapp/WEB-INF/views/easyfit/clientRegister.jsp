@@ -11,23 +11,30 @@
 		</div>
 			<form method="post" class="table table-bordered">
 				<div class="form-group mt-3">
-					<label class="width-10">이름 : </label>
+					<label class="width-10">이 름 : </label>
 					<input class="box" type="text" name="mname" /><br />
 				</div>
 				<div class="form-group mt-3">	
-					<label class="width-10">생일 : </label>
-					<input class="dateBox"type="date" name="mbirth" />
+					<label class="width-10">생 일 : </label>
+					<input class="dateBox" type="date" name="mbirth" />
 				</div>
 				<div class="form-group mt-3">		
-					<label class="width-10">성별 : </label>
-					<input class="box" type="text" name="mgen" /><br />
+					<label class="width-10 mr-4">성 별 : </label>
+					  <div class="custom-control custom-radio custom-control-inline ml-4 mr-5">
+					    <input class="custom-control-input" type="radio" name="mgen" id="mgen_m" value="M">
+					    <label class="custom-control-label" for="mgen_m">남성</label>
+					  </div>
+					  <div class="custom-control custom-radio custom-control-inline mr-4">
+					    <input class="custom-control-input" type="radio" name="mgen" id="mgen_f" value="F">
+					    <label class="custom-control-label" for="mgen_f">여성</label>
+					  </div>
 				</div>
 				<div class="form-group mt-3">
 					<label class="width-10">전화번호 : </label>
 					<input class="box" type="text" name="mtel" /><br />	
 				</div>
 				<div class="form-group mt-3">
-					<label class="width-10">주소 : </label>
+					<label class="width-10">주 소 : </label>
 					<input class="box" type="text" name="maddress" placeholder="(선택)"/><br />	
 				</div>
 				<div class="form-group mt-3">
@@ -39,7 +46,7 @@
 					<input class="dateBox" type="date" name="mdeldate" placeholder="(선택)"/><br />	
 				</div>
 				<div class="form-group mt-3">
-					<label class="width-10">비고 : </label>
+					<label class="width-10">비 고 : </label>
 					<input class="box" type="text" name="mmemo" placeholder="(선택)"/><br />	
 				</div>
 				<div class="form-group mt-3">

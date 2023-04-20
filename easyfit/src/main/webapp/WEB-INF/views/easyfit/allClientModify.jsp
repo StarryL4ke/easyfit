@@ -11,27 +11,27 @@
 		</div>
 			<form method="post" class="table table-bordered">
 				<div class="form-group mt-3">
-					<label class="w-25">회원번호 : </label>
+					<label class="width-10">회원번호 : </label>
 					<input class="box" type="number" name="mno" value="${client.mno}" disabled/>	
 				</div>
 				<div class="form-group mt-3">
-					<label class="w-25">Email : </label>
+					<label class="width-10">Email : </label>
 					<input class="box" type="text" name="memail" value="${client.memail}" /><br />	
 				</div>
 				<div class="form-group mt-3">
-					<label class="w-25">이름 : </label>
+					<label class="width-10">이름 : </label>
 					<input class="box" type="text" name="mname" value="${client.mname}" />	
 				</div>
 				<div class="form-group mt-3">
-					<label class="w-25">가입일 : </label>
+					<label class="width-10">가입일 : </label>
 					<input class="dateBox"type="date" name="mjoindate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mjoindate}"/>' disabled/><br />
 				</div>
 				<div class="form-group mt-3">
-					<label class="w-25">생년월일 : </label>
+					<label class="width-10">생년월일 : </label>
 					<input class="dateBox" type="date" name="mbirth" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mbirth}"/>'/><br />
 				</div>	
 				<div class="form-group mt-3">	
-					<label class="w-25">주소 : </label>
+					<label class="width-10">주소 : </label>
 					<input class="box" type="text" name="maddress" value="${client.maddress}" /><br />
 				</div>
 				<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		

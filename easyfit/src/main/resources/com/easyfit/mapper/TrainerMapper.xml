@@ -129,4 +129,21 @@ WHERE
 	tno = #{tno}
 </update>
 
+<!-- 담당트레이너의 회원 목록 -->
+<select id="trList" resultType="com.easyfit.domain.join.LessonJoinVO">
+<![CDATA[
+SELECT DISTINCT
+    tno, mname, MAX(prturn) max
+FROM
+    ptrecord p, member m
+WHERE
+    p.mno = m.mno
+    AND tno = #{tno}
+GROUP BY
+    tno, mname
+ORDER BY
+    mname
+]]>
+</select>
+
 </mapper>

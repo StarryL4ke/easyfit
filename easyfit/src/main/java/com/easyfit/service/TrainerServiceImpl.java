@@ -3,11 +3,11 @@ package com.easyfit.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.easyfit.domain.Criteria;
 import com.easyfit.domain.TrainerAuthVO;
 import com.easyfit.domain.TrainerVO;
+import com.easyfit.domain.join.LessonJoinVO;
 import com.easyfit.mapper.TrainerMapper;
 
 import lombok.AllArgsConstructor;
@@ -53,5 +53,10 @@ public class TrainerServiceImpl implements TrainerService {
 	public void getAuthModify(long tno) {
 		trainerMapper.authModify(tno);
 		
+	}
+	// 담당트레이너 회원 목록
+	@Override
+	public List<LessonJoinVO> getTrList(Long tno) {
+		return trainerMapper.trList(tno);
 	}
 }

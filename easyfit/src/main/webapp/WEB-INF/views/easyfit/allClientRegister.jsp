@@ -19,8 +19,15 @@
 					<input class="dateBox"type="date" name="mbirth" />
 				</div>
 				<div class="form-group mt-3">	
-					<label class="width-10">성별 : </label>
-					<input class="box" type="text" name="mgen" /><br />
+					<label class="width-10 mr-4">성별 : </label>
+					 <div class="custom-control custom-radio custom-control-inline ml-4 mr-5">
+					    <input class="custom-control-input" type="radio" name="mgen" id="mgen_m" value="M">
+					    <label class="custom-control-label" for="mgen_m">남성</label>
+					  </div>
+					  <div class="custom-control custom-radio custom-control-inline mr-4">
+					    <input class="custom-control-input" type="radio" name="mgen" id="mgen_f" value="F">
+					    <label class="custom-control-label" for="mgen_f">여성</label>
+					  </div>
 				</div>
 				<div class="form-group mt-3">	
 					<label class="width-10">전화번호 : </label>

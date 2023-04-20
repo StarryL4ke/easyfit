@@ -32,7 +32,7 @@ public class LoginController {
 	
 
 	
-	@GetMapping("/login")
+	@GetMapping("/customLogin")
 	public void loginInput(String error, String logout, Model model) {
 		if(error != null) {
 			model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
@@ -42,9 +42,9 @@ public class LoginController {
 		}
 	}
 	
-	@GetMapping("/logout")
+	@GetMapping("/customLogout")
 	public void logoutGet() {}
-	@PostMapping("/logout")
+	@PostMapping("/customLogout")
 	public void logoutPost() {}
 	
 

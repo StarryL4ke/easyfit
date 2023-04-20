@@ -56,6 +56,36 @@ public class CalendarController {
 
 		return jsonArr;
 	}
+	
+	@GetMapping("/chartDataDisplay")
+	@ResponseBody
+	public List<Map<String, Object>> chartDataList(){
+		List<Map<String, Object>> chartData = calendarService.chartData();
+
+		JSONObject chartJsonObj = new JSONObject();
+		JSONArray chartJsonArr = new JSONArray();
+		
+		HashMap<String, Object> chartHash = new HashMap<>();
+		
+		for(int i = 0 ; i < chartData.size() ; i++) {
+			chartHash.put("month", chartData.get(i).get("MONTH"));
+			chartHash.put("count", chartData.get(i).get("COUNT"));
+
+			chartJsonObj = new JSONObject(chartHash);
+			chartJsonArr.add(chartJsonObj);
+		}
+		log.info("jsonArrCheck: {}"+ chartJsonArr);
+
+
+		return chartJsonArr;
+	}
+/*	
+	@GetMapping(value= "/chartDataDisplay", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public List <String> chartData {		
+		List<String> mnameList = calendarService.mnameList();
+		return mnameList;		
+	}
+*/	
 	@Transactional
 	@PostMapping(value = "/calendarRegister", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> register(@RequestBody ExerciseRecordVO exerciseRecord, String mname){
@@ -70,9 +100,7 @@ public class CalendarController {
 	@GetMapping(value= "/calendarClientName", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public List <String> mnameList() {		
 		List<String> mnameList = calendarService.mnameList();
-		return mnameList;
-
-		
+		return mnameList;		
 	}
 }
 

@@ -62,7 +62,7 @@ public class NoticeController {
 	//공지사항 조회
 	@GetMapping({"/noticeGet", "/noticeModify"})
 	public void get(@RequestParam("nno") Long nno, Model model) {
-		log.info("get or modify" + nno);
+		log.info("get or modify : " + nno);
 		model.addAttribute("notice", noticeService.getGet(nno));
 	}
 	
