@@ -44,9 +44,9 @@ public class ClientController {
 	}
 	
 	@GetMapping({"/clientGet", "/clientModify"})//회원 정보, 회원 수정(GET), PT 목록
-	public void get(@RequestParam("mno") Long mno, PTRecordVO ptRecord, Model model) {
+	public void get(@RequestParam("mno") Long mno, PTRecordVO ptRecord, Model model, Long tno) {
 		model.addAttribute("client", clientService.getGet(mno));
-		model.addAttribute("ptRecordList", clientService.getPrList(mno));
+		model.addAttribute("ptRecordList", clientService.getPrList(mno, tno));
 	}
 	
 	@PostMapping("/clientModify")//회원 수정(POST)
@@ -83,9 +83,9 @@ public class ClientController {
 	}
 	
 	@GetMapping({"/allClientGet", "/allClientModify"})//회원 정보, 회원 수정(GET), PT 목록
-	public void allGet(@RequestParam("mno") Long mno, PTRecordVO ptRecord, Model model) {
+	public void allGet(@RequestParam("mno") Long mno, PTRecordVO ptRecord, Model model, Long tno) {
 		model.addAttribute("client", clientService.getGet(mno));
-		model.addAttribute("ptRecordList", clientService.getPrList(mno));
+		model.addAttribute("ptRecordList", clientService.getPrList(mno, tno));
 	}
 	
 	@PostMapping("/allClientModify")//회원 수정(POST)

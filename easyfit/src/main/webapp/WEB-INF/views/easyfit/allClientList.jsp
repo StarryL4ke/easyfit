@@ -26,7 +26,7 @@
 		<tr>
 			<%-- <td>${allList.rn}</td> --%>
 			<td>${allList.mno}</td>
-			<td><a href="/easyfit/allClientGet?mno=${allList.mno}">${allList.mname}</a></td>
+			<td><a href="/easyfit/allClientGet?mno=${allList.mno}&tno=<sec:authentication property="principal.trainerVO.tno"/>">${allList.mname}</a></td>
 			<td>${allList.mtel}</td>
 			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${allList.mjoindate}" /></td>
 		</tr>

@@ -1,5 +1,6 @@
 package com.easyfit.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +48,11 @@ public class NoticeController {
 	
 	
 	//공지사항 작성
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/noticeRegister")
 	public String register(NoticeVO notice,RedirectAttributes rttr) {
 		log.info("register : " + notice.getNno());
+		
 
 		noticeService.getRegister(notice);
 		

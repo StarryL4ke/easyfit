@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authentication property="principal" var="principal"/>					
+<sec:authorize access="hasRole('ROLE_ADMIN')"> 
+	<%@ include file="../includes/adminHeader.jsp" %>			        
+</sec:authorize>
+<sec:authorize access="hasRole('ROLE_MANAGER')"> 		        
+	<%@ include file="../includes/header.jsp" %>
+</sec:authorize>
 
 <div class="card-body shadow bg-light container">
 	<!-- 페이지 이름 -->

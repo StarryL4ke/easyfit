@@ -4,11 +4,29 @@
 
 <!-- 일정 목록 -->
 <select id="list" resultType="Map" parameterType="String">
-<![CDATA[
+<!-- 
 SELECT
     mname, TO_CHAR(edate,'YYYY-MM-DD') edate, ptr.prno
 FROM
     member mem, ptrecord ptr, exerciserecord er, trainer t, trainer_auth auth
+WHERE
+    mem.mno = ptr.mno
+    AND ptr.prno = er.prno
+    AND t.tno = ptr.tno
+    AND t.tid = auth.tid
+    AND t.tid = #{tid}
+-->
+<![CDATA[
+SELECT
+    mname, edate, ptr.prno
+FROM
+    member mem, ptrecord ptr,
+    (
+    SELECT DISTINCT
+        prno, TO_CHAR(edate,'YYYY-MM-DD') edate
+    FROM
+        exerciserecord    
+    ) er, trainer t, trainer_auth auth
 WHERE
     mem.mno = ptr.mno
     AND ptr.prno = er.prno

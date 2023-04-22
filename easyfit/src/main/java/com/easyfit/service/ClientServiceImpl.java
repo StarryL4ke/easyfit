@@ -68,8 +68,8 @@ public class ClientServiceImpl implements ClientService {
 	
 
 	@Override//PT 목록
-	public List<PTRecordVO> getPrList(Long mno) { 
-		return clientMapper.prList(mno); 
+	public List<PTRecordVO> getPrList(Long mno, Long tno) { 
+		return clientMapper.prList(mno, tno); 
 	}
 	
 	@Override//PT 등록

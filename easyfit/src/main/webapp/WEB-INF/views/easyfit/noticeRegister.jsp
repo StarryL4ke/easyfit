@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authentication property="principal" var="principal"/>					
+<sec:authorize access="hasRole('ROLE_ADMIN')"> 
+	<%@ include file="../includes/adminHeader.jsp" %>			        
+</sec:authorize>
+<sec:authorize access="hasRole('ROLE_MANAGER')"> 		        
+	<%@ include file="../includes/header.jsp" %>
+</sec:authorize>
 
 <div class="card-body shadow bg-light container">
 	<!-- 페이지 이름 -->
@@ -22,7 +29,8 @@
 			<div>
 				<div class="form-group mt-3">
 					<label class="form-label h5 mr-3">작성자</label>
-					<input class="box width-10" name="tno" value='1' readonly />  
+					<input type='hidden' name='tno' value='<sec:authentication property="principal.trainerVO.tno"/>'>
+					<input class="box width-10" name="tname" value='<sec:authentication property="principal.trainerVO.tname"/>' readonly />  
 				</div>
 			</div>
 			<div>

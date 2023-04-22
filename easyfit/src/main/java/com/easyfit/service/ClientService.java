@@ -33,7 +33,7 @@ public interface ClientService {//변수앞에 get을 붙여서 카멜표기법�
 	
 	
 	//PT 목록
-	public List<PTRecordVO> getPrList(Long mno);	
+	public List<PTRecordVO> getPrList(Long mno, Long tno);	
 	//PT 등록
 	public long getPrRegister(PTRecordVO ptrecord);
 	// PT 상세보기

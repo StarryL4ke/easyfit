@@ -194,6 +194,7 @@ FROM
    ptrecord
 WHERE
    mno = #{mno}
+   AND tno = #{tno}
 ]]>
 </select>
 

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.easyfit.mapper.TrainerBoardMapper"><!-- Query 작성시 CDATA 꼭 써주세요. -->
+<!-- <![CDATA[ SELECT tbno, tno, tbtitle, tbcontent, tbdate, tbupdatedate FROM trainerboard ]]> -->
+	
+	
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()"> tbtitle LIKE '%'||#{keyword}||'%' </when>
+					<when test="type == 'C'.toString()"> tbcontent LIKE '%'||#{keyword}||'%' </when>
+					<when test="type == 'W'.toString()"> tno LIKE '%'||#{keyword}||'%' </when>
+				</choose>
+			</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- 공지사항 목록 보기 
+	<select id="list" resultType="com.easyfit.domain.TrainerBoardVO">
+		<![CDATA[
+		SELECT
+		    tbno, tno, tbtitle, tbcontent, tbdate, tbupdatedate
+		FROM
+		    trainerboard
+		]]>
+	</select>
+	-->
+	
+	<select id="list" resultType="com.easyfit.domain.TrainerBoardVO">
+		<![CDATA[ 
+		SELECT 
+			tbno, tno, tbtitle, tbcontent, tbdate, tbupdatedate
+		FROM ( 
+			SELECT /*+INDEX_DESC(trainerboard TRAINERBOARD_TBNO_PK) */
+				rownum rn, tbno, tbtitle, tbcontent, tno, tbdate, tbupdatedate FROM trainerboard
+		WHERE 
+		
+		
+			
+		]]>
+		
+		<include refid="criteria"/>
+		<![CDATA[ 
+		rownum <= #{pageNum} * #{amount} ) WHERE rn > (#{pageNum} - 1) * #{amount} 
+		]]>
+	</select>
+	
+	<!--  총 게시글 수  -->
+	<select id="count" resultType="Long"> 
+	
+	
+	SELECT count(*) 
+	
+	FROM trainerboard 
+	
+	WHERE
+	
+	<include refid="criteria"/>
+	
+	<![CDATA[
+	tbno > 0 
+	
+	]]>
+	
+	</select>
+		
+	
+	
+	<!--  공지사항 상세보기  -->
+	<select id="get" resultType="com.easyfit.domain.TrainerBoardVO"> 
+		<![CDATA[
+		SELECT
+		    tbno, tno, tbtitle, tbcontent, tbdate, tbupdatedate
+		FROM
+		    trainerboard
+		
+		WHERE tbno = #{tbno} 
+		]]>
+	</select>
+	
+	
+	
+	<!--  공지사항 등록하기  -->
+	<insert id="register"> 
+		<![CDATA[
+		INSERT INTO trainerboard(
+			 tbno, tno, tbtitle, tbcontent, tbdate, tbupdatedate) 
+		VALUES(
+			 trainerboard_seq.NEXTVAL, #{tno}, #{tbtitle}, #{tbcontent}, sysdate, sysdate) 
+		]]>
+	</insert>
+	
+	
+	<!--  공지사항 수정하기  -->
+	<update id="modify"> 
+		<![CDATA[ 
+		UPDATE 
+			trainerboard 
+		SET 
+			tbtitle = #{tbtitle}, 
+			tbcontent = #{tbcontent},
+			tbupdatedate = sysdate
+			
+		WHERE 
+			tbno = #{tbno}	
+		]]>
+	</update>
+	
+	<!-- 공지사항 삭제하기 -->
+	<delete id="remove" >
+		<![CDATA[ 
+		DELETE
+		FROM 
+			trainerboard 
+		WHERE 
+			tbno = #{tbno} 
+		]]>
+	</delete>
+
+	
+	
+	<!-- 공지사항 
+	<insert id="registerSelectKey">
+	<selectKey keyProperty="tbno" order="BEFORE" resultType="long"> 
+		SELECT trainerboard_seq.NEXTVAL FROM dual 
+	
+	</selectKey>
+		<![CDATA[
+		INSERT INTO 
+			trainerboard(tbno, tbtitle, tbcontent,tno, tbdate, tbupdatedate) 
+		VALUES(
+			#{tbno}, #{tbtitle}, #{tbcontent}, #{tno}, #{tbdate}, #{tbupdatedate})
+		]]>
+	</insert>
+-->
+
+
+	
+	
+
+	
+</mapper>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

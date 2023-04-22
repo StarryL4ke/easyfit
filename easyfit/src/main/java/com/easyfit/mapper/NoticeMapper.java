@@ -21,7 +21,7 @@ public interface NoticeMapper {
 	public NoticeJoinVO get(Long nno);
 
 	//공지 입력
-	public int register(NoticeVO notice);
+	public long register(@Param("notice") NoticeVO notice);
 
 	//공지사항 수정
 	public void modify(NoticeVO notice);

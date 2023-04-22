@@ -1,6 +1,7 @@
 package com.easyfit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ public class LoginController {
 		if(error != null) {
 			model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
 		}
+		
 		if(logout != null) {
 			model.addAttribute("logout", "로그아웃 되었습니다.");
 		}
@@ -44,6 +46,7 @@ public class LoginController {
 	
 	@GetMapping("/customLogout")
 	public void logoutGet() {}
+	
 	@PostMapping("/customLogout")
 	public void logoutPost() {}
 	
@@ -54,22 +57,21 @@ public class LoginController {
 		model.addAttribute("message", "접근 불가.");
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/adminPage")
 	public void loginAdmin() {
 	}
 	
 	@GetMapping("/trainerPage")
-	public void loginTrainer(LoginJoinVO vo, Model model) {
-		
-		// trainerPage 월별 PT 현황 막대 그래프 출력 (JHR)
+	public void loginTrainer(LoginJoinVO vo, Model model) {		
+		//trainerPage 월별 PT 현황 막대 그래프 출력 (JHR)
 		log.info("trainerPage(get)");
 		model.addAttribute("monthlyPT", loginService.getPrCountSum(vo));
 	}
 	
 	@ResponseBody
 	@PostMapping(value = "/trainerPage", consumes="application/json")
-	public Long[] loginTrainer2(@RequestBody LoginJoinVO vo, @RequestParam("tid") String tid, Model model) {
-		
+	public Long[] loginTrainer2(@RequestBody LoginJoinVO vo, @RequestParam("tid") String tid, Model model) {		
 		// trainerPage 월별 PT 현황 막대 그래프 출력 (JHR)
 		log.info("trainerPage(post) : " + vo.getPrcountSum());
 		
@@ -78,14 +80,12 @@ public class LoginController {
 		for(int i = 0; i < 2; i++) {
 			
 			prcountSumList[i] = vo.getPrcountSum();
-		}
-		
+		}		
 		return prcountSumList;
 	}
 	
 	@GetMapping("/trainerSample")
-	public void loginSample() {
-		
+	public void loginSample() {		
 	}
 	
 	

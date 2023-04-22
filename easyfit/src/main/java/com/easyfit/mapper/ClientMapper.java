@@ -32,7 +32,7 @@ public interface ClientMapper {
 	public void remove(Long mno);
 	
 	//PT 목록
-	public List<PTRecordVO> prList(Long mno);	
+	public List<PTRecordVO> prList(@Param("mno") long mno, @Param("tno") long tno);	
 	//PT 등록
 	public long prRegister(PTRecordVO ptrecord);	
 	// PT 상세보기

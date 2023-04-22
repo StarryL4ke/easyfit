@@ -1,10 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%-- <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> --%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authentication property="principal" var="principal"/>					
+<sec:authorize access="hasRole('ROLE_ADMIN')"> 
+	<%@ include file="../includes/adminHeader.jsp" %>			        
+</sec:authorize>
+<sec:authorize access="hasRole('ROLE_MANAGER')"> 		        
+	<%@ include file="../includes/header.jsp" %>
+</sec:authorize>
     
-<%@ include file="../includes/header.jsp" %>
 
 			    <!-- 공지사항 페이지 타이틀 -->
 		        <div class="d-sm-flex align-items-center justify-content-between mb-4 ml-2">
@@ -67,14 +72,16 @@
 									<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 									<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'>
 									
-									<div class="ml-4">
+									<div class="ml-2">
 			                			<button type="submit" class="btn btn-secondary custom-select-sm btn-width">검색</button>
-			                		</div>
-		              				
-		              				   <!-- 공지사항 게시글 등록 버튼 -->            		
-					                <div class="ml-4">
-					          			<a href="/easyfit/noticeRegister"><button type="button" class="btn btn-primary custom-select-sm btn-width">등록</button></a>
-					          		</div>
+			                		</div>		              				
+							        <sec:authentication property="principal" var="principal"/>					
+							        <sec:authorize access="hasRole('ROLE_ADMIN')">			        
+			              				   <!-- 공지사항 게시글 등록 버튼 -->            		
+						                <div class="ml-2">
+						          			<a href="/easyfit/noticeRegister"><button type="button" class="btn btn-primary custom-select-sm btn-width">등록</button></a>
+						          		</div>					        
+							        </sec:authorize>
 								</div>
 							</div>					
 						</form>
