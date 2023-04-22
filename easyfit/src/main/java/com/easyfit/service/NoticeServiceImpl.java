@@ -44,9 +44,9 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	//새로운 공지사항 등록
 	@Override
-	public void getRegister(NoticeVO notice) {
+	public void getRegisterSelectKey(NoticeVO notice) {
 		log.info("noticeRegister");
-		noticeMapper.register(notice);
+		noticeMapper.registerSelectKey(notice);
 		
 		
 	}

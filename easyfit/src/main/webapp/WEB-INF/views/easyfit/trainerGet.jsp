@@ -55,11 +55,13 @@
 			<h4 class="h3 mb-0 text-gray-800">담당 회원 이력</h4>
 		</div>
 			
-		<table id="ptTable" class="table table-bordered width-40">
+		<table id="ptTable" class="table table-bordered">
 				<thead>
 					<tr>
 						<!-- <th>PT 번호</th> -->
 						<th class="bg-light">회원 이름</th>
+						<th class="bg-light">전화번호</th>
+						<th class="bg-light">가입일</th>
 						<th class="bg-light">PT 회차</th>
 					</tr>
 				</thead>
@@ -68,6 +70,8 @@
 			<c:forEach  items="${trList}" var="trList">
 				<tr>
 					<td>${trList.mname}</td>
+					<td>${trList.mtel}</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${trList.mjoindate}" /></td>					
 					<td>${trList.max}</td>
 				</tr>
 			</c:forEach>

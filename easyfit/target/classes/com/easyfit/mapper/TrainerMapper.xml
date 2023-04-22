@@ -133,14 +133,14 @@ WHERE
 <select id="trList" resultType="com.easyfit.domain.join.LessonJoinVO">
 <![CDATA[
 SELECT DISTINCT
-    tno, mname, MAX(prturn) max
+    tno, mname, mtel, mjoindate, MAX(prturn) max
 FROM
     ptrecord p, member m
 WHERE
     p.mno = m.mno
     AND tno = #{tno}
 GROUP BY
-    tno, mname
+    tno, mname, mtel, mjoindate
 ORDER BY
     mname
 ]]>

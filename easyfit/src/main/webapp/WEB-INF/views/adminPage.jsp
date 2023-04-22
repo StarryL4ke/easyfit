@@ -88,7 +88,7 @@
  						<!-- 공지사항 시작 -------------------------------------------------------------------------->
 	                    <div class="col-lg-5 mb-5">
 	                        <div class="card shadow mb-4">
-	                            <div class="card-header py-3">
+	                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" onclick="location.href='/easyfit/noticeList'">
 	                                <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 	                            </div>
 	                            <div class="card-body">

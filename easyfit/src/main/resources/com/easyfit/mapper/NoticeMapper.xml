@@ -72,15 +72,18 @@
 	
 	
 	
-	<!--  공지사항 등록하기  -->
-	<insert id="register"> 
-		<![CDATA[
+<!--  공지사항 등록하기  -->
+<insert id="registerSelectKey">
+<selectKey keyProperty="nno" order="BEFORE" resultType="long">
+<![CDATA[
+SELECT notice_seq.NEXTVAL FROM dual
+]]>
+</selectKey>
 INSERT INTO
     notice(nno, ntitle, ncontent, ndate, tno)
 VALUES(
-    notice_seq.NEXTVAL, #{ntitle}, #{ncontent}, #{ndate}, #{tno})
-		]]>
-	</insert>
+    #{nno}, #{ntitle}, #{ncontent}, sysdate, #{tno})
+</insert>
 	
 	
 	<!--  공지사항 수정하기  -->

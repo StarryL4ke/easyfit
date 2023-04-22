@@ -42,22 +42,17 @@ public class NoticeController {
 	
 	//공지사항 작성
 	@GetMapping("/noticeRegister")
-	public void register() {
+	public void register(NoticeVO notice, Model model) {
+		model.addAttribute("result", notice.getNno());
 		log.info("getRegister");
 	}
 	
 	
 	//공지사항 작성
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/noticeRegister")
-	public String register(NoticeVO notice,RedirectAttributes rttr) {
-		log.info("register : " + notice.getNno());
-		
-
-		noticeService.getRegister(notice);
-		
-		rttr.addFlashAttribute("result", notice.getNno());
-		
+	public String register(NoticeVO notice, RedirectAttributes rttr) {
+		noticeService.getRegisterSelectKey(notice);		
+		rttr.addFlashAttribute("result", notice.getNno());		
 		return "redirect:/easyfit/noticeList";
 	}
 	
@@ -79,7 +74,7 @@ public class NoticeController {
 		noticeService.getModify(notice);
 		
 		rttr.addFlashAttribute("notice", notice.getNno());
-		return "redirect:/easyfit/noticeGet?nno="+notice.getNno();
+		return "redirect:/easyfit/noticeList";
 
 	}
 	
@@ -90,7 +85,7 @@ public class NoticeController {
 
 	
 	// 공지 삭제
-	@PostMapping("/noticeRemove")
+	@GetMapping("/noticeRemove")
 	public String noticeRemove(@RequestParam("nno") Long nno, Model model) {
 		log.info("remove : ");
 		noticeService.getRemove(nno);

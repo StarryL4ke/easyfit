@@ -106,15 +106,15 @@
                     <ul class="navbar-nav ml-auto">
 
                         <!-- 로그인 계정 정보 시작 -->
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow form-inline mr-2">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle" src="/resources/img/undraw_profile.svg">
                                 <span class="mr-2 d-none d-lg-inline text-black-600 small">&nbsp;<b><sec:authentication property="principal.trainerVO.tname"/></b> 사장 
-                                <a href="/customLogout">
-	                                <div>
-	                                	<i class="fas fa-sign-out-alt"></i>
-	                                </div>
-                                </a>
+	                                 <a  href="#" onclick="logout()">
+	                            		<div class="d-inline-block mt-1-5 mr-2 ml-0">
+			                            	<i class="fas fa-lg fa-sign-out-alt"></i>
+	                            		</div>
+	                           		</a>
                                 </span>
                             </a>
                         </li>
@@ -128,3 +128,15 @@
                 <div class="container-fluid">
                 
 <!-- 공통모듈 header 끝 -->
+<script>
+    function logout() {
+        // 로그아웃 처리
+        // ...
+
+        // alert 창 띄우기
+        alert("로그아웃 되었습니다.");
+
+        // 원하는 페이지로 이동시키기
+        window.location.href = "/customLogin?logout";
+    }
+</script>

@@ -18,35 +18,27 @@
 		</div>
 			
 			<form role="form" action="/easyfit/noticeModify" method="post">
-				<div>
-					<div class="form-group mt-3" style="display:flex; align-items: baseline;">
-						<label class="form-label h5 mr-3">글 번 호 :</label>
-						<input class="box width-10" name="nno" value='<c:out value="${notice.nno}"/>' readonly />
-					</div>
+
+
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">글 제 목 :</label>
+					<input class="box width-25" name="ntitle" value='<c:out value="${notice.ntitle}"/>' />
 				</div>
-				<div>
-					<div class="form-group mt-3">
-						<label class="form-label h5 mr-3">글 제 목 :</label>
-						<input class="box width-25" name="ntitle" value='<c:out value="${notice.ntitle}"/>' />
-					</div>
+<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->	
+
+
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">공지 내용</label> <br>
+					<textarea class="form-control z-depth-1" name="ncontent" rows="10" cols="100" ><c:out value="${notice.ncontent}"/></textarea>
 				</div>
-				<div>
-					<div class="form-group mt-3">
-						<label class="form-label h5 mr-3">작 성 자 : </label>
-						<input class="box width-10" name="tno" value='<c:out value="${notice.tname}"/>' readonly />
-					</div>
-				</div>
-				<div>
-					<div class="form-group mt-3">
-						<label class="form-label h5 mr-3">공지 내용</label> <br>
-						<textarea class="form-control z-depth-1" name="ncontent" rows="10" cols="100" ><c:out value="${notice.ncontent}"/></textarea>
-					</div>
-				</div>
+
 				
 				<!-- 수정, 삭제 버튼 -->
 				<div class="float-right">
-					<button type="submit" data-oper="modify" class="btn btn-info custom-select-sm mb-4">수정완료</button>
-					<button type="submit" data-oper="remove" class="btn btn-danger custom-select-sm mb-4">삭제하기</button>
+					<button type="submit" data-oper="modify" class="btn btn-info custom-select-sm mb-4">수정완료</button>					
 					<button type="button" data-oper="list" class="btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록으로</button>
 				</div>
 			</form>	

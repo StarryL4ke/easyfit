@@ -157,7 +157,7 @@
                                 	&nbsp;<b><sec:authentication property="principal.trainerVO.tname"/></b> 트레이너 
                                 </span>
                             </a>
-                            <a href="/customLogout">
+                            <a  href="#" onclick="logout()">
                             	<div class="d-inline-block mt-1-5 mr-2 ml-0">
 		                            <i class="fas fa-lg fa-sign-out-alt"></i>
                             	</div>
@@ -174,4 +174,17 @@
                 <!-- 페이지 내용 시작 ------------------------------------------------------------------------------->
                 <div class="container-fluid">
 
+
 <!-- 공통모듈 header 끝 -->
+<script>
+    function logout() {
+        // 로그아웃 처리
+        // ...
+
+        // alert 창 띄우기
+        alert("로그아웃 되었습니다.");
+
+        // 원하는 페이지로 이동시키기
+        window.location.href = "/customLogin?logout";
+    }
+</script>

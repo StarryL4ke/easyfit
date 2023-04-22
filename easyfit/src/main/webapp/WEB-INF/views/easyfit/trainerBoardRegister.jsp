@@ -5,70 +5,43 @@
 
 <%@ include file="../includes/header.jsp" %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>공지사항 - Get</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<title>Insert title here</title>
-
-<script src="/resources/vendor/jquery/jquery.min.js"></script>
-
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></script>
-
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
-
-</head>
-<body> 
-
-	<h1>New Notification - 새로운 공지사항</h1> 
-
-	<!-- 공지사항 글목록 -------------------------------------------------------------------------->
-
-	
+<div class="card-body shadow bg-light container">
+	<!-- 페이지 이름 -->
+	<div class="col-lg-12 py-4 d-inline-block ">
+		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-4 d-inline-block">
+			<h1 class="h3 mb-0 text-gray-800">트레이너 게시판 등록</h1> 
+		</div>
+		
+		<!-- 공지사항 글목록 -------------------------------------------------------------------------->
 		<form role="form" action="/easyfit/trainerBoardRegister" method="post">
 			<input type='hidden' name='tbno' value='<c:out value="${trainerboard.tbno}"/>'>
-
-	
-			<!-- <div>
-				<label>글번호</label>
-				<input name="nno" value='<c:out value="${trainerboard.tbno}"/>' readonly />
-			</div> -->
 			<div>
-				<label>제목</label>
-				<input name="tbtitle"  />
-				<!-- value='<c:out value="${trainerboard.tbtitle}"/>' -->
+				<div class="form-group mt-3" style="display:flex; align-items: baseline;">
+					<label class="form-label h5 mr-3">제목</label>
+					<input class="box width-25" name="tbtitle"  />
+				</div>
 			</div>
 			<div>
-				<label>공지 내용을 입력하세요</label> <br>
-				<textarea name="tbcontent" rows="10" cols="50" ></textarea>
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">작성자</label>
+					<input class="box width-10" name="tno" value='1' readonly />  
+				</div>
 			</div>
-			
 			<div>
-				<label>작성자</label>
-				<input name="tno" value='1' readonly />  
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">공지 내용</label> <br>
+					<textarea  class="form-control z-depth-1" name="tbcontent" rows="10" cols="50" ></textarea>
+				</div>
 			</div>
 			<div> 
-				<button type="submit" data-oper="register" class="btn btn-default" >작성완료</button>
-				<button type="reset" class="btn btn-default" onclick="location.href = '/easyfit/trainerBoardRegister'">초기화</button>
-				<button type="button" data-oper="list" class="btn btn-default" onclick="location.href = '/easyfit/trainerBoard?tbno=${trainerboard.tbno}'">목록으로</button>
+				<div class="float-right"> 
+					<button type="submit" data-oper="register" class="btn btn-primary custom-select-sm mb-4">작성완료</button>
+					<button type="reset" class="btn btn-warning custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardRegister'">초기화</button>
+					<button type="button" data-oper="list" class="btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoard?tbno=${trainerboard.tbno}'">목록으로</button>
+				</div>
 			</div>	
-		
 		</form>
+	</div>
+</div>
 		
-		
-		
-
-		
-	
-		
-			
-
-</body>
-</html>
-
 <%@ include file="../includes/footer.jsp" %>

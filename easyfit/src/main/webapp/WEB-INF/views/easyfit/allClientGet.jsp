@@ -184,14 +184,34 @@ $(document).ajaxSend(function(e, xhr, options) {
 	    modal.find(modalInputPrTurn).val("");
 	    modal.find(modalInputPrStartDate).val("");
 	    modal.find(modalInputPrEndDate).val("");
-	    modal.find(modalInputPrCount).val("");
+	    modal.find(modalInputPrCount).val(0);
 	    modal.find(modalInputPrCountAll).val("");
 	    $(".modal").modal("show");
     });
     
     modalRegisterBtn.on("click",function(e){
     e.preventDefault();
-    
+    	
+	    if ($('#ptTurn').val() === '') {
+	        alert('PT 횟수를 입력해주세요.');
+	        return false;
+	    } 
+		if ($('#ptStartDate').val() === '') {
+	        alert('PT 시작일을 입력해주세요.');
+	        return false;
+	    } 
+		if ($('#ptEndDate').val() === '') {
+	        alert('PT 종료일을 입력해주세요.');
+	        return false;
+	    } 
+		if ($('#ptCount').val() === '') {
+	        alert('PT 진행회차을 입력해주세요.');
+	        return false;
+	    } 
+		if ($('#ptCountAll').val() === '') {
+	        alert('PT 전체회차를 입력해주세요.');
+	        return false;
+	    } 
         var ptRecord = {
 	        	/* prno: modalInputPrno.val(), */
 	            tno:modalInputTno.val(),

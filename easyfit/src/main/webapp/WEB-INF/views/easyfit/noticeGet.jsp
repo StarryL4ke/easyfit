@@ -21,7 +21,7 @@
 				<div >
 					<div class="form-group mt-3" style="display:flex; align-items: baseline;">
 						<label class="form-label h5 mr-3">글 번 호 : </label>
-						<input class="box width-10" type="number" name="nno" v alue="${notice.nno}" readonly />	
+						<input class="box width-10" type="number" name="nno" value="${notice.nno}" readonly />	
 					</div>
 					<div class="form-group mt-3">
 						<label class="form-label h5 mr-3">타 이 틀 : </label>
@@ -47,9 +47,10 @@
 				<div class="float-right">
 				<sec:authentication property="principal" var="principal"/>					
 		        <sec:authorize access="hasRole('ROLE_ADMIN')">			        
-					<button type="button" class="btn btn-info custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeModify?nno=${notice.nno}'">수정·삭제</button>
+					<button type="button" class="btn btn-info custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeModify?nno=${notice.nno}'">수정</button>
+					<button type="button" class="btn btn-danger custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeRemove?nno=${notice.nno}'">삭제</button>
 		        </sec:authorize>
-					<button type="button" class="btn btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록으로</button>
+					<button type="button" class="btn btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록</button>
 				</div>
 			</form>
 		</div>

@@ -3,47 +3,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%-- <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> --%>
-    
+ 
 <%@ include file="../includes/header.jsp" %>
 
-
-
-
 			    
-		       <div class="d-sm-flex align-items-center justify-content-between mb-4 ml-2">
-                       <h1 class="h3 mb-0 text-gray-800">Trainer Board</h1>
-               </div>
-			    
-				<!-- 공지사항 글목록 -------------------------------------------------------------------------->
-				<div class="card-body">	
-					<table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-	                    <thead>
-				
-							<tr role="row">	
-		 						<th>글번호</th>
-		 						<th>글제목</th>
-		 						<!-- <th>공지 내용</th> -->
-		 						<th>작성자</th>
-		 						<th>공지 날짜</th>
-	 						</tr>
-	                    </thead>
-	               
-	                    <tbody> 
-							<c:forEach items="${list}" var="list">
-								<tr>									
-									<td width="10%">${list.tbno}</td>
-									<td width="50%">
-										<a href='/easyfit/trainerBoardGet?tbno=${list.tbno}'>${list.tbtitle}</a>
-									</td>
-									<!--<td>${list.tbcontent}</td>  -->
-									<td width="20%">${list.tno}</td>
-									<td width="20%"><fmt:formatDate pattern='yyyy-MM-dd' value="${list.tbdate}" /></td>						
-								</tr>
-							</c:forEach>
-                        </tbody>
-	                </table>
-				</div>
-				<!-- 공지사항 목록 끝 ------------>
+		
+		<div class="card-body">		
+			<div class="d-sm-flex align-items-center justify-content-between mb-4 ml-2">
+				<h1 class="h3 mb-0 text-gray-800"> 트레이너 게시판</h1>	
+			</div>
+			<table class="table table-bordered dataTable" id="dataTable" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+	                  <thead>
+		
+					<tr role="row">	
+							<th>글번호</th>
+							<th>글제목</th>
+							<!-- <th>공지 내용</th> -->
+							<th>작성자</th>
+							<th>공지 날짜</th>
+						</tr>
+	                  </thead>
+	             
+                  <tbody> 
+					<c:forEach items="${list}" var="list">
+						<tr>									
+							<td width="10%">${list.tbno}</td>
+							<td width="50%">
+								<a href='/easyfit/trainerBoardGet?tbno=${list.tbno}'>${list.tbtitle}</a>
+							</td>
+							<!--<td>${list.tbcontent}</td>  -->
+							<td width="20%">${list.tno}</td>
+							<td width="20%"><fmt:formatDate pattern='yyyy-MM-dd' value="${list.tbdate}" /></td>						
+						</tr>
+					</c:forEach>
+                  </tbody>
+             </table>
+		</div>
+</div>
 				
 				
 				<!--공지사항 검색, 새로등록 버튼  -->
@@ -67,22 +63,14 @@
 									</select>
 									
 									<input type='text' name='keyword' class='custom-select-sm form-control form-control-sm ml-2' value='<c:out value="${pageMaker.cri.keyword}"/>'>
-									
-									
 									<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'>
-									
-									
 									<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'>
-									
-									<div class="ml-4">
-			                			<button type="submit" class="btn btn-secondary custom-select-sm" style="width: 80px;">조회</button>
+									<div class="ml-2">
+			                			<button type="submit" class="btn btn-secondary custom-select-sm btn-width">조회</button>
 			                		</div>
-			                		
-			                		
-					                <div class="ml-4">
-			                			<a href="/easyfit/trainerBoardRegister"><button type="button" class="btn btn-primary custom-select-sm" style="width: 80px;">등록</button></a>
+					                <div class="ml-2">
+			                			<a href="/easyfit/trainerBoardRegister"><button type="button" class="btn btn-primary custom-select-sm btn-width">등록</button></a>
 			                		</div>
-		              		
 								</div>
 							</div>					
 						</form>
@@ -90,7 +78,6 @@
 						<form id='hiddenForm' action="/easyfit/trainerBoardList" method='get'>
 							<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 							<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-
 							<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
 							<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
 						</form>
@@ -115,18 +102,6 @@
 						<li class="paginate_button page-item previous disabled" id="dataTable_previous">
 						<a href="${pageMaker.startPage -1}" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
 					</c:if>
-					<!-- \<li class="paginate_button page-item active">
-					<a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-					<li class="paginate_button page-item ">
-					<a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-					<li class="paginate_button page-item ">
-					<a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-					<li class="paginate_button page-item ">
-					<a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-					<li class="paginate_button page-item ">
-					<a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
-					<li class="paginate_button page-item ">
-					<a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li> -->
 					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 						<li><a href="/easyfit/trainerBoardList?pageNum=${num}&amount=10&type=${pageMaker.cri.type}&keyword=${pageMaker.cri.keyword}" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">${num}</a></li>
         			</c:forEach>
@@ -139,9 +114,6 @@
 				
 				<!-- 페이지 -->
             	
-        
-
-
-
-
+   	
+       
 <%@ include file="../includes/footer.jsp" %>

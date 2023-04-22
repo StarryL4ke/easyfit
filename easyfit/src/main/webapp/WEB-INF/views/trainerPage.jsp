@@ -62,8 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 </script>
- <div id='calendar'></div>
- 
+ <div id='calendar'></div> 
  <!-- 그래프 및 미니 공지사항 영역 시작 ----------------------------------------------------------->
 	<div class="row">
 
@@ -95,9 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
 				<!-- hidden 태그 전송용 폼 끝 -->
 
 <!-- 공지사항 시작 -------------------------------------------------------------------------->
-	                    <div class="col-lg-5 mb-5">
-	                        <div class="card shadow mb-4">
-	                            <div class="card-header py-3">
+	                     <div class="col-xl-6 col-lg-6">
+                            <div class="card shadow mb-4">
+	                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" onclick="location.href='/easyfit/noticeList'">
 	                                <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 	                            </div>
 	                            <div class="card-body">

@@ -1,14 +1,16 @@
-package com.easyfit.domain;
+package com.easyfit.domain.join;
 
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class TrainerBoardVO {
+public class TrainerBoardJoinVO {
+	
+	private String tid;
 	
 	private Long tbno; //트레이너게시글 글번호
-	private long tno; //트레이너게시글 게시자
+	private String tno; //트레이너게시글 게시자
 	private String tbtitle; //트레이너게시글 글제목
 	private String tbcontent; //공지 내용
 

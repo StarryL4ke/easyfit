@@ -21,7 +21,7 @@
 			</div>
 			<div class="form-group mt-3">
 				<label class="width-10">이름 : </label>
-				<input class="box" type="text" name="mname" value="${client.mname}" /><br />	
+				<input id="mname" class="box" type="text" name="mname" value="${client.mname}" /><br />	
 			</div>
 			<div class="form-group mt-3">
 				<label class="width-10">가입일 : </label>
@@ -29,7 +29,7 @@
 			</div>
 			<div class="form-group mt-3">
 				<label class="width-10">생년월일 : </label>
-				<input class="dateBox" type="date" name="mbirth" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mbirth}"/>'/><br />
+				<input id="mbirth" class="dateBox" type="date" name="mbirth" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${client.mbirth}"/>'/><br />
 			</div>
 			<div class="form-group mt-3">
 				<label class="width-10">주소 : </label>
@@ -40,11 +40,25 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->	
 			<div class="text-center">		
-				<button type="submit" class="btn btn-info custom-select-sm btn-width mb-4">수정완료</button>
+				<button data-oper="modify" type="submit" class="btn btn-info custom-select-sm btn-width mb-4">수정완료</button>
 			</div>
 		</form>
 	</div>
 </div>
-		
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("button[data-oper='modify']").on("click", function(){
+		if($("#mname").val() == null || $("#mname").val().length == 0){
+			alert("이름을 입력해주세요잉~");
+			return false;
+		}
+		if($("#mbirth").val() == null || $("#mbirth").val().length == 0){
+			alert("생일을 입력해주세요잉~");
+			return false;
+		}
+	})
+});
+</script>
 
 <%@ include file="../includes/footer.jsp" %>

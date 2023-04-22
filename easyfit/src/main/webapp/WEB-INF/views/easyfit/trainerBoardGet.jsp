@@ -5,63 +5,45 @@
 
 <%@ include file="../includes/header.jsp" %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>공지사항 - Get</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="/resources/vendor/jquery/jquery.min.js"></script>
-
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></script>
-
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
-
-
-
-</head>
-<body>  
-	<h1>트레이너 커뮤니티 게시판입니다</h1>
-		
-
-
-
-		<label>글번호</label>
-		<input type="number" name="tbno" value="${trainerboard.tbno}" disabled />	
-
-
-
-		<div>
+<div class="card-body shadow bg-light container">
+	<!-- 페이지 이름 -->
+	<div class="col-lg-12 py-4 d-inline-block ">
+		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-4 d-inline-block"> 
+			<h1 class="h3 mb-0 text-gray-800">트레이너 게시판</h1>
+		</div>
+			<div>
+				<div class="form-group mt-3" style="display:flex; align-items: baseline;">
+					<label class="form-label h5 mr-3">글번호</label>
+					<input class="box width-10" type="number" name="tbno" value="${trainerboard.tbno}" disabled />	
+				</div>
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">타이틀</label>
+					<input class="box width-25" type="text" name="tbtitle" value="${trainerboard.tbtitle}"  disabled /><br>
+				</div>
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">작성일자</label>
+					<input class="dateBox width-20" type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbdate}"/>' disabled/><br />
+				</div>
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">수정일자</label>
+					<input class="dateBox width-20" type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbupdatedate}"/>' disabled/><br />
+				</div>
+				<div class="form-group mt-3">
+					<label class="form-label h5 mr-3">작성자</label>
+					<input class="box width-10" type="number" name="tno" value="${trainerboard.tno}" disabled /> <br>	
+				</div>
+				<div class="form-group mt-3">
+					<label class="default">공지 내용</label> <br>
+					<textarea name="tbcontent" rows="10" cols="100" disabled><c:out value="${trainerboard.tbcontent}"/></textarea> <br>
+				</div>
 			</div>
-
-		<label>타이틀</label>
-		<input type="text" name="tbtitle" value="${trainerboard.tbtitle}"  disabled /><br>
-
-		<label class="default">공지 내용</label> <br>
-		<textarea name="tbcontent" rows="10" cols="100" disabled><c:out value="${trainerboard.tbcontent}"/></textarea> <br>
-	
-		
-		<label>작성일자</label>
-		<input type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbdate}"/>' disabled/><br />
-		
-		<label>수정일자</label>
-		<input type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbupdatedate}"/>' disabled/><br />
-		
-		
-		<label>작성자</label>
-		<input type="number" name="tno" value="${trainerboard.tno}" disabled /> <br>	
-		
-		
-		<!-- 수정, 삭제 버튼 -->
-		<button type="button" class="btn btn-default" onclick="location.href = '/easyfit/trainerBoardModify?tbno=${trainerboard.tbno}'">수정·삭제</button>
-		
-		<button type="button" class="btn btn-default" onclick="location.href = '/easyfit/trainerBoardList?tbno=${trainerboard.tbno}'">목록으로</button>
-	
-
+			<div class="float-right">
+				<!-- 수정, 삭제, 목록 버튼 -->
+				<button type="button" class="btn btn-info custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardModify?tbno=${trainerboard.tbno}'">수정·삭제</button>
+				<button type="button" class="btn btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardList?tbno=${trainerboard.tbno}'">목록으로</button>
+			</div>
+		</div>
+	</div>
 	
 	
 	

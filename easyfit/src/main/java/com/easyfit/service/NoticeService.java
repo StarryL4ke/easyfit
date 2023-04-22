@@ -17,7 +17,7 @@ public interface NoticeService {//변수앞에 get을 붙여서 카멜표기법�
 	public long getCount(Criteria cri);
 
 	//공지사항 등록
-	public void getRegister(NoticeVO notice);
+	public void getRegisterSelectKey(NoticeVO notice);
 
 	//공지사항 상세보기
 	public NoticeJoinVO getGet(Long nno);
