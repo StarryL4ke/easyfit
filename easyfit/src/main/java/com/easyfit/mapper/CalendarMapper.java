@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.easyfit.domain.ClientVO;
 import com.easyfit.domain.ExerciseRecordVO;
+import com.easyfit.domain.NoticeVO;
 @Mapper
 public interface CalendarMapper {
 	//일정 목록
@@ -20,5 +21,7 @@ public interface CalendarMapper {
 	public long prcountUpdate(@Param("mname") String mname, @Param("tid") String tid);
 	//chartData
 	public List<Map<String, Object>> chartData(@Param("tid") String tid);
+	//smallNotice
+	public List<Map<String, Object>> smallNotice();
 	
 }

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%@ include file="../includes/header.jsp" %>
 
 <div class="card-body shadow bg-light container">
@@ -30,7 +29,7 @@
 				</div>
 				<div class="form-group mt-3">
 					<label class="form-label h5 mr-3">작성자</label>
-					<input class="box width-10" type="number" name="tno" value="${trainerboard.tno}" disabled /> <br>	
+					<input class="box width-10" type="text" name="tname" value="${trainerboard.tname}" disabled /> <br>	
 				</div>
 				<div class="form-group mt-3">
 					<label class="default">공지 내용</label> <br>
@@ -39,7 +38,14 @@
 			</div>
 			<div class="float-right">
 				<!-- 수정, 삭제, 목록 버튼 -->
-				<button type="button" class="btn btn-info custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardModify?tbno=${trainerboard.tbno}'">수정·삭제</button>
+	        <sec:authentication property="principal" var="principal"/>
+       		<sec:authorize access="isAuthenticated()">
+	        	<c:if test="${principal.username eq trainerboard.tid}">
+					<button type="button" class="btn btn-info custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardModify?tbno=${trainerboard.tbno}'">수정·삭제</button>
+	        	</c:if>
+			</sec:authorize>
+        	
+        	
 				<button type="button" class="btn btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardList?tbno=${trainerboard.tbno}'">목록으로</button>
 			</div>
 		</div>

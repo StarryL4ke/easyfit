@@ -65,11 +65,11 @@
             </li>
 
 
-            <!-- 사이드바 - 운동일지 -->
+            <!-- 사이드바 - 운동일지 -->ㄴ
             <li class="nav-item">
-                <a class="nav-link" href="/easyfit/trainerBoardList=<sec:authentication property="principal.trainerVO.tno"/>">
+                <a class="nav-link" href="/easyfit/trainerBoardList">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>노하우게시판</span>
+                    <span>트레이너 게시판</span>
                 </a>
             </li>
             
@@ -109,14 +109,14 @@
                         <li class="nav-item dropdown no-arrow form-inline mr-2">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle" src="/resources/img/undraw_profile.svg">
-                                <span class="mr-2 d-none d-lg-inline text-black-600 small">&nbsp;<b><sec:authentication property="principal.trainerVO.tname"/></b> 사장 
-	                                 <a  href="#" onclick="logout()">
-	                            		<div class="d-inline-block mt-1-5 mr-2 ml-0">
-			                            	<i class="fas fa-lg fa-sign-out-alt"></i>
-	                            		</div>
-	                           		</a>
+                                <span class="d-none d-lg-inline text-black-600">&nbsp;<b><sec:authentication property="principal.trainerVO.tname"/></b> 사장 
                                 </span>
-                            </a>
+                       		</a>
+                                 <a  href="#" onclick="logout()">
+                            		<div class="d-inline-block mt-1-5 mr-2 ml-0">
+		                            	<i class="fas fa-lg fa-sign-out-alt"></i>
+                            		</div>
+                            	</a>
                         </li>
                         <!-- 로그인 계정 정보 종료 -->
                         

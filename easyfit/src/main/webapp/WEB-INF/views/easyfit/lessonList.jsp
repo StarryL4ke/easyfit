@@ -40,7 +40,7 @@
 		                            <td><fmt:formatDate pattern="yyyy-MM-dd hh:MM:ss" value="${list.maxerdate}" /></td>
 		                            <td><c:out value="${list.prturn}"/>번째</td>
 		                            <td>
-		                            	<a class='moveToList' href='<c:out value="${list.prno}" />'>
+		                            	<a href="/easyfit/lessonDetailList?tno=<sec:authentication property="principal.trainerVO.tno"/>&mno=${list.mno}&prno=${list.prno}">
 		                            		<b><c:out value="${list.prcount}"/> / <c:out value="${list.prcountall}"/></b>
 		                            	</a>
 		                            </td>
@@ -176,18 +176,7 @@
 			$("#hiddenForm").find("input[name='pageNum']").val($(this).attr("href"));
 			$("#hiddenForm").submit();
 		});
-		
-		$('.moveToList').on("click", function(e) {
-			
-			e.preventDefault();
-			
-			if($("input[name=prno]").length == 0) {
-				$("#hiddenForm").append('<input type="hidden" name="prno" value="' + $(this).attr("href") + '">');
-			}
-			$("#hiddenForm").attr("action", "/easyfit/lessonDetailList");
-			$("#hiddenForm").submit();
-		});
-		
+				
 		
 		/* 검색 이벤트 ******************************************************************/
 		$("#searchForm button").on("click", function(e) {

@@ -64,14 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
  <div id='calendar'></div> 
  <!-- 그래프 및 미니 공지사항 영역 시작 ----------------------------------------------------------->
-	<div class="row">
+	<div class="row mt-3">
 
 <!-- 그래프 시작 ----------------------------------------------------------------------------->
                         <div class="col-xl-6 col-lg-6">
-                            <div class="card shadow mb-4">
+                            <div class="card shadow">
 <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">월별 PT 현황 요약</h6>
                                 </div>
 <!-- Card Body -->
@@ -107,15 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	                            				<td>제목</td>
 	                            			</tr>
 	                            		</thead>
-	                            		<tbody>
-	                            			<tr>
-	                            				<td>1</td>
-	                            				<td>3월 휴무 안내</td>
-	                            			</tr>
-	                            			<tr>
-	                            				<td>2</td>
-	                            				<td>코로나 방역 대책 변경 안내</td>
-	                            			</tr>
+	                            		<tbody id="smallNoticeList">                            		
 	                            		</tbody>
 	                            	</table>
 	                            </div>
@@ -185,6 +176,20 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	});
 
+ 
+var noticeRequest = $.ajax({
+	url: "/easyfit/noticeDisplay",
+	type: "get",
+	dataType: "json"
+});
+noticeRequest.done(function(data){ 	
+	$.each(data, function(i,v){
+		$("#smallNoticeList").append("<tr data-nno='"+v.nno+"'><td>"+v.rn+"</td><td>"+v.ntitle+"</td></tr>");
+	$("#smallNoticeList").on('click', 'tr', function(){
+		location.href="/easyfit/noticeGet?nno=" + $(this).data("nno");
+	});
+	});
+});
 </script>
  
  

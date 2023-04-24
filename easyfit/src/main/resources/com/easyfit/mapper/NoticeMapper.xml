@@ -15,10 +15,12 @@
 		</trim>
 	</sql>
 	
+
+
 <select id="list" resultType="com.easyfit.domain.join.NoticeJoinVO">
 <![CDATA[
 	SELECT 
-      	n.nno, n.ntitle, n.ncontent, n.tno, n.ndate, t.tname 
+      	rn, n.nno, n.ntitle, n.ncontent, n.tno, n.ndate, t.tname 
     FROM (
       	SELECT 
         	rownum rn, nno, ntitle, ncontent, tno, ndate 

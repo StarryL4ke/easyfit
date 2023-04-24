@@ -27,7 +27,6 @@ public class NoticeServiceImpl implements NoticeService {
 		log.info("noticeGet");
 		return noticeMapper.list(cri);
 	}
-
 	
 	//글 세기
 	@Override

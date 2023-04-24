@@ -8,9 +8,10 @@ import com.easyfit.domain.Criteria;
 import com.easyfit.domain.TrainerAuthVO;
 import com.easyfit.domain.TrainerVO;
 import com.easyfit.domain.join.LessonJoinVO;
+import com.easyfit.domain.join.TrainerJoinVO;
 
 public interface TrainerMapper {
-	public List<TrainerVO> list(@Param("cri") Criteria cri);
+	public List<TrainerJoinVO> list(@Param("cri") Criteria cri);
 	public long count(@Param("cri") Criteria cri);
 	public TrainerVO get(Long tno);
 	public void registerSelectKey(TrainerVO trainer);

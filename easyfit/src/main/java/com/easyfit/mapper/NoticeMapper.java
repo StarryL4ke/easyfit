@@ -14,6 +14,7 @@ public interface NoticeMapper {
 	//공지사항 목록
 	public List<NoticeJoinVO> list(Criteria cri);
 	
+	
 	//글 세기
 	public long count(Criteria cri);
 	

@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class NoticeJoinVO {
 	
+	private Long rn;
 	private Long nno; //공지 글번호
 	private String ntitle; //공지 글제목
 	private String ncontent; //공지 내용

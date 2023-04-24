@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%-- <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> --%>
- 
-<%@ include file="../includes/header.jsp" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authorize access="hasRole('ROLE_ADMIN')"><%@ include file="../includes/adminHeader.jsp" %></sec:authorize>
+<sec:authorize access="hasRole('ROLE_MANAGER')"><%@ include file="../includes/header.jsp" %></sec:authorize>
 
 			    
 		
@@ -32,14 +32,14 @@
 								<a href='/easyfit/trainerBoardGet?tbno=${list.tbno}'>${list.tbtitle}</a>
 							</td>
 							<!--<td>${list.tbcontent}</td>  -->
-							<td width="20%">${list.tno}</td>
+							<td width="20%">${list.tname}</td>
 							<td width="20%"><fmt:formatDate pattern='yyyy-MM-dd' value="${list.tbdate}" /></td>						
 						</tr>
 					</c:forEach>
                   </tbody>
              </table>
 		</div>
-</div>
+
 				
 				
 				<!--공지사항 검색, 새로등록 버튼  -->
@@ -80,6 +80,7 @@
 							<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 							<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
 							<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+							<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" />
 						</form>
 
 					</div>

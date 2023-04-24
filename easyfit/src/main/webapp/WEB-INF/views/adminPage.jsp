@@ -7,12 +7,7 @@
 					<!-- 메인 페이지 시작 ------------------------------------------------------------------------>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">관리자</h1>
-                    <div>
-
- 						<p>사용자 : <sec:authentication property="principal.trainerVO" /></p>
- 						<p>권한 : <sec:authentication property="principal.trainerVO.trainerAuthList" /></p>                   
-                    </div>
-                        
+             
                     </div>
 
 

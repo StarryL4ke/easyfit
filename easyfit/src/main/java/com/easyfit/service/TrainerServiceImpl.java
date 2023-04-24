@@ -8,6 +8,7 @@ import com.easyfit.domain.Criteria;
 import com.easyfit.domain.TrainerAuthVO;
 import com.easyfit.domain.TrainerVO;
 import com.easyfit.domain.join.LessonJoinVO;
+import com.easyfit.domain.join.TrainerJoinVO;
 import com.easyfit.mapper.TrainerMapper;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class TrainerServiceImpl implements TrainerService {
 	private TrainerMapper trainerMapper;
 
 	@Override
-	public List<TrainerVO> getList(Criteria cri) {
+	public List<TrainerJoinVO> getList(Criteria cri) {
 		return trainerMapper.list(cri);
 	}
 	@Override

@@ -79,13 +79,31 @@ public class CalendarController {
 
 		return chartJsonArr;
 	}
-/*	
-	@GetMapping(value= "/chartDataDisplay", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public List <String> chartData {		
-		List<String> mnameList = calendarService.mnameList();
-		return mnameList;		
+
+	@GetMapping("/noticeDisplay")
+	@ResponseBody
+	public List<Map<String, Object>> smallNoticeList(){
+		List<Map<String, Object>> smallNotice = calendarService.smallNotice();
+		
+		JSONObject noticeJsonObj = new JSONObject();
+		JSONArray noticeJsonArr = new JSONArray();
+		
+		HashMap<String, Object> noticeHash = new HashMap<>();
+		
+		for(int i = 0 ; i < smallNotice.size() ; i++) {
+			noticeHash.put("rn", smallNotice.get(i).get("RN"));
+			noticeHash.put("ntitle", smallNotice.get(i).get("NTITLE"));
+			noticeHash.put("nno", smallNotice.get(i).get("NNO"));
+			
+			noticeJsonObj = new JSONObject(noticeHash);
+			noticeJsonArr.add(noticeJsonObj);			
+		}
+		log.info("jsonArrCheck: {}"+ noticeJsonArr);
+
+
+		return noticeJsonArr;
 	}
-*/	
+	
 	@Transactional
 	@PostMapping(value = "/calendarRegister", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> register(@RequestBody ExerciseRecordVO exerciseRecord, String mname){

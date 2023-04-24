@@ -14,7 +14,6 @@
 		
 		<!-- 공지사항 글목록 -------------------------------------------------------------------------->
 		<form role="form" action="/easyfit/trainerBoardRegister" method="post">
-			<input type='hidden' name='tbno' value='<c:out value="${trainerboard.tbno}"/>'>
 			<div>
 				<div class="form-group mt-3" style="display:flex; align-items: baseline;">
 					<label class="form-label h5 mr-3">제목</label>
@@ -24,7 +23,8 @@
 			<div>
 				<div class="form-group mt-3">
 					<label class="form-label h5 mr-3">작성자</label>
-					<input class="box width-10" name="tno" value='1' readonly />  
+					<input class="box width-10" type="text" name="tname" value='<sec:authentication property="principal.trainerVO.tname"/>'readonly />
+					<input type="hidden" name="tid" value='<sec:authentication property="principal.trainerVO.tid"/>' />    
 				</div>
 			</div>
 			<div>
@@ -33,6 +33,10 @@
 					<textarea  class="form-control z-depth-1" name="tbcontent" rows="10" cols="50" ></textarea>
 				</div>
 			</div>
+			<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+			<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
 			<div> 
 				<div class="float-right"> 
 					<button type="submit" data-oper="register" class="btn btn-primary custom-select-sm mb-4">작성완료</button>

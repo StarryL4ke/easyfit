@@ -43,10 +43,15 @@ public class ClientController {
 		return "redirect:/easyfit/clientList?tno="+tno;
 	}
 	
-	@GetMapping({"/clientGet", "/clientModify"})//회원 정보, 회원 수정(GET), PT 목록
+	@GetMapping("/clientGet")//회원 정보, 회원 수정(GET), PT 목록
 	public void get(@RequestParam("mno") Long mno, PTRecordVO ptRecord, Model model, Long tno) {
 		model.addAttribute("client", clientService.getGet(mno));
 		model.addAttribute("ptRecordList", clientService.getPrList(mno, tno));
+	}
+	
+	@GetMapping("/clientModify")//회원 정보, 회원 수정(GET), PT 목록
+	public void get(@RequestParam("mno") Long mno, Model model) {
+		model.addAttribute("client", clientService.getGet(mno));
 	}
 	
 	@PostMapping("/clientModify")//회원 수정(POST)
@@ -82,10 +87,15 @@ public class ClientController {
 		return "redirect:/easyfit/allClientList";
 	}
 	
-	@GetMapping({"/allClientGet", "/allClientModify"})//회원 정보, 회원 수정(GET), PT 목록
+	@GetMapping("/allClientGet")//회원 정보, PT 목록
 	public void allGet(@RequestParam("mno") Long mno, PTRecordVO ptRecord, Model model, Long tno) {
 		model.addAttribute("client", clientService.getGet(mno));
 		model.addAttribute("ptRecordList", clientService.getPrList(mno, tno));
+	}
+	
+	@GetMapping("/allClientModify")//회원 정보, 회원 수정(GET), PT 목록
+	public void allGet(@RequestParam("mno") Long mno, Model model) {
+		model.addAttribute("client", clientService.getGet(mno));
 	}
 	
 	@PostMapping("/allClientModify")//회원 수정(POST)

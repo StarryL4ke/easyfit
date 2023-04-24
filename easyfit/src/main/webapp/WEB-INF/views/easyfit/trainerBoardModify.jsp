@@ -5,7 +5,6 @@
 
 <%@ include file="../includes/header.jsp" %>
 
-
 <div class="card-body shadow bg-light container">
 	<!-- 페이지 이름 -->
 	<div class="col-lg-12 py-4 d-inline-block ">
@@ -17,7 +16,7 @@
 				<div>
 					<div class="form-group mt-3" style="display:flex; align-items: baseline;">
 						<label class="form-label h5 mr-3">글번호</label>
-						<input class="box width-10" name="tbno" value='<c:out value="${trainerboard.tbno}"/>' readonly />\
+						<input class="box width-10" name="tbno" value='<c:out value="${trainerboard.tbno}"/>' readonly />
 					</div>
 				</div>
 				<div>
@@ -29,9 +28,14 @@
 				<div>
 					<div class="form-group mt-3">	
 						<label class="form-label h5 mr-3">작성자</label>
-						<input class="box width-10" name="tno" value='<c:out value="${trainerboard.tno}"/>' readonly />
+						<input class="box width-10" name="tname" value='<c:out value="${trainerboard.tname}"/>' readonly />
+						<input type="hidden" name="tid" value='<sec:authentication property="principal.trainerVO.tid"/>' />	
 					</div>
 				</div>
+				<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+				<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->	
 				<div>
 					<div class="form-group mt-3">
 						<label class="form-label h5 mr-3">공지 내용</label> <br>

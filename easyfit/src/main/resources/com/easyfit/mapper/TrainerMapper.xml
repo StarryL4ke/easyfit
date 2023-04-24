@@ -23,23 +23,25 @@
 </sql>
 
 <!-- 트레이너 목록 -->
-<select id="list" resultType="com.easyfit.domain.TrainerVO"> 
+<select id="list" resultType="com.easyfit.domain.join.TrainerJoinVO"> 
 SELECT
-    rn, tno, tname, tid, ttel, taddress, tmemo
+    rn, tno, tname, tid, ttel, taddress, tmemo, auth
 FROM
     (
     SELECT
-       rownum rn, tno, tname, tid, ttel, taddress, tmemo
+       rownum rn, t.tno, tname, ttel, taddress, tmemo, auth.tid, auth
     FROM
-        trainer
+        trainer t, trainer_auth auth
     WHERE
 <include refid="criteria"></include>		
 <![CDATA[
-        tno NOT IN 0
-        AND rownum <= #{cri.pageNum} * #{cri.amount}
+        t.tno = auth.tno
+        AND t.tno NOT IN 0
+        AND auth = 'ROLE_MANAGER'
+        AND rownum <= 1 * 10
     )
 WHERE
-     rn > (#{cri.pageNum} - 1) * #{cri.amount}
+     rn > (1 - 1) * 10
 ORDER BY
     tno
 ]]>

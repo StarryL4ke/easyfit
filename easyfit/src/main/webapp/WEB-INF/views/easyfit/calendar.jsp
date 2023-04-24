@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					type : 'get',
 					url : '/easyfit/calendarClientName',
 					success : function(result, status, xhr) {
+						$("#clientNameList").empty();
 						$.each(result, function(i,v){
 							$("#clientNameList").append("<option value="+v+">" + v + "</option>");					
 						});

@@ -55,4 +55,8 @@ public class CalendarService {
 		String tid = auth.getName();
 		return calendarMapper.chartData(tid);
 	}
+	
+	public List<Map<String, Object>> smallNotice(){
+		return calendarMapper.smallNotice();
+	}
 }

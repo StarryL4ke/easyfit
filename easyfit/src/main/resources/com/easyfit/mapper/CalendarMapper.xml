@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyfit.mapper.CalendarMapper">
 
+<select id="smallNotice" resultType="Map" parameterType="String">
+SELECT
+	rn, ntitle, nno
+FROM
+	(
+	SELECT
+		rownum rn, ntitle, nno
+	FROM
+		notice
+	)
+</select>
+
 <!-- 일정 목록 -->
 <select id="list" resultType="Map" parameterType="String">
 <!-- 

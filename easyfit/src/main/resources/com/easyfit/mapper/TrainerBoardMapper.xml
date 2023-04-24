@@ -16,7 +16,7 @@
 	</trim>
 </sql>
 	
-<select id="list" resultType="com.easyfit.domain.TrainerBoardVO">
+<!-- <select id="list" resultType="com.easyfit.domain.TrainerBoardVO">
 SELECT 
 	tbno, tbtitle, tbcontent, tbdate, tbupdatedate, tno, tid
 FROM ( 
@@ -33,8 +33,29 @@ FROM (
 WHERE
 	rn > (#{pageNum} - 1) * #{amount} 
 ]]>
+</select> -->
+
+<select id="list" resultType="com.easyfit.domain.join.TrainerBoardJoinVO">
+SELECT 
+    tb.tbno tbno, tb.tbtitle tbtitle, tb.tbcontent tbcontent, tb.tbdate tbdate, tb.tbupdatedate tbupdatedate, tb.tno tno, auth.tid tid, tr.tname tname
+FROM 
+    (
+    SELECT
+        rownum rn, tb.tbno, tb.tbtitle, tb.tbcontent, tb.tbdate, tb.tbupdatedate, tb.tno, auth.tid
+    FROM
+        trainerboard tb
+        INNER JOIN trainer_auth auth ON tb.tno = auth.tno
+    WHERE
+<include refid="criteria"/>
+<![CDATA[
+     rownum <= #{pageNum} * #{amount}
+    ) tb
+    INNER JOIN trainer tr ON tr.tno = tb.tno
+    INNER JOIN trainer_auth auth ON auth.tno = tb.tno
+WHERE
+    rn > (#{pageNum} - 1) * #{amount} 
+]]>
 </select>
-	
 <!--  총 게시글 수  -->
 <select id="count" resultType="Long"> 	
 SELECT
@@ -51,7 +72,7 @@ tbno > 0
 	
 	
 <!--  공지사항 상세보기  -->
-<select id="get" resultType="com.easyfit.domain.TrainerBoardVO"> 
+<!-- <select id="get" resultType="com.easyfit.domain.TrainerBoardVO"> 
 	<![CDATA[
 	SELECT
 	    tbno, tno, tbtitle, tbcontent, tbdate, tbupdatedate
@@ -60,6 +81,18 @@ tbno > 0
 	
 	WHERE tbno = #{tbno} 
 	]]>
+</select> -->
+
+<!--  공지사항 상세보기  -->
+<select id="get" resultType="com.easyfit.domain.join.TrainerBoardJoinVO"> 
+SELECT
+    tbno, tb.tno tno, tbtitle, tbcontent, tbdate, tbupdatedate, tr.tname tname, auth.tid tid
+FROM
+    trainerboard tb, trainer tr, trainer_auth auth
+WHERE 
+    tbno = #{tbno} 
+    AND tb.tno = tr.tno
+    AND tr.tid = auth.tid
 </select>
 	
 	
@@ -69,8 +102,12 @@ tbno > 0
 	<![CDATA[
 	INSERT INTO trainerboard(
 		 tbno, tno, tbtitle, tbcontent, tbdate, tbupdatedate) 
-	VALUES(
-		 trainerboard_seq.NEXTVAL, #{tno}, #{tbtitle}, #{tbcontent}, sysdate, sysdate) 
+	SELECT
+		 trainerboard_seq.NEXTVAL, #{trainerboard.tno}, #{trainerboard.tbtitle}, #{trainerboard.tbcontent}, sysdate, sysdate
+	FROM 
+		trainer_auth
+	WHERE 
+		trainer_auth.tid = #{tid}
 	]]>
 </insert>
 	
@@ -79,14 +116,23 @@ tbno > 0
 <update id="modify"> 
 	<![CDATA[ 
 	UPDATE 
-		trainerboard 
+   		trainerboard 
 	SET 
-		tbtitle = #{tbtitle}, 
-		tbcontent = #{tbcontent},
-		tbupdatedate = sysdate
-		
+	    tbtitle = #{trainerboard.tbtitle}, 
+	    tbcontent = #{trainerboard.tbcontent},
+	    tbupdatedate = sysdate
 	WHERE 
-		tbno = #{tbno}	
+	    tbno = #{trainerboard.tbno}	
+	    AND 
+	    	tno 
+    	IN (
+	        SELECT 
+	        	tno 
+        	FROM 
+        		trainer_auth 
+       		WHERE 
+     			tid = #{tid}
+    )
 	]]>
 </update>
 	
@@ -95,9 +141,19 @@ tbno > 0
 	<![CDATA[ 
 	DELETE
 	FROM 
-		trainerboard 
+		trainerboard tb
 	WHERE 
-		tbno = #{tbno} 
+		tb.tbno = #{tbno}
+		AND EXISTS (
+	        SELECT 
+	        	tb.tbno
+			FROM 
+				trainer_auth auth, trainerboard tb
+			WHERE 
+				auth.tno = tb.tno
+			AND 
+				auth.tid = #{tid}
+	)
 	]]>
 </delete>
 	

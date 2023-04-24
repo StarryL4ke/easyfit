@@ -58,6 +58,7 @@ private LessonService lessonService;
 		
 		model.addAttribute("prnoTransfer", prno);	
 		model.addAttribute("mnoTransfer", mno);
+		log.info("mno :" + mno);
 	}
 	
 	// SELECT - GET
