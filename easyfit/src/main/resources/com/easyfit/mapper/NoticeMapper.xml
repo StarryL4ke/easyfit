@@ -19,22 +19,27 @@
 
 <select id="list" resultType="com.easyfit.domain.join.NoticeJoinVO">
 <![CDATA[
-	SELECT 
-      	rn, n.nno, n.ntitle, n.ncontent, n.tno, n.ndate, t.tname 
-    FROM (
-      	SELECT 
-        	rownum rn, nno, ntitle, ncontent, tno, ndate 
-      	FROM 
-        	notice 
-      	WHERE 
+SELECT 
+	rn, n.nno, n.ntitle, n.ncontent, n.tno, n.ndate, t.tname 
+FROM (
+		SELECT 
+			rownum rn, nno, ntitle, ncontent, tno, ndate 
+		FROM 
+			notice 
+		WHERE 
 ]]>
 <include refid="criteria"/>
 <![CDATA[
-      rownum <= #{pageNum} * #{amount} 
-    ) n 
-    JOIN trainer t ON n.tno = t.tno 
-    WHERE 
-      rn > (#{pageNum} - 1) * #{amount}
+			rownum <= #{pageNum} * #{amount}
+		ORDER BY
+			nno DESC
+		) n 
+JOIN
+	trainer t
+ON
+	n.tno = t.tno 
+WHERE 
+	rn > (#{pageNum} - 1) * #{amount}
 ]]>
 </select>
 	

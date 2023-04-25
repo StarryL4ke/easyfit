@@ -27,7 +27,7 @@
 						<div class="col-lg-12" id="loginCard">
 							<div class="p-5 text-center">
 								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">트레이너 로그인</h1> 
+									<h1 class="h4 text-gray-900 mb-4">Easyfit+ 로그인</h1> 
                                     <h2 class="h5 msgColor mb-4"><c:out value="${logout}"/></h2>
 								</div>
                                 <div class="loginBox text-center">

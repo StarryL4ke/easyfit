@@ -176,6 +176,7 @@
 
 
 <!-- 공통모듈 header 끝 -->
+<script type="text/javascript" src="/resources/js/sb-admin-2.js"></script>
 <script>
     function logout() {
         // 로그아웃 처리

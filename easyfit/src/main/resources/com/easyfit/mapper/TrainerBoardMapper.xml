@@ -48,7 +48,9 @@ FROM
     WHERE
 <include refid="criteria"/>
 <![CDATA[
-     rownum <= #{pageNum} * #{amount}
+     	rownum <= #{pageNum} * #{amount}
+     ORDER BY
+     	tbno
     ) tb
     INNER JOIN trainer tr ON tr.tno = tb.tno
     INNER JOIN trainer_auth auth ON auth.tno = tb.tno

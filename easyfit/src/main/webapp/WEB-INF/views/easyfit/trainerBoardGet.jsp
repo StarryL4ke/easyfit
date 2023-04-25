@@ -2,83 +2,67 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <%@ include file="../includes/header.jsp" %>
 
-<div class="card-body shadow bg-light container">
+<div class="card-body shadow bg-light container mb-3">
 	<!-- 페이지 이름 -->
-	<div class="col-lg-12 py-4 d-inline-block ">
-		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-4 d-inline-block"> 
-			<h1 class="h3 mb-0 text-gray-800">트레이너 게시판</h1>
+	<div class="col-lg-12 py-4 d-inline-block">
+		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-0 d-inline-block"> 
+			<h1 class="h3 mb-0 text-gray-800 font-weight-bold">트레이너 게시판</h1>
+			<hr>
 		</div>
-			<div>
-				<div class="form-group mt-3" style="display:flex; align-items: baseline;">
-					<label class="form-label h5 mr-3">글번호</label>
-					<input class="box width-10" type="number" name="tbno" value="${trainerboard.tbno}" disabled />	
+		<div class="px-3 mt-0">
+			<div class="form-group ml-3 mb-0" style="display:flex; align-items: baseline;">
+				<label class="form-label mr-1 h7">#</label>
+				<input class="box5 bg-light h7" type="number" name="tbno" value="${trainerboard.tbno}" readonly />	
+			</div>
+			<div class="form-group mb-0 ml-3">
+				<input class="box4 h5 bg-light mb-0 font-weight-bold" type="text" name="tbtitle" value="${trainerboard.tbtitle}"  readonly /><br>
+			</div>
+			<div class="row my-0 py-0 my-0">
+				<div class="col-lg-1 form-group mt-1 ml-4 mr-1 px-0">
+					<img class="img-profile rounded-circle writerImg ml-2" src="/resources/img/undraw_profile.svg" width="23px">
+					<input class="box5 bg-light h8 width-60 mb-0" type="text"  name="tname" value="${trainerboard.tname}" readonly /> <br>	
 				</div>
-				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">타이틀</label>
-					<input class="box width-25" type="text" name="tbtitle" value="${trainerboard.tbtitle}"  disabled /><br>
+				<div class="col-lg-2 form-group mt-1 px-0">
+					<input class="box5 bg-light h8 width-60 mb-0" type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbdate}"/>' readonly/><br />
 				</div>
-				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">작성일자</label>
-					<input class="dateBox width-20" type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbdate}"/>' disabled/><br />
-				</div>
-				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">수정일자</label>
-					<input class="dateBox width-20" type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbupdatedate}"/>' disabled/><br />
-				</div>
-				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">작성자</label>
-					<input class="box width-10" type="text" name="tname" value="${trainerboard.tname}" disabled /> <br>	
-				</div>
-				<div class="form-group mt-3">
-					<label class="default">공지 내용</label> <br>
-					<textarea name="tbcontent" rows="10" cols="100" disabled><c:out value="${trainerboard.tbcontent}"/></textarea> <br>
+				<div class="col-lg-3 form-group mt-1 px-0 position-right-15">
+					<span class="position-bottom-0-5">( 업데이트 : </span>
+					<input class="box5 bg-light h8 width-38 mb-0 mr-0" type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${trainerboard.tbupdatedate}"/>' readonly/>
+					<span class="position-bottom-0-5">)</span>
+					<br />
 				</div>
 			</div>
-			<div class="float-right">
-				<!-- 수정, 삭제, 목록 버튼 -->
-	        <sec:authentication property="principal" var="principal"/>
-       		<sec:authorize access="isAuthenticated()">
-	        	<c:if test="${principal.username eq trainerboard.tid}">
-					<button type="button" class="btn btn-info custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardModify?tbno=${trainerboard.tbno}'">수정·삭제</button>
-	        	</c:if>
-			</sec:authorize>
-        	
-        	
-				<button type="button" class="btn btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardList?tbno=${trainerboard.tbno}'">목록으로</button>
+			<div class="col-lg-12 form-group my-0 mx-1">
+				<textarea class="form-control z-depth-1 h7 text-black-600" name="tbcontent" rows="10" cols="100" readonly><c:out value="${trainerboard.tbcontent}"/></textarea> <br>
 			</div>
+		</div>
+		<div class="float-right">
+			<!-- 수정, 삭제, 목록 버튼 -->
+			<button type="button" class="btn btn-info mb-4 h7-5" onclick="location.href = '/easyfit/trainerBoardModify?tbno=${trainerboard.tbno}'">수정·삭제</button>
+			<button type="button" class="btn btn btn-success mb-4 h7-5" onclick="location.href = '/easyfit/trainerBoardList?tbno=${trainerboard.tbno}'">목록</button>
 		</div>
 	</div>
+</div>
 	
-	
-	
-		<div class='row'>			
-		  <div class="col-lg-12">			
-		    <!-- /.panel -->
-			    <div class="panel panel-default">			      
-			      <div class="panel-heading">
-			        <i class="fa fa-comments fa-fw"></i> Reply
-			        <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
-			      </div>   
-			      
-			      <!-- /.panel-heading -->
-			      <div class="panel-body"> 
-			        <ul class="chat">
-			
-			        </ul>
-			        <!-- ./ end ul -->
-			      </div>
-			      <!-- /.panel .chat-panel -->
-			
+<div class="card-body container mb-3">
+	<div class="row">			
+		<div class="col-lg-12">			
+			<div class="panel panel-default">			      
+			    <div class="panel-heading">
+				    <span class="h7 mt-1"><i class="fa fa-comments fa-fw"></i> Reply</span>
+				    <button id='addReplyBtn' class='btn btn-primary h7-5 float-right'>New Reply</button>
+			    </div>   
+			    <div class="panel-body"> 
+			   		<ul class="chat"></ul>
+			    </div>
 				<div class="panel-footer"></div>
-		
-		
 			</div>
-		  </div>
-		  <!-- ./ end row -->
-		</div>  
-		
+		 </div>
+	</div>  
+</div>
 		
 		
 		<!-- modal ------------------------------------------------------------------>

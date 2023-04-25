@@ -12,36 +12,46 @@
 
 <div class="card-body shadow bg-light container">
 	<!-- 페이지 이름 -->
-	<div class="col-lg-12 py-4 d-inline-block ">
-		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-4 d-inline-block"> 
-			<h1 class="h3 mb-0 text-gray-800">공지사항 수정</h1>
+	<div class="col-lg-12 py-4 d-inline-block">
+		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-1 d-inline-block"> 
+			<h1 class="h3 mb-0 text-gray-800 font-weight-bold">공지사항 수정</h1>
+			<hr>
 		</div>
 			
-			<form role="form" action="/easyfit/noticeModify" method="post">
-
-
-				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">글 제 목 :</label>
-					<input class="box width-25" name="ntitle" value='<c:out value="${notice.ntitle}"/>' />
+		<form role="form" action="/easyfit/noticeModify" method="post">
+			<div class="form-group mt-1 ml-3 mb-1" style="display:flex; align-items: baseline;">
+				<label class="form-label mr-1 h7">#</label>
+				<input class="box5 bg-light width-10" type="number" name="nno" value='<c:out value="${notice.nno}"/>' readonly />
+			</div>
+			<div class="form-group my-1 ml-3">
+				<input class="box6 h4 mb-0 font-weight-bold" type="text" name="ntitle" value='<c:out value="${notice.ntitle}"/>' />
+			</div>
+			<div class="row my-0 py-0 my-0">
+				<div class="col-lg-1 form-group mt-1 ml-4 mr-1 px-0">	
+					<img class="img-profile rounded-circle writerImg ml-2" src="/resources/img/undraw_profile.svg" width="23px">
+					<input class="box5 bg-light h8 width-60 mb-0" type="text"  name="tname" value='<c:out value="${notice.tname}"/>' readonly />
+					<input type="hidden" name="tid" type="text" value='<sec:authentication property="principal.trainerVO.tid"/>' />	
 				</div>
-<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
-<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->	
-
-
-				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">공지 내용</label> <br>
-					<textarea class="form-control z-depth-1" name="ncontent" rows="10" cols="100" ><c:out value="${notice.ncontent}"/></textarea>
+				<div class="col-lg-2 form-group mt-1 px-0">
+					<input class="box5 bg-light h8 width-60 mb-0" type="text" name="tbdate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${notice.ndate}"/>' readonly/><br />
 				</div>
+			</div> 
+			
+			<div class="col-lg-12 form-group my-0 mx-1">
+				<textarea class="form-control z-depth-1 h7 text-black-600" name="ncontent" rows="8" ><c:out value="${notice.ncontent}"/></textarea>
+			</div>
 
-				
-				<!-- 수정, 삭제 버튼 -->
-				<div class="float-right">
-					<button type="submit" data-oper="modify" class="btn btn-info custom-select-sm mb-4">수정완료</button>					
-					<button type="button" data-oper="list" class="btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록으로</button>
-				</div>
-			</form>	
+			<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
+			<input type="hidden" name="tno" value="<sec:authentication property="principal.trainerVO.tno"/>" /><br />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->	
+			
+			<!-- 수정, 삭제 버튼 -->
+			<div class="float-right">
+				<button type="submit" data-oper="modify" class="btn btn-info mb-4 h7-5">수정 완료</button>					
+				<button type="button" data-oper="list" class="btn btn-success mb-4 h7-5" onclick="location.href = '/easyfit/noticeList?nno=${notice.nno}'">목록</button>
+			</div>
+		</form>	
 	</div>
 </div>
 

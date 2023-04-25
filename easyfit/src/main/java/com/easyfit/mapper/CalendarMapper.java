@@ -23,5 +23,8 @@ public interface CalendarMapper {
 	public List<Map<String, Object>> chartData(@Param("tid") String tid);
 	//smallNotice
 	public List<Map<String, Object>> smallNotice();
-	
+	//log
+	public List<Map<String, Object>> log();
+	//totalPTData
+	public List<Map<String, Object>> totalPTData();
 }

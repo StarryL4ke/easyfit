@@ -4,8 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <sec:authorize access="hasRole('ROLE_ADMIN')"><%@ include file="../includes/adminHeader.jsp" %></sec:authorize>
-<sec:authorize access="hasRole('ROLE_MANAGER')"><%@ include file="../includes/header.jsp" %></sec:authorize>
-
+<sec:authorize access="hasRole('ROLE_MANAGER')"><%@ include file="../includes/header.jsp" %></sec:authorize>  
 			    
 		
 		<div class="card-body">		
@@ -31,7 +30,7 @@
 							<td width="50%">
 								<a href='/easyfit/trainerBoardGet?tbno=${list.tbno}'>${list.tbtitle}</a>
 							</td>
-							<!--<td>${list.tbcontent}</td>  -->
+							 <!--<td>${list.tbcontent}</td>  -->
 							<td width="20%">${list.tname}</td>
 							<td width="20%"><fmt:formatDate pattern='yyyy-MM-dd' value="${list.tbdate}" /></td>						
 						</tr>

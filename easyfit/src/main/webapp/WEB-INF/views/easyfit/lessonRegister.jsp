@@ -9,9 +9,7 @@
 	var ergroupNo = 0;
 </script>
 
-<div>
-	<p>TrainerVO : <sec:authentication property="principal.trainerVO" /></p>                 
-</div>
+
 
     
     				<!-- 운동일자, 작성일자, 회원이름 시작  -------------------------------------------------->

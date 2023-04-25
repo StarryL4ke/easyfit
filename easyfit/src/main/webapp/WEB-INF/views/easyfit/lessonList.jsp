@@ -5,10 +5,6 @@
     
 <%@ include file="../includes/header.jsp" %>
 
-<div>
-	<p>TrainerVO : <sec:authentication property="principal.trainerVO" /></p>                 
-</div>
-
 			
 			    <!-- 페이지 이름 -->
 		        <div class="col-lg-9 align-items-center justify-content-start mb-4 d-inline-block">

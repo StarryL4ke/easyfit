@@ -59,4 +59,12 @@ public class CalendarService {
 	public List<Map<String, Object>> smallNotice(){
 		return calendarMapper.smallNotice();
 	}
+	
+	public List<Map<String, Object>> log(){
+		return calendarMapper.log();
+	}
+	
+	public List<Map<String, Object>> totalPTData(){
+		return calendarMapper.totalPTData();
+	}
 }

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <sec:authorize access="hasRole('ROLE_ADMIN')"><%@ include file="../includes/adminHeader.jsp" %></sec:authorize>
-<sec:authorize access="hasRole('ROLE_MANAGER')"><%@ include file="../includes/header.jsp" %></sec:authorize>    
+<sec:authorize access="hasRole('ROLE_MANAGER')"><%@ include file="../includes/header.jsp" %></sec:authorize>  
 
 			    <!-- 공지사항 페이지 타이틀 -->
 		        <div class="d-sm-flex align-items-center justify-content-between mb-4 ml-2">
@@ -28,7 +28,7 @@
 	                    <tbody> 
 							<c:forEach items="${list}" var="list">
 								<tr>									
-									<td width="10%">${list.rn}</td>
+									<td width="10%">${list.nno}</td>
 									<td width="50%">
 										<a href='/easyfit/noticeGet?nno=${list.nno}'>${list.ntitle}</a>
 									</td>
@@ -70,13 +70,13 @@
 									<div class="ml-2">
 			                			<button type="submit" class="btn btn-secondary custom-select-sm btn-width">검색</button>
 			                		</div>
-       								<sec:authentication property="principal" var="principal"/>					
+		              				<sec:authentication property="principal" var="principal"/>					
 		       					 		<sec:authorize access="hasRole('ROLE_ADMIN')">	
+		              				   <!-- 공지사항 게시글 등록 버튼 -->            		
 					                <div class="ml-2">
 					          			<a href="/easyfit/noticeRegister"><button type="button" class="btn btn-primary custom-select-sm btn-width">등록</button></a>
 					          		</div>
-		       	 					</sec:authorize>
-		              				   <!-- 공지사항 게시글 등록 버튼 -->            		
+					          		</sec:authorize>
 								</div>
 							</div>					
 						</form>

@@ -2,16 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyfit.mapper.CalendarMapper">
 
-<select id="smallNotice" resultType="Map" parameterType="String">
+<select id="log" resultType="Map" parameterType="String">
+<![CDATA[
 SELECT
-	rn, ntitle, nno
+    rn, tname, tid, TO_CHAR(log, 'YYYY/MM/DD HH24:MI:SS') log, tno
 FROM
-	(
-	SELECT
-		rownum rn, ntitle, nno
-	FROM
-		notice
-	)
+    (
+    SELECT
+        rownum rn, tname, username tid, last_used log, t.tno tno
+    FROM
+        trainer t, trainer_auth auth, persistent_logins log
+    WHERE
+        t.tid NOT IN 'admin'
+        AND t.tid = auth.tid
+        AND auth.tid = log.username
+        AND rownum <= 1 * 10
+    ORDER BY
+        log DESC
+    )
+WHERE
+    rn > (1 - 1) * 10
+]]>
+</select> 
+
+<select id="smallNotice" resultType="Map" parameterType="String">
+SELECT 
+    rn, nno, ntitle 
+FROM (
+    SELECT 
+        rownum rn, nno, ntitle
+    FROM 
+        notice 
+    WHERE 
+<![CDATA[
+        rownum <= 1 * 5 
+    ORDER BY
+        nno DESC
+) n  
+WHERE 
+    rn > (1 - 1) * 5
+]]>
 </select>
 
 <!-- 일정 목록 -->
@@ -198,6 +228,45 @@ FROM
 			    AND ptr.prno = er.prno
 			    AND TO_CHAR(edate, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 			    AND t.tid = #{tid}
+			GROUP BY
+			    TO_CHAR(edate, 'MM')
+	        ) real
+WHERE
+    mock.mth = real.mth(+)
+ORDER BY
+    month
+]]>
+</select>
+
+<select id="totalPTData" resultType="Map" parameterType="String">
+
+<![CDATA[
+SELECT
+    TO_CHAR(mock.mth) month, NVL(real.cnt, 0) count
+FROM
+	(
+	select to_char(TO_DATE('2023-01-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-02-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-03-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-04-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-05-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-06-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-07-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-08-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-09-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-10-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-11-01'),'MM') mth from dual union all
+	select TO_CHAR(TO_DATE('2023-12-01'),'MM') mth from dual
+	) mock, (
+			SELECT
+			    TO_CHAR(edate, 'MM') mth, COUNT(erno) cnt
+			FROM
+			    exerciserecord er, ptrecord ptr, trainer t, trainer auth
+			WHERE
+			    auth.tid = t.tid
+			    AND t.tno = ptr.tno
+			    AND ptr.prno = er.prno
+			    AND TO_CHAR(edate, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 			GROUP BY
 			    TO_CHAR(edate, 'MM')
 	        ) real

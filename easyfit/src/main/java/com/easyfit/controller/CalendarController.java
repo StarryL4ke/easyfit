@@ -75,11 +75,35 @@ public class CalendarController {
 			chartJsonArr.add(chartJsonObj);
 		}
 		log.info("jsonArrCheck: {}"+ chartJsonArr);
-
-
 		return chartJsonArr;
 	}
 
+	@GetMapping("/totalPTDisplay")
+	@ResponseBody
+	public List<Map<String, Object>> totalPTList(){
+		List<Map<String, Object>> totalPTData = calendarService.totalPTData();
+
+		JSONObject ptJsonObj = new JSONObject();
+		JSONArray ptJsonArr = new JSONArray();
+		
+		HashMap<String, Object> ptHash = new HashMap<>();
+		
+		for(int i = 0 ; i < totalPTData.size() ; i++) {
+			ptHash.put("month", totalPTData.get(i).get("MONTH"));
+			ptHash.put("count", totalPTData.get(i).get("COUNT"));
+
+			ptJsonObj = new JSONObject(ptHash);
+			ptJsonArr.add(ptJsonObj);
+		}
+		log.info("jsonArrCheck: {}"+ ptJsonArr);
+		return ptJsonArr;
+	}
+	
+	
+	
+	
+	
+	
 	@GetMapping("/noticeDisplay")
 	@ResponseBody
 	public List<Map<String, Object>> smallNoticeList(){
@@ -103,6 +127,34 @@ public class CalendarController {
 
 		return noticeJsonArr;
 	}
+	
+	@GetMapping("/logDisplay")
+	@ResponseBody
+	public List<Map<String, Object>> logList(){
+		List<Map<String, Object>> log = calendarService.log();
+		
+		JSONObject logJsonObj = new JSONObject();
+		JSONArray logJsonArr = new JSONArray();
+		
+		HashMap<String, Object> logHash = new HashMap<>();
+		
+		for(int i = 0 ; i < log.size() ; i++) {
+			logHash.put("tname", log.get(i).get("TNAME"));
+			logHash.put("tid", log.get(i).get("TID"));
+			logHash.put("log", log.get(i).get("LOG"));
+			logHash.put("tno", log.get(i).get("TNO"));
+			
+			
+			logJsonObj = new JSONObject(logHash);
+			logJsonArr.add(logJsonObj);			
+		}
+		
+		return logJsonArr;
+	}
+	
+	
+	
+	
 	
 	@Transactional
 	@PostMapping(value = "/calendarRegister", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })

@@ -11,7 +11,7 @@
 
 
             <!-- footer (팀이름 기재 영역) 시작 -------------------------------------------------------->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-light">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>2023, Team EasySpring</span>

@@ -6567,7 +6567,6 @@ button.bg-dark:focus {
 .border-top-0 {
   border-top: 0 !important;
 }
-
 .border-right-0 {
   border-right: 0 !important;
 }
@@ -11395,6 +11394,11 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* 추가 */
+.h7-5 {
+	font-size: 1.2rem!important;
+}
+
+/* 추가 */
 .h8 {
 	font-size: 1.1rem!important;
 }
@@ -11459,6 +11463,11 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* 추가 */
+.width-38 {
+	width: 38%!important
+}
+
+/* 추가 */
 .width-40 {
 	width: 40%!important
 }
@@ -11485,10 +11494,11 @@ body.sidebar-toggled footer.sticky-footer {
 #checkbox:checked {
 	display: inline-block!important;
 	content: '✔';
-	width: 30px!important;
-	height: 30px!important;
+	width: 20px!important;
+	height: 20px!important;
 	border-radius: 0.35rem!important;
 	text-align: center;
+	accent-color: gray;
 }
 
 /* 추가 */
@@ -11603,11 +11613,6 @@ input[name='exerciseNameSearch'] {
 	text-align: center;
 }
 
-
-
-
-
-
 /* 추가 */
 .cbtn:hover {
   color: #e74a3b;
@@ -11626,4 +11631,66 @@ input[name='exerciseNameSearch'] {
   background-color: #fff;
   background-clip: padding-box;
   border: 0!important;
+}
+
+/* 추가 */
+.box4 {
+  display: inline;
+  height: calc(1.5em + 0.3rem + 2px);
+  font-size: 1.5rem;
+  line-height: 2!important;
+  color: #6e707e;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0!important;
+}
+
+/* 추가 */
+.box5 {
+  display: inline;
+  height: calc(1.5em + 0.3rem + 2px);
+  font-size: 1.3rem;
+  line-height: 2!important;
+  color: #6e707e;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0!important;
+}
+
+/* 추가 */
+.box6 {
+  display: inline-block;
+  width: 600px;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  text-align: left;
+  line-height: 2!important;
+  background-color: #fff;
+  background-clip: padding-box;
+  color: #6e707e;
+  border: 1px solid #d1d3e2;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* 추가 */
+.writerImg {
+	position: relative !important;
+	bottom: 2px !important;
+}
+
+/* 추가 */
+textarea[name='ncontent'], textarea[name='tbcontent'] {
+	padding: 20px !important;
+}
+
+/* 추가 */ 
+.position-bottom-0-5 {
+	position: relative !important;
+	bottom: 0.5px !important;
+}
+
+/* 추가 */
+.position-right-15 {
+	position: relative !important;
+	right: 63px !important;
 }

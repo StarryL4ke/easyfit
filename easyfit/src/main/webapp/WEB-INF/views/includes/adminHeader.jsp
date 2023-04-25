@@ -65,7 +65,7 @@
             </li>
 
 
-            <!-- 사이드바 - 운동일지 -->ㄴ
+            <!-- 사이드바 - 운동일지 -->
             <li class="nav-item">
                 <a class="nav-link" href="/easyfit/trainerBoardList">
                     <i class="fas fa-fw fa-book"></i>
@@ -73,13 +73,14 @@
                 </a>
             </li>
             
-            <!-- 사이드바 - 통계 -->
+            <!-- 사이드바 - 통계
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>통계</span>
                 </a>
             </li>
+             -->
             
             <!-- 사이드바 토글 버튼 -->
             <div class="text-center d-none d-md-inline">
@@ -128,6 +129,7 @@
                 <div class="container-fluid">
                 
 <!-- 공통모듈 header 끝 -->
+<script type="text/javascript" src="/resources/js/sb-admin-2.js"></script>
 <script>
     function logout() {
         // 로그아웃 처리

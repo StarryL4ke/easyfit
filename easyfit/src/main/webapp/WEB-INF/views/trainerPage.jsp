@@ -76,7 +76,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
+                                       <%--  <canvas id="ptBarChart" style="height: 320px; width: 740px;"></canvas> --%>
                                         <canvas id="ptBarChart"></canvas>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -146,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				}]		
 			},
 			options: {
+				//responsive: false,
 			    scales: {
 			      xAxes: [{
 			        gridLines: {

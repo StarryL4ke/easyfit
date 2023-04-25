@@ -5,32 +5,21 @@
 
 <%@ include file="../includes/header.jsp" %>
 
-<div class="card-body shadow bg-light container">
+<div class="card-body shadow bg-light container mb-3">
 	<!-- 페이지 이름 -->
-	<div class="col-lg-12 py-4 d-inline-block ">
-		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-4 d-inline-block">
-			<h1 class="h3 mb-0 text-gray-800">트레이너 게시판 등록</h1> 
+	<div class="col-lg-12 py-4 d-inline-block">
+		<div class="panel-heading col-lg-9 align-items-center justify-content-start mb-1 d-inline-block"> 
+			<h1 class="h3 mb-0 text-gray-800 font-weight-bold">게시글 등록</h1>
+			<hr>
 		</div>
 		
-		<!-- 공지사항 글목록 -------------------------------------------------------------------------->
-		<form role="form" action="/easyfit/trainerBoardRegister" method="post">
-			<div>
-				<div class="form-group mt-3" style="display:flex; align-items: baseline;">
-					<label class="form-label h5 mr-3">제목</label>
-					<input class="box width-25" name="tbtitle"  />
-				</div>
+		<form role="form" action="/easyfit/trainerBoardRegister" method="post" class="px-3 mt-0">
+			<div class="form-group my-1 ml-0">
+				<input class="box6 h4 mb-0 font-weight-bold" type="text" name="tbtitle" placeholder="게시글 제목을 입력하세요." />
 			</div>
 			<div>
 				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">작성자</label>
-					<input class="box width-10" type="text" name="tname" value='<sec:authentication property="principal.trainerVO.tname"/>'readonly />
-					<input type="hidden" name="tid" value='<sec:authentication property="principal.trainerVO.tid"/>' />    
-				</div>
-			</div>
-			<div>
-				<div class="form-group mt-3">
-					<label class="form-label h5 mr-3">공지 내용</label> <br>
-					<textarea  class="form-control z-depth-1" name="tbcontent" rows="10" cols="50" ></textarea>
+					<textarea class="form-control z-depth-1" name="tbcontent" rows="8"  placeholder="게시글 내용을 입력하세요."></textarea>
 				</div>
 			</div>
 			<!-- ↓Parameter 전달을 위한 코드, 절대 수정 금지 ------------------------------------------------------------>		
@@ -39,9 +28,9 @@
 			<!-- ↑Parameter 전달을 위한 코드, 절대 수정 금지------------------------------------------------------------->
 			<div> 
 				<div class="float-right"> 
-					<button type="submit" data-oper="register" class="btn btn-primary custom-select-sm mb-4">작성완료</button>
-					<button type="reset" class="btn btn-warning custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoardRegister'">초기화</button>
-					<button type="button" data-oper="list" class="btn btn-secondary custom-select-sm mb-4" onclick="location.href = '/easyfit/trainerBoard?tbno=${trainerboard.tbno}'">목록으로</button>
+					<button type="submit" data-oper="register" class="btn btn-primary mb-4 h7-5">작성 완료</button>
+					<button type="reset" class="btn btn-warning mb-4 h7-5" onclick="location.href = '/easyfit/trainerBoardRegister'">초기화</button>
+					<button type="button" data-oper="list" class="btn btn-success mb-4 h7-5" onclick="location.href = '/easyfit/trainerBoard?tbno=${trainerboard.tbno}'">목록</button>
 				</div>
 			</div>	
 		</form>
